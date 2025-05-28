@@ -17,6 +17,7 @@
             --success-green: #34C759;
             --warning-orange: #FF9500;
             --error-red: #FF3B30;
+            --purple-accent: #AF52DE;
             --background-primary: #FAFBFC;
             --background-secondary: #FFFFFF;
             --text-primary: #1D1D1F;
@@ -147,6 +148,38 @@
             padding: 32px;
             box-shadow: var(--shadow-md);
             margin-bottom: 24px;
+        }
+
+        /* === SZABLONY RETROSPEKTYWY === */
+        .template-selector {
+            display: grid;
+            gap: 16px;
+        }
+        .template-option {
+            background: var(--background-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .template-option:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .template-option.selected {
+            border-color: var(--primary-blue);
+            background: rgba(27, 54, 93, 0.05);
+        }
+        .template-option h4 {
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        .template-option p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
         }
 
         /* === PRZYCISKI === */
@@ -325,15 +358,39 @@
             <h2 style="margin-bottom: 32px; color: var(--primary-blue);">🚀 Konfiguracja sesji retrospektywy</h2>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
-                <!-- Szablon retrospektywy - tylko Start/Stop/Continue -->
+                <!-- Wybór szablonu retrospektywy - ROZSZERZONE OPCJE -->
                 <div class="modern-card">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Szablon retrospektywy</h3>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Wybierz szablon retrospektywy</h3>
                     
-                    <div style="background: rgba(27, 54, 93, 0.05); padding: 20px; border-radius: 12px; border: 2px solid var(--accent-blue);">
-                        <h4 style="color: var(--primary-blue);">🔄 Start/Stop/Continue</h4>
-                        <p style="color: var(--text-secondary);">Klasyczny szablon agile - co zacząć, przestać i kontynuować robić</p>
-                        <div style="margin-top: 12px; font-size: 0.9em; color: var(--text-secondary);">
-                            ✅ Aktywny szablon dla zespołu Capital Service
+                    <div class="template-selector">
+                        <div class="template-option selected" onclick="selectTemplate('start-stop-continue')">
+                            <h4>🔄 Start/Stop/Continue</h4>
+                            <p>Klasyczny szablon agile - co zacząć, przestać i kontynuować</p>
+                        </div>
+                        
+                        <div class="template-option" onclick="selectTemplate('4ls')">
+                            <h4>📝 4Ls Framework</h4>
+                            <p>Liked, Learned, Lacked, Longed for - pogłębiona analiza</p>
+                        </div>
+                        
+                        <div class="template-option" onclick="selectTemplate('glad-sad-mad')">
+                            <h4>😊😢😠 Glad/Sad/Mad</h4>
+                            <p>Emocjonalne spojrzenie na sprint - uczucia zespołu</p>
+                        </div>
+                        
+                        <div class="template-option" onclick="selectTemplate('what-worked')">
+                            <h4>✅❌💡 What Worked/Didn't/Try</h4>
+                            <p>Fokus na praktyczne rozwiązania i eksperymenty</p>
+                        </div>
+                        
+                        <div class="template-option" onclick="selectTemplate('team-radar')">
+                            <h4>📡 Team Radar</h4>
+                            <p>Komunikacja, Proces, Narzędzia, Współpraca</p>
+                        </div>
+                        
+                        <div class="template-option" onclick="selectTemplate('roses-thorns')">
+                            <h4>🌹🌿🌱 Roses/Thorns/Buds</h4>
+                            <p>Sukcesy, Problemy, Nowe możliwości</p>
                         </div>
                     </div>
                 </div>
@@ -411,8 +468,8 @@
                 <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in zespołu Capital Service</h2>
                 
                 <div class="modern-card" style="max-width: 600px; margin: 32px auto;">
-                    <h3>🎲 Icebreaker dnia</h3>
-                    <p id="icebreakerQuestion">Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?</p>
+                    <h3>💭 Icebreaker dnia</h3>
+                    <p id="icebreakerQuestion">Która umiejętność, którą rozwijasz teraz, będzie Ci najbardziej pomocna za rok?</p>
                     <button class="btn" onclick="generateNewIcebreaker()">🔄 Nowy icebreaker</button>
                 </div>
                 
@@ -437,29 +494,10 @@
         
         <!-- === RETROSPEKTYWA === -->
         <div id="retro" class="tab-content">
-            <h2 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Tablica retrospektywy - Start/Stop/Continue</h2>
+            <h2 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Tablica retrospektywy</h2>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin-top: 24px;">
-                <!-- START Column -->
-                <div style="background: rgba(52, 199, 89, 0.1); border-radius: 20px; padding: 32px;">
-                    <h3 style="background: linear-gradient(135deg, var(--success-green) 0%, #20C997 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">🚀 START - Co zacząć robić?</h3>
-                    <div style="border: 3px dashed rgba(52, 199, 89, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('start')">+ Dodaj nowy pomysł</div>
-                    <div id="start-notes"></div>
-                </div>
-                
-                <!-- STOP Column -->
-                <div style="background: rgba(255, 59, 48, 0.1); border-radius: 20px; padding: 32px;">
-                    <h3 style="background: linear-gradient(135deg, var(--error-red) 0%, #E55353 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">🛑 STOP - Co przestać robić?</h3>
-                    <div style="border: 3px dashed rgba(255, 59, 48, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('stop')">+ Dodaj nowy pomysł</div>
-                    <div id="stop-notes"></div>
-                </div>
-                
-                <!-- CONTINUE Column -->
-                <div style="background: rgba(74, 144, 190, 0.1); border-radius: 20px; padding: 32px;">
-                    <h3 style="background: linear-gradient(135deg, var(--accent-blue) 0%, #7BB3D9 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">✅ CONTINUE - Co robić dalej?</h3>
-                    <div style="border: 3px dashed rgba(74, 144, 190, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('continue')">+ Dodaj nowy pomysł</div>
-                    <div id="continue-notes"></div>
-                </div>
+            <div id="retroBoard">
+                <!-- Zawartość będzie dynamicznie generowana na podstawie wybranego szablonu -->
             </div>
         </div>
         
@@ -494,10 +532,10 @@
 
     <script>
         // =====================================================
-        // === KONFIGURACJA UŻYTKOWNIKÓW I RÓL (MOCK DATA) ===
+        // ===🔴 MOCK DATA SECTION - EASY TO FIND AND REPLACE ===
         // =====================================================
         
-        // MOCK: Aktualny użytkownik - w przyszłości pobierany z Microsoft/Teams
+        // 🔴 MOCK: Aktualny użytkownik - ZASTĄP gdy połączysz z Microsoft/Teams
         let currentUser = {
             id: "user_001",
             name: "Jan Kowalski",
@@ -506,16 +544,7 @@
             avatar: "👨‍💻"
         };
 
-        // MOCK: Lista członków zespołu Capital Service z Teams
-        // TODO: Po integracji z Teams API odkomentować poniższe linie:
-        /*
-        async function loadTeamMembersFromTeams() {
-            const response = await fetch('/api/teams/members');
-            const members = await response.json();
-            return members;
-        }
-        */
-        
+        // 🔴 MOCK: Lista członków zespołu z Teams - ZASTĄP gdy połączysz z Teams API
         const teamMembers = [
             {
                 id: "user_001",
@@ -550,12 +579,122 @@
                 avatar: "👨‍💻"
             }
         ];
+        
+        // 🔴 MOCK: Lista zadań - ZASTĄP gdy połączysz z YouTrack API
+        let stories = [
+            {
+                id: 1,
+                title: "🔐 Implementacja logowania OAuth 2.0",
+                description: "Integracja z Microsoft Azure AD dla zespołu Capital Service",
+                estimations: {},
+                finalEstimation: null,
+                assignee: null
+            },
+            {
+                id: 2,
+                title: "📊 Dashboard z metrykami retrospektyw", 
+                description: "Widok statystyk dla Project Managerów Capital Service",
+                estimations: {},
+                finalEstimation: null,
+                assignee: null
+            }
+        ];
+
+        // =====================================================
+        // === 🟢 REAL API CALLS SECTION - ODKOMENTUJ PO INTEGRACJI ===
+        // =====================================================
+        
+        // 🟢 TEAMS API: Pobieranie członków zespołu z Microsoft Teams
+        /*
+        async function loadTeamMembersFromTeams() {
+            try {
+                const response = await fetch('/api/teams/members', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + getTeamsAccessToken(),
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const members = await response.json();
+                return members;
+            } catch (error) {
+                console.error('Błąd pobierania członków zespołu z Teams:', error);
+                return [];
+            }
+        }
+        */
+        
+        // 🟢 YOUTRACK API: Pobieranie zadań z YouTrack
+        /*
+        async function loadStoriesFromYouTrack() {
+            try {
+                const response = await fetch('/api/youtrack/tasks', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + getYouTrackToken(),
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const tasks = await response.json();
+                return tasks;
+            } catch (error) {
+                console.error('Błąd pobierania zadań z YouTrack:', error);
+                return [];
+            }
+        }
+        */
+        
+        // 🟢 YOUTRACK API: Zapisywanie estymacji do YouTrack
+        /*
+        async function saveEstimationToYouTrack(taskId, userId, estimation) {
+            try {
+                const response = await fetch('/api/youtrack/update-estimation', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + getYouTrackToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        taskId: taskId,
+                        userId: userId,
+                        estimation: estimation
+                    })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('Błąd zapisywania estymacji do YouTrack:', error);
+                throw error;
+            }
+        }
+        */
+        
+        // 🟢 TEAMS API: Wysyłanie raportów do Teams
+        /*
+        async function sendReportToTeams(message) {
+            try {
+                const response = await fetch('/api/teams/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + getTeamsAccessToken(),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        channelId: 'retro_capital_devteam',
+                        message: message
+                    })
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('Błąd wysyłania raportu do Teams:', error);
+                throw error;
+            }
+        }
+        */
 
         // ============================================
         // === KONTROLA DOSTĘPU OPARTA NA ROLACH ===
         // ============================================
         
-        // Definicja uprawnień dla każdej roli
         const rolePermissions = {
             developer: {
                 allowedTabs: ["planning", "checkin", "retro"],
@@ -571,24 +710,18 @@
             }
         };
 
-        // Sprawdź czy użytkownik ma dostęp do konkretnej funkcji
         function hasPermission(permission) {
-            const userRole = currentUser.role;
-            return rolePermissions[userRole][permission] || false;
+            return rolePermissions[currentUser.role][permission] || false;
         }
 
-        // Aktualizuj interfejs użytkownika na podstawie roli
         function updateUIForCurrentUser() {
-            // Aktualizuj informacje o użytkowniku w headerze
             document.getElementById('userName').textContent = currentUser.name;
             document.getElementById('userRole').textContent = 
                 currentUser.role === 'pm' ? 'Project Manager' : 'Developer';
             
-            // Ustaw kolor znaczka roli
             const userBadge = document.getElementById('userBadge');
             userBadge.className = `user-badge role-${currentUser.role}`;
             
-            // Pokaż/ukryj zakładki na podstawie uprawnień
             const allowedTabs = rolePermissions[currentUser.role].allowedTabs;
             document.querySelectorAll('.tab').forEach(tab => {
                 const tabId = tab.id.replace('tab-', '');
@@ -599,7 +732,6 @@
                 }
             });
             
-            // Pokaż/ukryj elementy dostępne tylko dla PM
             const isPM = currentUser.role === 'pm';
             document.querySelectorAll('.pm-only').forEach(element => {
                 if (isPM) {
@@ -610,7 +742,6 @@
             });
         }
 
-        // Przełącz rolę użytkownika (tylko do demonstracji)
         function switchUserRole() {
             if (currentUser.role === 'developer') {
                 currentUser.role = 'pm';
@@ -633,14 +764,12 @@
         // =======================================
         
         function showTab(tabName) {
-            // Sprawdź czy użytkownik ma dostęp do tej zakładki
             const allowedTabs = rolePermissions[currentUser.role].allowedTabs;
             if (!allowedTabs.includes(tabName)) {
                 alert(`❌ Brak dostępu do zakładki "${tabName}". Wymagana rola: PM`);
                 return;
             }
 
-            // Ukryj wszystkie zakładki
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
             });
@@ -648,7 +777,6 @@
                 tab.classList.remove('active');
             });
             
-            // Pokaż wybraną zakładkę
             document.getElementById(tabName).classList.add('active');
             document.getElementById(`tab-${tabName}`).classList.add('active');
         }
@@ -660,15 +788,120 @@
         }
 
         // ========================================
+        // === SZABLONY RETROSPEKTYWY - ROZSZERZONE ===
+        // ========================================
+        
+        const retroTemplates = {
+            'start-stop-continue': {
+                name: 'Start/Stop/Continue',
+                columns: [
+                    { id: 'start', title: '🚀 START - Co zacząć robić?', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'stop', title: '🛑 STOP - Co przestać robić?', color: 'rgba(255, 59, 48, 0.1)' },
+                    { id: 'continue', title: '✅ CONTINUE - Co robić dalej?', color: 'rgba(74, 144, 190, 0.1)' }
+                ]
+            },
+            '4ls': {
+                name: '4Ls Framework',
+                columns: [
+                    { id: 'liked', title: '👍 LIKED - Co się podobało?', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'learned', title: '🎓 LEARNED - Czego się nauczyliśmy?', color: 'rgba(74, 144, 190, 0.1)' },
+                    { id: 'lacked', title: '❌ LACKED - Czego brakowało?', color: 'rgba(255, 149, 0, 0.1)' },
+                    { id: 'longed', title: '💭 LONGED - Za czym tęsknimy?', color: 'rgba(175, 82, 222, 0.1)' }
+                ]
+            },
+            'glad-sad-mad': {
+                name: 'Glad/Sad/Mad',
+                columns: [
+                    { id: 'glad', title: '😊 GLAD - Co nas cieszy?', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'sad', title: '😢 SAD - Co nas smuci?', color: 'rgba(74, 144, 190, 0.1)' },
+                    { id: 'mad', title: '😠 MAD - Co nas złości?', color: 'rgba(255, 59, 48, 0.1)' }
+                ]
+            },
+            'what-worked': {
+                name: 'What Worked/Didn\'t/Try',
+                columns: [
+                    { id: 'worked', title: '✅ CO DZIAŁAŁO - Sukcesy', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'didnt-work', title: '❌ CO NIE DZIAŁAŁO - Problemy', color: 'rgba(255, 59, 48, 0.1)' },
+                    { id: 'try-next', title: '💡 CO SPRÓBOWAĆ - Eksperymenty', color: 'rgba(175, 82, 222, 0.1)' }
+                ]
+            },
+            'team-radar': {
+                name: 'Team Radar',
+                columns: [
+                    { id: 'communication', title: '💬 KOMUNIKACJA', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'process', title: '⚙️ PROCES', color: 'rgba(74, 144, 190, 0.1)' },
+                    { id: 'tools', title: '🛠️ NARZĘDZIA', color: 'rgba(255, 149, 0, 0.1)' },
+                    { id: 'collaboration', title: '🤝 WSPÓŁPRACA', color: 'rgba(175, 82, 222, 0.1)' }
+                ]
+            },
+            'roses-thorns': {
+                name: 'Roses/Thorns/Buds',
+                columns: [
+                    { id: 'roses', title: '🌹 ROSES - Sukcesy i radości', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'thorns', title: '🌿 THORNS - Problemy i frustracje', color: 'rgba(255, 59, 48, 0.1)' },
+                    { id: 'buds', title: '🌱 BUDS - Nowe możliwości', color: 'rgba(175, 82, 222, 0.1)' }
+                ]
+            }
+        };
+        
+        let currentTemplate = 'start-stop-continue';
+        let retroNotes = {};
+
+        function selectTemplate(templateKey) {
+            document.querySelectorAll('.template-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
+            currentTemplate = templateKey;
+            
+            // Zainicjuj strukturę danych dla nowego szablonu
+            const template = retroTemplates[templateKey];
+            retroNotes = {};
+            template.columns.forEach(col => {
+                retroNotes[col.id] = [];
+            });
+            
+            // Aktualizuj tablicę retro jeśli jest wyświetlana
+            if (document.getElementById('retro').classList.contains('active')) {
+                generateRetroBoard();
+            }
+        }
+
+        function generateRetroBoard() {
+            const template = retroTemplates[currentTemplate];
+            const board = document.getElementById('retroBoard');
+            
+            board.innerHTML = `
+                <h3 style="text-align: center; margin-bottom: 24px; color: var(--primary-blue);">
+                    ${template.name}
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;">
+                    ${template.columns.map(col => `
+                        <div style="background: ${col.color}; border-radius: 20px; padding: 32px;">
+                            <h3 style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">
+                                ${col.title}
+                            </h3>
+                            <div style="border: 3px dashed rgba(74, 144, 190, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('${col.id}')">
+                                + Dodaj nowy pomysł
+                            </div>
+                            <div id="${col.id}-notes"></div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Wyświetl istniejące notatki
+            template.columns.forEach(col => {
+                displayRetroNotes(col.id);
+            });
+        }
+
+        // ========================================
         // === GENEROWANIE LISTY CZŁONKÓW ZESPOŁU ===
         // ========================================
         
         function displayTeamMembers() {
             const container = document.getElementById('teamMembersList');
             
-            // TODO: Po integracji z Teams API zastąp poniższe wywołaniem:
-            // const members = await loadTeamMembersFromTeams();
-            
+            // 🔴 MOCK: Replace with loadTeamMembersFromTeams() when Teams API is ready
             const presenceIcons = {
                 online: '🟢',
                 offline: '⚪', 
@@ -692,30 +925,9 @@
         // === ZARZĄDZANIE ZADANIAMI ===
         // ===================================
         
-        // Lista zadań do oszacowania
-        let stories = [
-            {
-                id: 1,
-                title: "🔐 Implementacja logowania OAuth 2.0",
-                description: "Integracja z Microsoft Azure AD dla zespołu Capital Service",
-                estimations: {},
-                finalEstimation: null,
-                assignee: null
-            },
-            {
-                id: 2,
-                title: "📊 Dashboard z metrykami retrospektyw", 
-                description: "Widok statystyk dla Project Managerów Capital Service",
-                estimations: {},
-                finalEstimation: null,
-                assignee: null
-            }
-        ];
-        
         let selectedStoryId = null;
         let currentEstimation = null;
 
-        // Wyświetl listę zadań
         function displayStories() {
             const container = document.getElementById('storiesList');
             
@@ -737,7 +949,6 @@
             `).join('');
         }
 
-        // Wybierz zadanie do oszacowania
         function selectStory(storyId) {
             selectedStoryId = storyId;
             const story = stories.find(s => s.id === storyId);
@@ -753,17 +964,15 @@
                     </div>
                 `;
                 
-                // Przywróć poprzednią estymację użytkownika jeśli istnieje
                 const userEstimation = story.estimations[currentUser.name];
                 if (userEstimation) {
                     selectEstimation(userEstimation);
                 }
             }
             
-            displayStories(); // Odśwież listę żeby pokazać zaznaczenie
+            displayStories();
         }
 
-        // Dodaj nowe zadanie (tylko PM)
         function addNewStory() {
             if (!hasPermission('canManageUsers')) {
                 alert('❌ Tylko PM może dodawać zadania');
@@ -790,7 +999,6 @@
             stories.push(newStory);
             displayStories();
             
-            // Wyczyść formularz
             document.getElementById('newStoryTitle').value = '';
             document.getElementById('newStoryDescription').value = '';
             
@@ -805,12 +1013,10 @@
             currentEstimation = value;
             document.getElementById('currentEstimation').textContent = value;
             
-            // Zaktualizuj wygląd kart
             document.querySelectorAll('.poker-card').forEach(card => {
                 card.classList.remove('selected');
             });
             
-            // Znajdź i zaznacz wybraną kartę
             event.target.classList.add('selected');
         }
 
@@ -825,14 +1031,13 @@
                 return;
             }
             
-            // Zapisz estymację użytkownika
             const story = stories.find(s => s.id === selectedStoryId);
             if (story) {
                 story.estimations[currentUser.name] = currentEstimation;
                 alert(`✅ Estymacja ${currentEstimation} zapisana dla zadania: ${story.title}`);
                 
-                // TODO: Po integracji z API wyślij estymację na serwer:
-                // await saveEstimationToAPI(selectedStoryId, currentUser.id, currentEstimation);
+                // 🟢 REAL API: Odkomentuj gdy YouTrack API będzie gotowe
+                // await saveEstimationToYouTrack(selectedStoryId, currentUser.id, currentEstimation);
             }
         }
 
@@ -863,12 +1068,6 @@
         // === RETROSPEKTYWA ===
         // ===============================
         
-        // Dane notatek retrospektywy
-        let retroNotes = {
-            start: [],
-            stop: [], 
-            continue: []
-        };
         let noteCounter = 0;
 
         function addRetroNote(category) {
@@ -883,6 +1082,7 @@
                     timestamp: new Date().toLocaleString('pl-PL')
                 };
                 
+                retroNotes[category] = retroNotes[category] || [];
                 retroNotes[category].push(note);
                 displayRetroNotes(category);
             }
@@ -890,8 +1090,9 @@
 
         function displayRetroNotes(category) {
             const container = document.getElementById(`${category}-notes`);
+            if (!container) return;
             
-            container.innerHTML = retroNotes[category].map(note => `
+            container.innerHTML = (retroNotes[category] || []).map(note => `
                 <div style="background: white; padding: 20px; margin: 12px 0; border-radius: 12px; box-shadow: var(--shadow-sm);">
                     <div style="margin-bottom: 12px; font-weight: 500;">${note.text}</div>
                     <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--text-secondary);">
@@ -904,7 +1105,7 @@
         }
 
         function voteRetroNote(noteId, category) {
-            const note = retroNotes[category].find(n => n.id === noteId);
+            const note = (retroNotes[category] || []).find(n => n.id === noteId);
             if (note) {
                 note.votes++;
                 displayRetroNotes(category);
@@ -912,17 +1113,20 @@
         }
 
         // ==============================
-        // === CHECK-IN I ICEBREAKERS ===
+        // === CHECK-IN I ICEBREAKERS - LEPSZE ===
         // ==============================
         
         const icebreakers = [
-            'Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?',
-            'Jaki był najlepszy moment w pracy tego tygodnia?', 
-            'Gdybyś był/była aplikacją mobilną, jaką funkcję byś miał/miała?',
-            'Co nowego nauczyłeś/aś się w ostatnim sprincie?',
-            'Jaki superbohater najlepiej opisuje Twój styl pracy w Capital Service?',
-            'Która technologia najbardziej Cię teraz ekscytuje i dlaczego?',
-            'Jakiej umiejętności chciałbyś/chciałabyś się nauczyć w tym roku?'
+            'Która umiejętność, którą rozwijasz teraz, będzie Ci najbardziej pomocna za rok?',
+            'Co ostatnio nauczyło Cię czegoś nowego o sobie?',
+            'Jaką jedną rzecz zmieniłbyś w swoim codziennym workflow?',
+            'Co sprawia, że czujesz się dumny ze swojej pracy?',
+            'Jakiej lekcji nauczyłeś się od współpracownika w ostatnim czasie?',
+            'Co motywuje Cię do lepszej pracy z zespołem?',
+            'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
+            'Co chciałbyś, żeby Twój zespół wiedział o Twojej pracy?',
+            'Która technologia/narzędzie najbardziej zmieniło Twój sposób pracy?',
+            'Co sprawia, że praca w Capital Service ma sens?'
         ];
 
         function generateNewIcebreaker() {
@@ -933,13 +1137,12 @@
         function selectMood(moodLevel, emoji) {
             document.getElementById('moodResponse').style.display = 'block';
             
-            // Animacja wybranego emoji
             event.target.style.transform = 'scale(1.3)';
             setTimeout(() => {
                 event.target.style.transform = 'scale(1)';
             }, 300);
             
-            // TODO: Po integracji z API wyślij nastrój na serwer:
+            // 🟢 REAL API: Odkomentuj gdy Teams API będzie gotowe
             // await saveMoodToAPI(currentUser.id, moodLevel);
         }
 
@@ -953,16 +1156,8 @@
                 return;
             }
             
-            // TODO: Po integracji z Teams API odkomentować:
-            /*
-            async function sendToTeamsChannel() {
-                const message = generateRetroSummary();
-                await fetch('/api/teams/send-message', {
-                    method: 'POST',
-                    body: JSON.stringify({ message: message })
-                });
-            }
-            */
+            // 🟢 REAL API: Odkomentuj gdy Teams API będzie gotowe
+            // await sendReportToTeams(generateRetroSummary());
             
             alert('📤 Raport zostanie wysłany do kanału Teams Capital Service');
         }
@@ -973,22 +1168,8 @@
                 return;
             }
             
-            // TODO: Po integracji z YouTrack API odkomentować:
-            /*
-            async function updateYouTrackEstimations() {
-                for (const story of stories) {
-                    if (story.finalEstimation) {
-                        await fetch('/api/youtrack/update-estimation', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                taskId: story.id,
-                                estimation: story.finalEstimation
-                            })
-                        });
-                    }
-                }
-            }
-            */
+            // 🟢 REAL API: Odkomentuj gdy YouTrack API będzie gotowe
+            // await updateAllEstimationsInYouTrack();
             
             alert('🔄 Estymacje zostaną zaktualizowane w YouTrack');
         }
@@ -999,42 +1180,40 @@
                 return;
             }
             
-            // Generowanie raportu PDF
-            const reportData = {
-                teamName: "Capital Service",
-                date: new Date().toLocaleDateString('pl-PL'),
-                stories: stories.filter(s => s.finalEstimation),
-                retroNotes: retroNotes,
-                participants: teamMembers.filter(m => m.presence === 'online').map(m => m.name)
-            };
+            // 🔴 MOCK: Raport bez szczegółów zadań (zgodnie z wymaganiem)
+            const reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE
+===========================================
+
+Data: ${new Date().toLocaleDateString('pl-PL')}
+Zespół: Capital Service Development Team
+Szablon: ${retroTemplates[currentTemplate].name}
+
+STATYSTYKI SESJI:
+- Liczba uczestników: ${teamMembers.filter(m => m.presence === 'online').length}
+- Liczba pomysłów: ${Object.values(retroNotes).flat().length}
+- Czas trwania: ~60 minut
+
+ZESPÓŁ PRESENT:
+${teamMembers.filter(m => m.presence === 'online').map(m => `- ${m.name} (${m.role})`).join('\n')}
+
+PODSUMOWANIE:
+Retrospektywa przeprowadzona zgodnie z metodyką agile.
+Wszyscy członkowie zespołu aktywnie uczestniczyli w sesji.
+
+Raport wygenerowany automatycznie przez RETRO_CSSA
+© Capital Service ${new Date().getFullYear()}`;
             
-            // Prosty sposób generowania "raportu" - można zastąpić prawdziwą biblioteką PDF
-            let reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE\n`;
-            reportContent += `Data: ${reportData.date}\n`;
-            reportContent += `Zespół: ${reportData.teamName}\n\n`;
-            
-            reportContent += `OSZACOWANE ZADANIA:\n`;
-            reportData.stories.forEach(story => {
-                reportContent += `- ${story.title}: ${story.finalEstimation} SP\n`;
-            });
-            
-            reportContent += `\nUCZESTNICY:\n`;
-            reportData.participants.forEach(participant => {
-                reportContent += `- ${participant}\n`;
-            });
-            
-            // Pobierz raport jako plik tekstowy
-            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `raport-retro-${reportData.date.replace(/\./g, '-')}.txt`;
+            a.download = `raport-retro-capital-service-${new Date().toISOString().slice(0,10)}.txt`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert('📄 Raport zostanie pobrany jako plik tekstowy');
+            alert('📄 Raport retrospektywy został pobrany (bez szczegółów zadań ze względów bezpieczeństwa)');
         }
 
         function startRetrospective() {
@@ -1045,20 +1224,23 @@
         // === INICJALIZACJA APLIKACJI ===
         // ================================
         
-        // Uruchom aplikację po załadowaniu strony
         window.onload = function() {
             console.log('🔄 RETRO_CSSA Capital Service - inicjalizacja');
             
-            // Skonfiguruj interfejs dla aktualnego użytkownika
             updateUIForCurrentUser();
-            
-            // Wyświetl członków zespołu
             displayTeamMembers();
-            
-            // Wyświetl zadania
             displayStories();
             
+            // Inicjalizuj strukturę retroNotes dla domyślnego szablonu
+            const defaultTemplate = retroTemplates[currentTemplate];
+            defaultTemplate.columns.forEach(col => {
+                retroNotes[col.id] = [];
+            });
+            
             // Dodaj przykładowe notatki retro
+            retroNotes.start = retroNotes.start || [];
+            retroNotes.continue = retroNotes.continue || [];
+            
             retroNotes.start.push({
                 id: 1,
                 text: 'Częstsze retrospektywy zespołowe w Capital Service',
@@ -1075,14 +1257,10 @@
                 timestamp: new Date().toLocaleString('pl-PL')
             });
             
-            // Wyświetl notatki
-            displayRetroNotes('start');
-            displayRetroNotes('continue');
-            
-            // Pokaż pierwszą dostępną zakładkę
+            generateRetroBoard();
             showFirstAvailableTab();
             
-            console.log('✅ Aplikacja załadowana pomyślnie');
+            console.log('✅ Aplikacja RETRO_CSSA załadowana pomyślnie');
         };
     </script>
 </body>
