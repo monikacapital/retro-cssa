@@ -1,0 +1,4 @@
+# robots.txt for RETRO_CSSA
+User-agent: *
+Disallow:
+Sitemap: /sitemap.xml
