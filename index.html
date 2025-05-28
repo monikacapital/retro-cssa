@@ -3,33 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETRO_CSSA - Role Based Access</title>
+    <title>RETRO_CSSA - Capital Service</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* === KOLORY I ZMIENNE CSS === */
         :root {
             --primary-blue: #1B365D;
             --secondary-blue: #2E5984;
             --accent-blue: #4A90BE;
-            --light-blue: #7BB3D9;
             --success-green: #34C759;
             --warning-orange: #FF9500;
             --error-red: #FF3B30;
-            --purple-accent: #AF52DE;
             --background-primary: #FAFBFC;
             --background-secondary: #FFFFFF;
-            --background-tertiary: #F2F4F7;
             --text-primary: #1D1D1F;
             --text-secondary: #6E6E73;
-            --text-tertiary: #8E8E93;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
         }
 
+        /* === PODSTAWOWE STYLE === */
         * {
             margin: 0;
             padding: 0;
@@ -37,74 +34,61 @@
         }
 
         body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
             background: linear-gradient(135deg, var(--background-primary) 0%, #E8F4F8 100%);
             min-height: 100vh;
             color: var(--text-primary);
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
             max-width: 1400px;
-            margin: 0 auto;
+            margin: 20px auto;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-radius: 24px;
-            box-shadow: var(--shadow-xl);
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
-            margin: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        /* === HEADER Z INFORMACJĄ O UŻYTKOWNIKU === */
         .header {
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
             color: white;
             padding: 40px;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
         .header h1 {
             font-size: 3.5em;
             font-weight: 800;
             margin-bottom: 12px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .header p {
             font-size: 1.2em;
-            font-weight: 400;
             opacity: 0.9;
         }
 
-        /* Role Badge */
-        .role-indicator {
+        /* === INFORMACJE O UŻYTKOWNIKU === */
+        .user-info {
             position: absolute;
             top: 20px;
             right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            text-align: right;
         }
-        .role-badge {
+        .user-badge {
+            background: rgba(255, 255, 255, 0.15);
             padding: 12px 20px;
             border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9em;
-            backdrop-filter: blur(10px);
+            margin-bottom: 8px;
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
         .role-developer {
-            background: linear-gradient(135deg, var(--accent-blue), var(--light-blue));
-            color: white;
+            background: linear-gradient(135deg, var(--accent-blue), #7BB3D9);
         }
         .role-pm {
             background: linear-gradient(135deg, var(--success-green), #20C997);
-            color: white;
         }
-        .role-switcher {
+        .switch-role-btn {
             background: rgba(255, 255, 255, 0.15);
             color: white;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -112,21 +96,12 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.8em;
-            transition: all 0.3s ease;
-        }
-        .role-switcher:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.05);
         }
 
+        /* === ZAKŁADKI NAWIGACJI === */
         .nav-tabs {
             display: flex;
             background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(27, 54, 93, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
             overflow-x: auto;
         }
         .tab {
@@ -135,17 +110,15 @@
             padding: 20px 24px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             background: transparent;
             font-size: 1.1em;
             font-weight: 500;
             color: var(--text-secondary);
-            position: relative;
-            display: block; /* Default visible */
+            transition: all 0.3s ease;
         }
         .tab.hidden {
-            display: none !important; /* Hidden by RBAC */
+            display: none !important;
         }
         .tab.active {
             color: var(--primary-blue);
@@ -156,55 +129,27 @@
             background: rgba(27, 54, 93, 0.05);
             color: var(--primary-blue);
         }
+
+        /* === ZAWARTOŚĆ ZAKŁADEK === */
         .tab-content {
             display: none;
             padding: 40px;
             min-height: 600px;
-            animation: fadeIn 0.5s ease-out;
         }
         .tab-content.active {
             display: block;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
 
-        /* Access Control Messages */
-        .access-denied {
-            background: linear-gradient(135deg, var(--error-red) 0%, #E55353 100%);
-            color: white;
-            padding: 24px;
-            border-radius: 16px;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .role-info {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--light-blue) 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        /* Cards & Layout */
+        /* === KARTY I ELEMENTY === */
         .modern-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
+            background: var(--background-secondary);
             border-radius: 16px;
             padding: 32px;
             box-shadow: var(--shadow-md);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             margin-bottom: 24px;
         }
-        .setup-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-        }
 
-        /* Buttons */
+        /* === PRZYCISKI === */
         .btn {
             background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-blue) 100%);
             color: white;
@@ -214,9 +159,8 @@
             cursor: pointer;
             font-size: 1em;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin: 8px;
-            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
         }
         .btn:hover {
             transform: translateY(-2px);
@@ -228,16 +172,13 @@
         .btn-warning {
             background: linear-gradient(135deg, var(--warning-orange) 0%, #FD7E14 100%);
         }
-        .btn-danger {
-            background: linear-gradient(135deg, var(--error-red) 0%, #DC3545 100%);
-        }
         .btn.disabled {
             opacity: 0.5;
             cursor: not-allowed;
             pointer-events: none;
         }
 
-        /* PM Only Elements */
+        /* === ELEMENTY DOSTĘPNE TYLKO DLA PM === */
         .pm-only {
             display: block;
         }
@@ -245,337 +186,410 @@
             display: none !important;
         }
 
-        /* Developer Elements */
-        .developer-view {
-            background: rgba(74, 144, 190, 0.05);
+        /* === LISTA UŻYTKOWNIKÓW TEAMS === */
+        .team-members {
+            display: grid;
+            gap: 16px;
+        }
+        .member-card {
+            background: var(--background-secondary);
+            padding: 20px;
+            border-radius: 12px;
             border-left: 4px solid var(--accent-blue);
-            padding: 16px;
-            margin: 16px 0;
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .member-status {
+            font-size: 1.5em;
+        }
+        .member-info {
+            flex: 1;
+        }
+        .member-role {
+            background: var(--accent-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.85em;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .setup-grid {
-                grid-template-columns: 1fr;
-            }
+        /* === KARTY PLANNING POKER === */
+        .poker-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 16px;
+            max-width: 900px;
+            margin: 32px auto;
+        }
+        .poker-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 20px 16px;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .poker-card:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+        .poker-card.selected {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: white;
+            transform: translateY(-4px) scale(1.1);
+        }
+        .poker-card.special {
+            background: linear-gradient(135deg, var(--warning-orange) 0%, #FFB84D 100%);
+            color: white;
+        }
+
+        /* === LISTA ZADAŃ === */
+        .story-list {
+            display: grid;
+            gap: 16px;
+        }
+        .story-item {
+            background: var(--background-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .story-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+        .story-item.selected {
+            border-left-color: var(--primary-blue);
+            background: rgba(27, 54, 93, 0.05);
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
             .container {
                 margin: 12px;
             }
-            .role-indicator {
-                position: static;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                margin-top: 16px;
-            }
-        }
-        @media (max-width: 768px) {
             .header h1 {
                 font-size: 2.5em;
             }
-            .tab-content {
-                padding: 24px;
+            .user-info {
+                position: static;
+                margin-top: 20px;
             }
-            .nav-tabs {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-            }
-            .tab {
-                min-width: 100px;
-                font-size: 0.9em;
-                padding: 12px 16px;
+            .poker-cards {
+                grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+                gap: 12px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- === HEADER Z INFORMACJAMI O UŻYTKOWNIKU === -->
         <div class="header">
             <h1>🔄 RETRO_CSSA</h1>
-            <p>Kompleksowa platforma retrospektyw i planowania zespołowego - Capital Service</p>
+            <p>Platforma retrospektyw zespołowych - Capital Service</p>
             
-            <div class="role-indicator">
-                <div id="currentRole" class="role-badge">👤 DEVELOPER</div>
-                <button class="role-switcher" onclick="switchRole()">🔄 Przełącz rolę (demo)</button>
+            <!-- Informacje o aktualnym użytkowniku -->
+            <div class="user-info">
+                <div id="userBadge" class="user-badge">
+                    <div><strong id="userName">Jan Kowalski</strong></div>
+                    <div id="userRole">Developer</div>
+                </div>
+                <button class="switch-role-btn" onclick="switchUserRole()">🔄 Zmień rolę (demo)</button>
             </div>
         </div>
         
+        <!-- === NAWIGACJA ZAKŁADEK === -->
         <nav class="nav-tabs">
-            <button class="tab" id="tab-setup" onclick="showTab('setup')" data-role-required="pm">⚙️ Konfiguracja</button>
-            <button class="tab" id="tab-planning" onclick="showTab('planning')" data-role-required="developer,pm">📋 Planning Poker</button>
-            <button class="tab active" id="tab-checkin" onclick="showTab('checkin')" data-role-required="developer,pm">👋 Check-in</button>
-            <button class="tab" id="tab-retro" onclick="showTab('retro')" data-role-required="developer,pm">🎯 Retrospektywa</button>
-            <button class="tab" id="tab-accounts" onclick="showTab('accounts')" data-role-required="pm">🔗 Konta</button>
-            <button class="tab" id="tab-summary" onclick="showTab('summary')" data-role-required="pm">📊 Raport</button>
+            <button class="tab" id="tab-setup" onclick="showTab('setup')" data-required-role="pm">⚙️ Konfiguracja</button>
+            <button class="tab active" id="tab-planning" onclick="showTab('planning')" data-required-role="developer,pm">📋 Planning Poker</button>
+            <button class="tab" id="tab-checkin" onclick="showTab('checkin')" data-required-role="developer,pm">👋 Check-in</button>
+            <button class="tab" id="tab-retro" onclick="showTab('retro')" data-required-role="developer,pm">🎯 Retrospektywa</button>
+            <button class="tab" id="tab-accounts" onclick="showTab('accounts')" data-required-role="pm">🔗 Konta</button>
+            <button class="tab" id="tab-summary" onclick="showTab('summary')" data-required-role="pm">📊 Raport</button>
         </nav>
         
-        <!-- KONFIGURACJA (PM Only) -->
+        <!-- === KONFIGURACJA (tylko PM) === -->
         <div id="setup" class="tab-content">
-            <div class="role-info pm-only">
-                <h3>🎯 Panel Project Managera</h3>
-                <p>Jako PM masz dostęp do wszystkich funkcji konfiguracji i zarządzania zespołem</p>
-            </div>
+            <h2 style="margin-bottom: 32px; color: var(--primary-blue);">🚀 Konfiguracja sesji retrospektywy</h2>
             
-            <h2 style="margin-bottom: 32px; color: var(--primary-blue); font-weight: 700;">🚀 Konfiguracja sesji retrospektywy</h2>
-            <div class="setup-grid">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+                <!-- Szablon retrospektywy - tylko Start/Stop/Continue -->
                 <div class="modern-card">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Wybierz szablon retrospektywy</h3>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Szablon retrospektywy</h3>
                     
-                    <div class="template-option selected" onclick="selectTemplate('start-stop-continue')">
-                        <h4>🔄 Start/Stop/Continue</h4>
-                        <p>Klasyczny szablon - co zacząć, przestać i kontynuować robić</p>
+                    <div style="background: rgba(27, 54, 93, 0.05); padding: 20px; border-radius: 12px; border: 2px solid var(--accent-blue);">
+                        <h4 style="color: var(--primary-blue);">🔄 Start/Stop/Continue</h4>
+                        <p style="color: var(--text-secondary);">Klasyczny szablon agile - co zacząć, przestać i kontynuować robić</p>
+                        <div style="margin-top: 12px; font-size: 0.9em; color: var(--text-secondary);">
+                            ✅ Aktywny szablon dla zespołu Capital Service
+                        </div>
                     </div>
-                    
-                    <div class="template-option" onclick="selectTemplate('4ls')">
-                        <h4>📝 4Ls (Liked/Learned/Lacked/Longed)</h4>
-                        <p>Co się podobało, czego się nauczyliśmy, czego brakowało, za czym tęsknimy</p>
-                    </div>
-                    
-                    <button class="btn pm-only" onclick="alert('🤖 AI Template Generator - Funkcja PM!')">🤖 Wygeneruj szablon AI</button>
                 </div>
                 
+                <!-- Zespół Capital Service z Teams -->
                 <div class="modern-card">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół Capital Service</h3>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół Capital Service (z Teams)</h3>
                     
-                    <div class="user-list">
-                        <div style="background: rgba(74, 144, 190, 0.1); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                            <strong>🟢 Jan Kowalski</strong> (Developer)<br>
-                            <small>Role: Uczestnik retrospektyw, estymacja zadań</small>
-                        </div>
-                        <div style="background: rgba(175, 82, 222, 0.1); padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                            <strong>🟡 Anna Nowak</strong> (Tester)<br>
-                            <small>Role: Uczestnik retrospektyw, kontrola jakości</small>
-                        </div>
-                        <div style="background: rgba(52, 199, 89, 0.1); padding: 16px; border-radius: 12px;">
-                            <strong>🟢 Monika Capital</strong> (Project Manager)<br>
-                            <small>Role: Pełen dostęp, zarządzanie, eksport</small>
-                        </div>
+                    <div class="team-members" id="teamMembersList">
+                        <!-- Lista członków zespołu będzie wygenerowana przez JavaScript -->
                     </div>
                     
-                    <button class="btn pm-only" onclick="startRetro()">▶️ Rozpocznij retrospektywę</button>
+                    <button class="btn btn-success" onclick="startRetrospective()">▶️ Rozpocznij retrospektywę</button>
                 </div>
             </div>
         </div>
         
-        <!-- PLANNING POKER (Developer + PM) -->
-        <div id="planning" class="tab-content">
-            <div class="role-info">
-                <h3>🃏 Planning Poker</h3>
-                <p>Szacowanie zadań dostępne dla developerów i Project Managerów</p>
+        <!-- === PLANNING POKER === -->
+        <div id="planning" class="tab-content active">
+            <h2 style="margin-bottom: 32px; color: var(--primary-blue);">📋 Planning Poker - Szacowanie zadań</h2>
+            
+            <!-- Dodawanie nowego zadania (PM) -->
+            <div class="modern-card pm-only">
+                <h3>➕ Dodaj nowe zadanie do szacowania</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                    <input type="text" id="newStoryTitle" placeholder="Tytuł zadania" style="padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px;">
+                    <input type="text" id="newStoryDescription" placeholder="Opis zadania" style="padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px;">
+                </div>
+                <button class="btn btn-success" onclick="addNewStory()">➕ Dodaj zadanie</button>
             </div>
             
-            <h2 style="margin-bottom: 32px; color: var(--primary-blue); font-weight: 700;">📋 Planning Poker - Szacowanie zadań</h2>
+            <!-- Lista zadań do oszacowania -->
+            <div class="modern-card">
+                <h3>📝 Zadania do oszacowania</h3>
+                <div class="story-list" id="storiesList">
+                    <!-- Zadania będą wygenerowane przez JavaScript -->
+                </div>
+            </div>
             
-            <div class="modern-card developer-view">
-                <h3>📝 Przykładowe zadanie do oszacowania</h3>
-                <h4>🔐 Implementacja logowania OAuth 2.0</h4>
-                <p style="margin: 16px 0;">Integracja z Microsoft Azure AD dla bezpiecznego logowania zespołu Capital Service</p>
+            <!-- Karty szacowania -->
+            <div class="modern-card">
+                <h3>🎯 Oszacuj wybrane zadanie</h3>
+                <div id="selectedStoryDisplay">
+                    <p style="color: var(--text-secondary);">Wybierz zadanie z listy powyżej, aby rozpocząć szacowanie</p>
+                </div>
                 
-                <div style="display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap;">
+                <h4 style="margin: 24px 0 16px;">Wybierz swoją estymację (Story Points):</h4>
+                <div class="poker-cards">
+                    <!-- Pełna skala Fibonacci + specjalne karty -->
+                    <div class="poker-card" onclick="selectEstimation(0.5)">½</div>
                     <div class="poker-card" onclick="selectEstimation(1)">1</div>
                     <div class="poker-card" onclick="selectEstimation(2)">2</div>
                     <div class="poker-card" onclick="selectEstimation(3)">3</div>
                     <div class="poker-card" onclick="selectEstimation(5)">5</div>
                     <div class="poker-card" onclick="selectEstimation(8)">8</div>
                     <div class="poker-card" onclick="selectEstimation(13)">13</div>
+                    <div class="poker-card" onclick="selectEstimation(21)">21</div>
+                    <div class="poker-card" onclick="selectEstimation(34)">34</div>
+                    <div class="poker-card special" onclick="selectEstimation('?')">?</div>
+                    <div class="poker-card special" onclick="selectEstimation('∞')">∞</div>
+                    <div class="poker-card special" onclick="selectEstimation('☕')">☕</div>
                 </div>
                 
-                <p>Twoja estymacja: <strong id="userEstimation">Nie wybrano</strong></p>
-                
-                <div style="margin-top: 16px;">
+                <div style="text-align: center; margin: 24px 0;">
+                    <p>Twoja estymacja: <strong id="currentEstimation">Nie wybrano</strong></p>
                     <button class="btn" onclick="submitEstimation()">✅ Zatwierdź głos</button>
-                    <button class="btn pm-only" onclick="revealVotes()">👁️ Ujawnij głosy (PM)</button>
+                    <button class="btn btn-warning pm-only" onclick="revealAllVotes()">👁️ Ujawnij głosy zespołu</button>
                 </div>
-            </div>
-            
-            <div class="modern-card pm-only">
-                <h3>🎯 Panel Project Managera</h3>
-                <p>Dodatkowe funkcje dostępne tylko dla PM:</p>
-                <button class="btn btn-success">➕ Dodaj zadanie</button>
-                <button class="btn btn-warning">👤 Przypisz osobę</button>
-                <button class="btn">📊 Pokaż statystyki</button>
             </div>
         </div>
         
-        <!-- CHECK-IN (Developer + PM) -->
-        <div id="checkin" class="tab-content active">
-            <div class="role-info">
-                <h3>👋 Check-in zespołu</h3>
-                <p>Dostępne dla wszystkich członków zespołu</p>
-            </div>
-            
+        <!-- === CHECK-IN === -->
+        <div id="checkin" class="tab-content">
             <div style="text-align: center; padding: 40px;">
                 <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in zespołu Capital Service</h2>
-                <p style="color: var(--text-secondary); font-size: 1.1em;">Zanim zaczniemy retro, sprawdźmy jak się wszyscy czujemy!</p>
                 
                 <div class="modern-card" style="max-width: 600px; margin: 32px auto;">
                     <h3>🎲 Icebreaker dnia</h3>
-                    <p id="icebreakerText">Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?</p>
-                    <button class="btn" onclick="generateIcebreaker()" style="margin-top: 16px;">🔄 Nowy icebreaker</button>
+                    <p id="icebreakerQuestion">Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?</p>
+                    <button class="btn" onclick="generateNewIcebreaker()">🔄 Nowy icebreaker</button>
                 </div>
                 
-                <h3 style="color: var(--primary-blue); margin: 32px 0 24px;">😊 Jaki jest Twój nastrój dzisiaj?</h3>
+                <h3 style="margin: 32px 0 24px;">😊 Jaki jest Twój nastrój dzisiaj?</h3>
                 <div style="display: flex; justify-content: center; gap: 24px; margin: 40px 0; flex-wrap: wrap;">
-                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('excellent')" title="Doskonały">🤩</span>
-                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('good')" title="Dobry">😊</span>
-                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('neutral')" title="Neutralny">😐</span>
-                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('bad')" title="Słaby">😔</span>
-                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('terrible')" title="Okropny">😫</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; transition: transform 0.3s;" onclick="selectMood('excellent', '🤩')" title="Doskonały">🤩</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; transition: transform 0.3s;" onclick="selectMood('good', '😊')" title="Dobry">😊</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; transition: transform 0.3s;" onclick="selectMood('neutral', '😐')" title="Neutralny">😐</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; transition: transform 0.3s;" onclick="selectMood('bad', '😔')" title="Słaby">😔</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; transition: transform 0.3s;" onclick="selectMood('terrible', '😫')" title="Okropny">😫</span>
                 </div>
                 
-                <div id="moodSelected" style="display:none; margin-top: 32px;">
+                <div id="moodResponse" style="display: none; margin-top: 32px;">
                     <div class="modern-card" style="max-width: 500px; margin: 0 auto;">
                         <h4 style="color: var(--success-green);">✅ Dziękujemy za udział w check-in!</h4>
-                        <p style="margin: 16px 0;">Twój głos jest ważny dla zespołu Capital Service</p>
+                        <p>Twój głos jest ważny dla zespołu Capital Service</p>
                         <button class="btn btn-success" onclick="showTab('retro')">Przejdź do retrospektywy →</button>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- RETROSPEKTYWA (Developer + PM) -->
+        <!-- === RETROSPEKTYWA === -->
         <div id="retro" class="tab-content">
-            <div class="role-info">
-                <h3>🎯 Retrospektywa zespołowa</h3>
-                <p>Udział w retrospektywie dla developerów. Pełny dostęp dla PM.</p>
-            </div>
+            <h2 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Tablica retrospektywy - Start/Stop/Continue</h2>
             
-            <h2 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Tablica retrospektywy</h2>
-            
-            <div class="modern-card pm-only">
-                <h3>🤖 Capital Service AI Assistant (PM)</h3>
-                <p>Funkcje AI dostępne tylko dla Project Managera</p>
-                <button class="btn" onclick="groupSimilarNotes()">🔗 Grupuj podobne tematy</button>
-                <button class="btn" onclick="generateInsights()">💡 Generuj insights</button>
-                <button class="btn" onclick="suggestActions()">⚡ Sugeruj akcje</button>
-            </div>
-            
-            <div class="developer-view">
-                <h3>📝 Dodaj swoje uwagi do retrospektywy</h3>
-                <p>Jako developer/tester możesz dodawać notatki i głosować na pomysły innych</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin-top: 24px;">
+                <!-- START Column -->
+                <div style="background: rgba(52, 199, 89, 0.1); border-radius: 20px; padding: 32px;">
+                    <h3 style="background: linear-gradient(135deg, var(--success-green) 0%, #20C997 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">🚀 START - Co zacząć robić?</h3>
+                    <div style="border: 3px dashed rgba(52, 199, 89, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('start')">+ Dodaj nowy pomysł</div>
+                    <div id="start-notes"></div>
+                </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 24px;">
-                    <div style="background: rgba(52, 199, 89, 0.1); padding: 24px; border-radius: 16px; border-left: 6px solid var(--success-green);">
-                        <h4 style="color: var(--success-green); margin-bottom: 16px;">🚀 START - Co zacząć robić?</h4>
-                        <button class="btn" onclick="addNote('start')">+ Dodaj pomysł</button>
-                        <div id="start-notes"></div>
-                    </div>
-                    
-                    <div style="background: rgba(255, 59, 48, 0.1); padding: 24px; border-radius: 16px; border-left: 6px solid var(--error-red);">
-                        <h4 style="color: var(--error-red); margin-bottom: 16px;">🛑 STOP - Co przestać robić?</h4>
-                        <button class="btn" onclick="addNote('stop')">+ Dodaj pomysł</button>
-                        <div id="stop-notes"></div>
-                    </div>
-                    
-                    <div style="background: rgba(74, 144, 190, 0.1); padding: 24px; border-radius: 16px; border-left: 6px solid var(--accent-blue);">
-                        <h4 style="color: var(--accent-blue); margin-bottom: 16px;">✅ CONTINUE - Co robić dalej?</h4>
-                        <button class="btn" onclick="addNote('continue')">+ Dodaj pomysł</button>
-                        <div id="continue-notes"></div>
-                    </div>
+                <!-- STOP Column -->
+                <div style="background: rgba(255, 59, 48, 0.1); border-radius: 20px; padding: 32px;">
+                    <h3 style="background: linear-gradient(135deg, var(--error-red) 0%, #E55353 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">🛑 STOP - Co przestać robić?</h3>
+                    <div style="border: 3px dashed rgba(255, 59, 48, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('stop')">+ Dodaj nowy pomysł</div>
+                    <div id="stop-notes"></div>
+                </div>
+                
+                <!-- CONTINUE Column -->
+                <div style="background: rgba(74, 144, 190, 0.1); border-radius: 20px; padding: 32px;">
+                    <h3 style="background: linear-gradient(135deg, var(--accent-blue) 0%, #7BB3D9 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">✅ CONTINUE - Co robić dalej?</h3>
+                    <div style="border: 3px dashed rgba(74, 144, 190, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('continue')">+ Dodaj nowy pomysł</div>
+                    <div id="continue-notes"></div>
                 </div>
             </div>
         </div>
         
-        <!-- KONTA (PM Only) -->
+        <!-- === KONTA (tylko PM) === -->
         <div id="accounts" class="tab-content">
-            <div class="role-info pm-only">
-                <h3>🔗 Zarządzanie kontami</h3>
-                <p>Panel dostępny wyłącznie dla Project Managerów</p>
-            </div>
-            
             <h2 style="color: var(--primary-blue); margin-bottom: 32px;">🔗 Matchowanie kont Teams ↔ YouTrack</h2>
             
             <div class="modern-card">
                 <h3>📊 Status mapowań Capital Service</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin: 24px 0;">
-                    <div style="background: rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2em; font-weight: 800; margin-bottom: 8px; color: var(--primary-blue);">3</div>
-                        <div style="font-size: 0.9em; color: var(--text-secondary);">Zmapowane konta</div>
-                    </div>
-                    <div style="background: rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2em; font-weight: 800; margin-bottom: 8px; color: var(--primary-blue);">1</div>
-                        <div style="font-size: 0.9em; color: var(--text-secondary);">Niezmapowane</div>
-                    </div>
-                    <div style="background: rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; text-align: center;">
-                        <div style="font-size: 2em; font-weight: 800; margin-bottom: 8px; color: var(--primary-blue);">95%</div>
-                        <div style="font-size: 0.9em; color: var(--text-secondary);">Pokrycie</div>
-                    </div>
+                <p>Funkcja dostępna po integracji z Microsoft Teams i YouTrack</p>
+                <div style="background: rgba(74, 144, 190, 0.1); padding: 20px; border-radius: 12px; margin: 20px 0;">
+                    <strong>🔄 Do zaimplementowania:</strong> Automatyczne mapowanie kont zespołu
                 </div>
-                <button class="btn btn-success">⚡ Auto-mapuj wysokie dopasowania</button>
             </div>
         </div>
         
-        <!-- RAPORT (PM Only) -->
+        <!-- === RAPORT (tylko PM) === -->
         <div id="summary" class="tab-content">
-            <div class="role-info pm-only">
-                <h3>📊 Panel raportowania</h3>
-                <p>Zaawansowane funkcje raportowania i eksportu dla Project Managerów</p>
-            </div>
-            
             <h2 style="color: var(--primary-blue); margin-bottom: 32px;">📊 Raport i podsumowanie</h2>
             
             <div class="modern-card" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%); color: white; text-align: center;">
-                <h2>🚀 Eksport i integracja Capital Service</h2>
-                <div style="background: rgba(255,255,255,0.1); padding: 24px; border-radius: 16px; margin: 24px 0;">
-                    <h3>📧 Integracja z Microsoft Teams & YouTrack</h3>
-                    <p>Automatycznie wyślij raport na kanał: <strong>retro_capital_devteam</strong></p>
+                <h2>🚀 Eksport i raportowanie</h2>
+                <div style="margin: 24px 0;">
+                    <p>Generowanie raportów i eksport danych z retrospektyw Capital Service</p>
                 </div>
-                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="exportToTeams()">📤 Wyślij do Teams</button>
-                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="updateYouTrackEstimations()">🔄 Zaktualizuj YouTrack</button>
-                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="generatePDFReport()">📄 Raport PDF</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="exportToTeams()">📤 Wyślij do Teams</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="updateYouTrack()">🔄 Zaktualizuj YouTrack</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="generatePDFReport()">📄 Raport PDF</button>
             </div>
         </div>
     </div>
 
     <script>
-        // === ROLE-BASED ACCESS CONTROL ===
+        // =====================================================
+        // === KONFIGURACJA UŻYTKOWNIKÓW I RÓL (MOCK DATA) ===
+        // =====================================================
         
-        // Current user state
+        // MOCK: Aktualny użytkownik - w przyszłości pobierany z Microsoft/Teams
         let currentUser = {
+            id: "user_001",
             name: "Jan Kowalski",
-            role: "developer", // developer, pm
-            permissions: []
+            email: "jan.kowalski@capitalservice.pl",
+            role: "developer", // developer lub pm
+            avatar: "👨‍💻"
         };
 
-        // Role definitions with tab access
+        // MOCK: Lista członków zespołu Capital Service z Teams
+        // TODO: Po integracji z Teams API odkomentować poniższe linie:
+        /*
+        async function loadTeamMembersFromTeams() {
+            const response = await fetch('/api/teams/members');
+            const members = await response.json();
+            return members;
+        }
+        */
+        
+        const teamMembers = [
+            {
+                id: "user_001",
+                name: "Jan Kowalski", 
+                email: "jan.kowalski@capitalservice.pl",
+                role: "developer",
+                presence: "online", // online, offline, away, busy
+                avatar: "👨‍💻"
+            },
+            {
+                id: "user_002", 
+                name: "Anna Nowak",
+                email: "anna.nowak@capitalservice.pl", 
+                role: "tester",
+                presence: "away",
+                avatar: "👩‍🔬"
+            },
+            {
+                id: "user_003",
+                name: "Monika Capital",
+                email: "monika.capital@capitalservice.pl",
+                role: "pm", 
+                presence: "online",
+                avatar: "👩‍💼"
+            },
+            {
+                id: "user_004",
+                name: "Piotr Kowalczyk", 
+                email: "piotr.kowalczyk@capitalservice.pl",
+                role: "developer",
+                presence: "busy",
+                avatar: "👨‍💻"
+            }
+        ];
+
+        // ============================================
+        // === KONTROLA DOSTĘPU OPARTA NA ROLACH ===
+        // ============================================
+        
+        // Definicja uprawnień dla każdej roli
         const rolePermissions = {
             developer: {
-                tabs: ["planning", "checkin", "retro"],
-                actions: ["add_notes", "vote", "estimate"],
-                name: "DEVELOPER",
-                badge: "role-developer"
+                allowedTabs: ["planning", "checkin", "retro"],
+                canExport: false,
+                canManageUsers: false,
+                canRevealVotes: false
             },
             pm: {
-                tabs: ["setup", "planning", "checkin", "retro", "accounts", "summary"],
-                actions: ["add_notes", "vote", "estimate", "manage_users", "export", "ai_functions"],
-                name: "PROJECT MANAGER", 
-                badge: "role-pm"
+                allowedTabs: ["setup", "planning", "checkin", "retro", "accounts", "summary"],
+                canExport: true,
+                canManageUsers: true, 
+                canRevealVotes: true
             }
         };
 
-        // Initialize RBAC on page load
-        function initializeRBAC() {
-            updateRoleUI();
-            filterTabsByRole();
-            updatePermissions();
-            showDefaultTab();
-        }
-
-        // Update role indicator in header
-        function updateRoleUI() {
-            const roleIndicator = document.getElementById('currentRole');
-            const roleConfig = rolePermissions[currentUser.role];
-            roleIndicator.textContent = `👤 ${roleConfig.name}`;
-            roleIndicator.className = `role-badge ${roleConfig.badge}`;
-        }
-
-        // Filter tabs based on current user role
-        function filterTabsByRole() {
+        // Sprawdź czy użytkownik ma dostęp do konkretnej funkcji
+        function hasPermission(permission) {
             const userRole = currentUser.role;
-            const allowedTabs = rolePermissions[userRole].tabs;
+            return rolePermissions[userRole][permission] || false;
+        }
+
+        // Aktualizuj interfejs użytkownika na podstawie roli
+        function updateUIForCurrentUser() {
+            // Aktualizuj informacje o użytkowniku w headerze
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userRole').textContent = 
+                currentUser.role === 'pm' ? 'Project Manager' : 'Developer';
             
-            // Hide/show tabs based on role
+            // Ustaw kolor znaczka roli
+            const userBadge = document.getElementById('userBadge');
+            userBadge.className = `user-badge role-${currentUser.role}`;
+            
+            // Pokaż/ukryj zakładki na podstawie uprawnień
+            const allowedTabs = rolePermissions[currentUser.role].allowedTabs;
             document.querySelectorAll('.tab').forEach(tab => {
                 const tabId = tab.id.replace('tab-', '');
                 if (allowedTabs.includes(tabId)) {
@@ -584,10 +598,8 @@
                     tab.classList.add('hidden');
                 }
             });
-        }
-
-        // Update PM-only elements visibility
-        function updatePermissions() {
+            
+            // Pokaż/ukryj elementy dostępne tylko dla PM
             const isPM = currentUser.role === 'pm';
             document.querySelectorAll('.pm-only').forEach(element => {
                 if (isPM) {
@@ -598,115 +610,268 @@
             });
         }
 
-        // Show first available tab for current role
-        function showDefaultTab() {
-            const allowedTabs = rolePermissions[currentUser.role].tabs;
-            const firstTab = allowedTabs[0];
-            showTab(firstTab);
-        }
-
-        // Check if user has permission for action
-        function hasPermission(action) {
-            return rolePermissions[currentUser.role].actions.includes(action);
-        }
-
-        // Switch role (demo function)
-        function switchRole() {
-            currentUser.role = currentUser.role === 'developer' ? 'pm' : 'developer';
-            currentUser.name = currentUser.role === 'pm' ? 'Monika Capital' : 'Jan Kowalski';
+        // Przełącz rolę użytkownika (tylko do demonstracji)
+        function switchUserRole() {
+            if (currentUser.role === 'developer') {
+                currentUser.role = 'pm';
+                currentUser.name = 'Monika Capital';
+                currentUser.email = 'monika.capital@capitalservice.pl';
+                currentUser.avatar = '👩‍💼';
+            } else {
+                currentUser.role = 'developer';
+                currentUser.name = 'Jan Kowalski';
+                currentUser.email = 'jan.kowalski@capitalservice.pl';
+                currentUser.avatar = '👨‍💻';
+            }
             
-            console.log(`🔄 Switched to role: ${currentUser.role}`);
-            initializeRBAC();
+            updateUIForCurrentUser();
+            showFirstAvailableTab();
         }
 
-        // === TAB NAVIGATION ===
+        // =======================================
+        // === NAWIGACJA MIĘDZY ZAKŁADKAMI ===
+        // =======================================
+        
         function showTab(tabName) {
-            // Check if user has access to this tab
-            if (!rolePermissions[currentUser.role].tabs.includes(tabName)) {
+            // Sprawdź czy użytkownik ma dostęp do tej zakładki
+            const allowedTabs = rolePermissions[currentUser.role].allowedTabs;
+            if (!allowedTabs.includes(tabName)) {
                 alert(`❌ Brak dostępu do zakładki "${tabName}". Wymagana rola: PM`);
                 return;
             }
 
-            // Hide all tabs and contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
+            // Ukryj wszystkie zakładki
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
             });
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Show selected tab
-            const selectedTab = document.getElementById(tabName);
-            const selectedContent = document.getElementById(tabName);
+            // Pokaż wybraną zakładkę
+            document.getElementById(tabName).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        function showFirstAvailableTab() {
+            const allowedTabs = rolePermissions[currentUser.role].allowedTabs;
+            const firstTab = allowedTabs[0];
+            showTab(firstTab);
+        }
+
+        // ========================================
+        // === GENEROWANIE LISTY CZŁONKÓW ZESPOŁU ===
+        // ========================================
+        
+        function displayTeamMembers() {
+            const container = document.getElementById('teamMembersList');
             
-            if (selectedTab && selectedContent) {
-                selectedTab.classList.add('active');
-                selectedContent.classList.add('active');
-            }
+            // TODO: Po integracji z Teams API zastąp poniższe wywołaniem:
+            // const members = await loadTeamMembersFromTeams();
+            
+            const presenceIcons = {
+                online: '🟢',
+                offline: '⚪', 
+                away: '🟡',
+                busy: '🔴'
+            };
+            
+            container.innerHTML = teamMembers.map(member => `
+                <div class="member-card">
+                    <span class="member-status">${presenceIcons[member.presence]} ${member.avatar}</span>
+                    <div class="member-info">
+                        <div style="font-weight: 600;">${member.name}</div>
+                        <div style="font-size: 0.9em; color: var(--text-secondary);">${member.email}</div>
+                    </div>
+                    <span class="member-role">${member.role.toUpperCase()}</span>
+                </div>
+            `).join('');
         }
 
-        // === PROTECTED FUNCTIONS ===
+        // ===================================
+        // === ZARZĄDZANIE ZADANIAMI ===
+        // ===================================
         
-        function exportToTeams() {
-            if (!hasPermission('export')) {
-                alert('❌ Brak uprawnień do eksportu. Wymagana rola: PM');
-                return;
+        // Lista zadań do oszacowania
+        let stories = [
+            {
+                id: 1,
+                title: "🔐 Implementacja logowania OAuth 2.0",
+                description: "Integracja z Microsoft Azure AD dla zespołu Capital Service",
+                estimations: {},
+                finalEstimation: null,
+                assignee: null
+            },
+            {
+                id: 2,
+                title: "📊 Dashboard z metrykami retrospektyw", 
+                description: "Widok statystyk dla Project Managerów Capital Service",
+                estimations: {},
+                finalEstimation: null,
+                assignee: null
             }
-            alert('📤 Eksportowanie raportu do Teams - kanał retro_capital_devteam');
-        }
-
-        function updateYouTrackEstimations() {
-            if (!hasPermission('export')) {
-                alert('❌ Brak uprawnień do eksportu. Wymagana rola: PM');
-                return;
-            }
-            alert('🔄 Aktualizacja estymacji w YouTrack...');
-        }
-
-        function generatePDFReport() {
-            if (!hasPermission('export')) {
-                alert('❌ Brak uprawnień do eksportu. Wymagana rola: PM');
-                return;
-            }
-            alert('📄 Generowanie raportu PDF...');
-        }
-
-        function groupSimilarNotes() {
-            if (!hasPermission('ai_functions')) {
-                alert('❌ Funkcje AI dostępne tylko dla PM');
-                return;
-            }
-            alert('🔗 AI Grouping - Analizowanie podobnych tematów...');
-        }
-
-        function generateInsights() {
-            if (!hasPermission('ai_functions')) {
-                alert('❌ Funkcje AI dostępne tylko dla PM');
-                return;
-            }
-            alert('💡 AI Insights - Generowanie wniosków z retrospektywy...');
-        }
-
-        function suggestActions() {
-            if (!hasPermission('ai_functions')) {
-                alert('❌ Funkcje AI dostępne tylko dla PM');
-                return;
-            }
-            alert('⚡ AI Actions - Proponowanie konkretnych działań...');
-        }
-
-        // === BASIC FUNCTIONS ===
+        ];
         
-        let retroData = { start: [], stop: [], continue: [] };
+        let selectedStoryId = null;
+        let currentEstimation = null;
+
+        // Wyświetl listę zadań
+        function displayStories() {
+            const container = document.getElementById('storiesList');
+            
+            if (stories.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 40px;">Brak zadań do oszacowania. PM może dodać nowe zadania.</p>';
+                return;
+            }
+            
+            container.innerHTML = stories.map(story => `
+                <div class="story-item ${selectedStoryId === story.id ? 'selected' : ''}" onclick="selectStory(${story.id})">
+                    <div style="font-weight: 600; margin-bottom: 8px;">${story.title}</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 8px;">${story.description}</div>
+                    <div style="font-size: 0.85em; color: var(--text-tertiary);">
+                        ID: ${story.id} | 
+                        Estymacja: ${story.finalEstimation ? story.finalEstimation + ' SP' : 'Nie oszacowano'} |
+                        Przypisane: ${story.assignee || 'Nieprzypisane'}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Wybierz zadanie do oszacowania
+        function selectStory(storyId) {
+            selectedStoryId = storyId;
+            const story = stories.find(s => s.id === storyId);
+            
+            if (story) {
+                document.getElementById('selectedStoryDisplay').innerHTML = `
+                    <div style="background: rgba(74, 144, 190, 0.1); padding: 20px; border-radius: 12px; margin-bottom: 16px;">
+                        <h4 style="color: var(--primary-blue); margin-bottom: 8px;">${story.title}</h4>
+                        <p style="margin-bottom: 8px;">${story.description}</p>
+                        <div style="font-size: 0.9em; color: var(--text-secondary);">
+                            <strong>Status:</strong> ${story.finalEstimation ? 'Oszacowane (' + story.finalEstimation + ' SP)' : 'Oczekuje na oszacowanie'}
+                        </div>
+                    </div>
+                `;
+                
+                // Przywróć poprzednią estymację użytkownika jeśli istnieje
+                const userEstimation = story.estimations[currentUser.name];
+                if (userEstimation) {
+                    selectEstimation(userEstimation);
+                }
+            }
+            
+            displayStories(); // Odśwież listę żeby pokazać zaznaczenie
+        }
+
+        // Dodaj nowe zadanie (tylko PM)
+        function addNewStory() {
+            if (!hasPermission('canManageUsers')) {
+                alert('❌ Tylko PM może dodawać zadania');
+                return;
+            }
+            
+            const title = document.getElementById('newStoryTitle').value.trim();
+            const description = document.getElementById('newStoryDescription').value.trim();
+            
+            if (!title) {
+                alert('❌ Wprowadź tytuł zadania');
+                return;
+            }
+            
+            const newStory = {
+                id: Date.now(),
+                title: title,
+                description: description || 'Brak szczegółowego opisu',
+                estimations: {},
+                finalEstimation: null,
+                assignee: null
+            };
+            
+            stories.push(newStory);
+            displayStories();
+            
+            // Wyczyść formularz
+            document.getElementById('newStoryTitle').value = '';
+            document.getElementById('newStoryDescription').value = '';
+            
+            alert(`✅ Dodano zadanie: ${title}`);
+        }
+
+        // ==============================
+        // === SZACOWANIE ZADAŃ ===
+        // ==============================
+        
+        function selectEstimation(value) {
+            currentEstimation = value;
+            document.getElementById('currentEstimation').textContent = value;
+            
+            // Zaktualizuj wygląd kart
+            document.querySelectorAll('.poker-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Znajdź i zaznacz wybraną kartę
+            event.target.classList.add('selected');
+        }
+
+        function submitEstimation() {
+            if (!selectedStoryId) {
+                alert('❌ Wybierz zadanie do oszacowania');
+                return;
+            }
+            
+            if (currentEstimation === null) {
+                alert('❌ Wybierz kartę z estymacją');
+                return;
+            }
+            
+            // Zapisz estymację użytkownika
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story) {
+                story.estimations[currentUser.name] = currentEstimation;
+                alert(`✅ Estymacja ${currentEstimation} zapisana dla zadania: ${story.title}`);
+                
+                // TODO: Po integracji z API wyślij estymację na serwer:
+                // await saveEstimationToAPI(selectedStoryId, currentUser.id, currentEstimation);
+            }
+        }
+
+        function revealAllVotes() {
+            if (!hasPermission('canRevealVotes')) {
+                alert('❌ Tylko PM może ujawniać głosy zespołu');
+                return;
+            }
+            
+            if (!selectedStoryId) {
+                alert('❌ Wybierz zadanie');
+                return;
+            }
+            
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story && Object.keys(story.estimations).length > 0) {
+                let voteSummary = "👁️ Głosy zespołu:\n\n";
+                Object.entries(story.estimations).forEach(([user, vote]) => {
+                    voteSummary += `${user}: ${vote}\n`;
+                });
+                alert(voteSummary);
+            } else {
+                alert('❌ Brak głosów do pokazania');
+            }
+        }
+
+        // ===============================
+        // === RETROSPEKTYWA ===
+        // ===============================
+        
+        // Dane notatek retrospektywy
+        let retroNotes = {
+            start: [],
+            stop: [], 
+            continue: []
+        };
         let noteCounter = 0;
-        let userEstimation = null;
 
-        function addNote(category) {
-            if (!hasPermission('add_notes')) {
-                alert('❌ Brak uprawnień do dodawania notatek');
-                return;
-            }
-            
+        function addRetroNote(category) {
             const text = prompt(`Wpisz pomysł dla kategorii ${category.toUpperCase()}:`);
             if (text && text.trim()) {
                 noteCounter++;
@@ -718,170 +883,206 @@
                     timestamp: new Date().toLocaleString('pl-PL')
                 };
                 
-                retroData[category] = retroData[category] || [];
-                retroData[category].push(note);
-                displayNotes(category);
+                retroNotes[category].push(note);
+                displayRetroNotes(category);
             }
         }
 
-        function displayNotes(category) {
-            const container = document.getElementById(category + '-notes');
-            if (!container) return;
+        function displayRetroNotes(category) {
+            const container = document.getElementById(`${category}-notes`);
             
-            container.innerHTML = '';
-            (retroData[category] || []).forEach(note => {
-                const noteDiv = document.createElement('div');
-                noteDiv.style.cssText = 'background: white; padding: 16px; margin: 12px 0; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);';
-                noteDiv.innerHTML = `
-                    <div style="margin-bottom: 8px; font-weight: 500;">${note.text}</div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: #666;">
+            container.innerHTML = retroNotes[category].map(note => `
+                <div style="background: white; padding: 20px; margin: 12px 0; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                    <div style="margin-bottom: 12px; font-weight: 500;">${note.text}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--text-secondary);">
                         <span>👍 ${note.votes} głosów</span>
-                        <button onclick="voteNote(${note.id}, '${category}')" style="background: var(--accent-blue); color: white; border: none; padding: 6px 12px; border-radius: 16px; cursor: pointer;">Głosuj</button>
+                        <button onclick="voteRetroNote(${note.id}, '${category}')" style="background: var(--accent-blue); color: white; border: none; padding: 8px 16px; border-radius: 16px; cursor: pointer;">Głosuj</button>
                     </div>
-                    <small style="color: #999;">${note.author} • ${note.timestamp}</small>
-                `;
-                container.appendChild(noteDiv);
-            });
+                    <div style="margin-top: 8px; font-size: 0.8em; color: var(--text-tertiary);">${note.author} • ${note.timestamp}</div>
+                </div>
+            `).join('');
         }
 
-        function voteNote(noteId, category) {
-            if (!hasPermission('vote')) {
-                alert('❌ Brak uprawnień do głosowania');
-                return;
-            }
-            
-            const note = retroData[category].find(n => n.id === noteId);
+        function voteRetroNote(noteId, category) {
+            const note = retroNotes[category].find(n => n.id === noteId);
             if (note) {
                 note.votes++;
-                displayNotes(category);
+                displayRetroNotes(category);
             }
         }
 
-        function selectEstimation(value) {
-            if (!hasPermission('estimate')) {
-                alert('❌ Brak uprawnień do estymacji');
-                return;
-            }
+        // ==============================
+        // === CHECK-IN I ICEBREAKERS ===
+        // ==============================
+        
+        const icebreakers = [
+            'Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?',
+            'Jaki był najlepszy moment w pracy tego tygodnia?', 
+            'Gdybyś był/była aplikacją mobilną, jaką funkcję byś miał/miała?',
+            'Co nowego nauczyłeś/aś się w ostatnim sprincie?',
+            'Jaki superbohater najlepiej opisuje Twój styl pracy w Capital Service?',
+            'Która technologia najbardziej Cię teraz ekscytuje i dlaczego?',
+            'Jakiej umiejętności chciałbyś/chciałabyś się nauczyć w tym roku?'
+        ];
+
+        function generateNewIcebreaker() {
+            const randomIcebreaker = icebreakers[Math.floor(Math.random() * icebreakers.length)];
+            document.getElementById('icebreakerQuestion').textContent = randomIcebreaker;
+        }
+
+        function selectMood(moodLevel, emoji) {
+            document.getElementById('moodResponse').style.display = 'block';
             
-            userEstimation = value;
-            document.getElementById('userEstimation').textContent = value;
-            
-            // Visual feedback
-            document.querySelectorAll('.poker-card').forEach(card => {
-                card.classList.remove('selected');
-                card.style.transform = 'scale(1)';
-            });
-            event.target.classList.add('selected');
-            event.target.style.transform = 'scale(1.1)';
-            event.target.style.background = 'var(--accent-blue)';
-            event.target.style.color = 'white';
-        }
-
-        function submitEstimation() {
-            if (userEstimation === null) {
-                alert('Wybierz estymację!');
-                return;
-            }
-            alert(`✅ Estymacja ${userEstimation} zapisana!`);
-        }
-
-        function revealVotes() {
-            if (!hasPermission('export')) {
-                alert('❌ Funkcja dostępna tylko dla PM');
-                return;
-            }
-            alert('👁️ Ujawnianie głosów zespołu...');
-        }
-
-        function generateIcebreaker() {
-            const icebreakers = [
-                'Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?',
-                'Jaki był najlepszy moment w pracy tego tygodnia?',
-                'Gdybyś był/była aplikacją, jaką funkcję byś miał/miała?',
-                'Co nowego nauczyłeś/aś się w ostatnim sprincie?',
-                'Jaki superbohater najlepiej opisuje Twój styl pracy w Capital Service?'
-            ];
-            const random = icebreakers[Math.floor(Math.random() * icebreakers.length)];
-            document.getElementById('icebreakerText').textContent = random;
-        }
-
-        function selectMood(mood) {
-            document.getElementById('moodSelected').style.display = 'block';
-            event.target.style.transform = 'scale(1.2)';
+            // Animacja wybranego emoji
+            event.target.style.transform = 'scale(1.3)';
             setTimeout(() => {
                 event.target.style.transform = 'scale(1)';
             }, 300);
+            
+            // TODO: Po integracji z API wyślij nastrój na serwer:
+            // await saveMoodToAPI(currentUser.id, moodLevel);
         }
 
-        function startRetro() {
+        // ================================
+        // === EKSPORT I RAPORTOWANIE ===
+        // ================================
+        
+        function exportToTeams() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            
+            // TODO: Po integracji z Teams API odkomentować:
+            /*
+            async function sendToTeamsChannel() {
+                const message = generateRetroSummary();
+                await fetch('/api/teams/send-message', {
+                    method: 'POST',
+                    body: JSON.stringify({ message: message })
+                });
+            }
+            */
+            
+            alert('📤 Raport zostanie wysłany do kanału Teams Capital Service');
+        }
+
+        function updateYouTrack() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            
+            // TODO: Po integracji z YouTrack API odkomentować:
+            /*
+            async function updateYouTrackEstimations() {
+                for (const story of stories) {
+                    if (story.finalEstimation) {
+                        await fetch('/api/youtrack/update-estimation', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                taskId: story.id,
+                                estimation: story.finalEstimation
+                            })
+                        });
+                    }
+                }
+            }
+            */
+            
+            alert('🔄 Estymacje zostaną zaktualizowane w YouTrack');
+        }
+
+        function generatePDFReport() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            
+            // Generowanie raportu PDF
+            const reportData = {
+                teamName: "Capital Service",
+                date: new Date().toLocaleDateString('pl-PL'),
+                stories: stories.filter(s => s.finalEstimation),
+                retroNotes: retroNotes,
+                participants: teamMembers.filter(m => m.presence === 'online').map(m => m.name)
+            };
+            
+            // Prosty sposób generowania "raportu" - można zastąpić prawdziwą biblioteką PDF
+            let reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE\n`;
+            reportContent += `Data: ${reportData.date}\n`;
+            reportContent += `Zespół: ${reportData.teamName}\n\n`;
+            
+            reportContent += `OSZACOWANE ZADANIA:\n`;
+            reportData.stories.forEach(story => {
+                reportContent += `- ${story.title}: ${story.finalEstimation} SP\n`;
+            });
+            
+            reportContent += `\nUCZESTNICY:\n`;
+            reportData.participants.forEach(participant => {
+                reportContent += `- ${participant}\n`;
+            });
+            
+            // Pobierz raport jako plik tekstowy
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `raport-retro-${reportData.date.replace(/\./g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('📄 Raport zostanie pobrany jako plik tekstowy');
+        }
+
+        function startRetrospective() {
             showTab('retro');
         }
 
-        // Additional poker card styles
-        const cardStyles = `
-        .poker-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border: 2px solid var(--accent-blue);
-            border-radius: 12px;
-            padding: 16px;
-            cursor: pointer;
-            font-size: 1.5em;
-            font-weight: 700;
-            color: var(--primary-blue);
-            min-height: 80px;
-            min-width: 60px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 4px;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-        .poker-card:hover {
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(74, 144, 190, 0.3);
-        }
-        .template-option {
-            background: var(--background-secondary);
-            padding: 20px;
-            margin: 12px 0;
-            border-radius: 12px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .template-option:hover,
-        .template-option.selected {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-        .template-option h4 {
-            color: var(--primary-blue);
-            margin-bottom: 8px;
-        }
-        `;
+        // ================================
+        // === INICJALIZACJA APLIKACJI ===
+        // ================================
         
-        // Add styles to page
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = cardStyles;
-        document.head.appendChild(styleSheet);
-
-        // Initialize app when page loads
+        // Uruchom aplikację po załadowaniu strony
         window.onload = function() {
-            console.log('🔄 RETRO_CSSA with RBAC loaded!');
-            initializeRBAC();
+            console.log('🔄 RETRO_CSSA Capital Service - inicjalizacja');
             
-            // Add some demo data
-            retroData.start.push({
+            // Skonfiguruj interfejs dla aktualnego użytkownika
+            updateUIForCurrentUser();
+            
+            // Wyświetl członków zespołu
+            displayTeamMembers();
+            
+            // Wyświetl zadania
+            displayStories();
+            
+            // Dodaj przykładowe notatki retro
+            retroNotes.start.push({
                 id: 1,
-                text: 'Częstsze retrospektywy zespołowe',
+                text: 'Częstsze retrospektywy zespołowe w Capital Service',
                 votes: 3,
                 author: 'Anna Nowak',
                 timestamp: new Date().toLocaleString('pl-PL')
             });
             
-            displayNotes('start');
+            retroNotes.continue.push({
+                id: 2, 
+                text: 'Dobra komunikacja między developerami a testerami',
+                votes: 5,
+                author: 'Monika Capital',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            // Wyświetl notatki
+            displayRetroNotes('start');
+            displayRetroNotes('continue');
+            
+            // Pokaż pierwszą dostępną zakładkę
+            showFirstAvailableTab();
+            
+            console.log('✅ Aplikacja załadowana pomyślnie');
         };
     </script>
 </body>
