@@ -17,18 +17,26 @@
 
 ## 📁 Struktura projektu
 
-retro_cssa/
-├── backend/ # Node.js/Express API
-│ ├── routes/ # Endpointy API
-│ ├── utils/ # Funkcje pomocnicze
-│ └── middleware/ # Autoryzacja i walidacja
-├── src/ # React frontend
-│ ├── components/ # Komponenty UI
-│ ├── utils/ # Funkcje pomocnicze frontend
-│ └── styles/ # CSS
-└── public/ # Statyczne pliki frontend
+retro-cssa/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # ← Robot GitHub Actions
+├── src/                        # ← Twoje pliki React/JS
+│   ├── app.js
+│   ├── api.js
+│   ├── auth.js
+│   ├── components/
+│   │   ├── RetroBoard.js
+│   │   ├── PlanningPoker.js
+│   │   └── UserList.js
+│   └── styles/
+│       └── styles.css
+├── public/                     # ← Pliki statyczne
+│   ├── index.html             # ← Szablon do budowania
+│   └── manifest.json
+├── package.json               # ← Zależności do budowania
+└── README.md
 
-text
 
 ---
 
@@ -41,7 +49,6 @@ npm install
 cp .env.example .env # skonfiguruj zmienne środowiskowe
 npm run dev
 
-text
 
 ### Frontend
 
@@ -49,7 +56,6 @@ cd src
 npm install
 npm start
 
-text
 
 Aplikacja będzie dostępna na:
 - **Frontend:** http://localhost:3000
@@ -69,14 +75,12 @@ YOUTRACK_API_URL=https://youtrack.example.com/api
 YOUTRACK_TOKEN=perm:your-youtrack-token
 SESSION_SECRET=your-session-secret
 
-text
 
 **Frontend:**
 
 REACT_APP_API_URL=http://localhost:4000/api
 REACT_APP_MS_CLIENT_ID=your-microsoft-client-id
 
-text
 
 ---
 
@@ -138,7 +142,6 @@ Terminal 2: Frontend
 
 cd src && npm start
 
-text
 
 ### Testowanie
 
@@ -149,7 +152,6 @@ Frontend
 
 cd src && npm test
 
-text
 
 ### Build produkcyjny
 
@@ -160,7 +162,6 @@ Backend
 
 cd backend && npm start
 
-text
 
 ---
 
@@ -196,66 +197,19 @@ MIT License - szczegóły w pliku [LICENSE](LICENSE)
 
 ## 👥 Autorzy
 
-- **Twoje Imię** - *Initial work* - [GitHub](https://github.com/username)
+- **Monika** - *Initial work* - [GitHub](https://github.com/monikacapital/retro-cssa/)
 
 ---
 
 ## 🆘 Wsparcie
 
 W razie problemów:
-1. Sprawdź [Issues](https://github.com/username/retro_cssa/issues)
+1. Sprawdź ([https://github.com/username/retro_cssa/](https://github.com/monikacapital/retro-cssa/)
 2. Utwórz nowy Issue z opisem problemu
 3. Dołącz logi z konsoli przeglądarki/serwera
 
 ---
 
-**Powered by Capital Service** 🚀
+**Powered by monikakidyba.pl** 🚀
 
-Struktura katalogów - finalna
-
-text
-retro_cssa/
-├── backend/
-│   ├── server.js
-│   ├── config.js
-│   ├── package.json
-│   ├── routes/
-│   │   ├── auth.js
-│   │   ├── teams.js
-│   │   ├── youtrack.js
-│   │   ├── retro.js
-│   │   ├── planning.js
-│   │   └── accounts.js
-│   ├── middleware/
-│   │   └── auth.js
-│   └── utils/
-│       ├── teamsApi.js
-│       ├── youtrackApi.js
-│       ├── matchAccounts.js
-│       └── todoSync.js
-├── src/
-│   ├── app.js
-│   ├── index.js
-│   ├── api.js
-│   ├── auth.js
-│   ├── package.json
-│   ├── components/
-│   │   ├── RetroBoard.js
-│   │   ├── PlanningPoker.js
-│   │   ├── UserList.js
-│   │   ├── RoleBasedView.js
-│   │   ├── TaskDetails.js
-│   │   ├── AssignmentModal.js
-│   │   └── AccountMatcher.js
-│   ├── utils/
-│   │   └── matchAccounts.js
-│   └── styles/
-│       └── styles.css
-├── public/
-│   ├── index.html
-│   └── manifest.json
-├── .env.example
-├── .gitignore
-├── README.md
-└── LICENSE
 
