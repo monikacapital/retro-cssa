@@ -1,3 +1,0 @@
-# Placeholder dla logo512.png  
-# Dodaj własne logo 512x512 pikseli w formacie PNG
-# Logo dla PWA (Progressive Web App)
