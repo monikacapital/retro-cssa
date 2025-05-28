@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETRO_CSSA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #1B365D;
+            --secondary-blue: #2E5984;
+            --accent-blue: #4A90BE;
+            --light-blue: #7BB3D9;
+            --success-green: #34C759;
+            --warning-orange: #FF9500;
+            --error-red: #FF3B30;
+            --purple-accent: #AF52DE;
+
+            --background-primary: #FAFBFC;
+            --background-secondary: #FFFFFF;
+            --background-tertiary: #F2F4F7;
+            --surface-glass: rgba(255, 255, 255, 0.8);
+            --surface-frosted: rgba(255, 255, 255, 0.95);
+
+            --text-primary: #1D1D1F;
+            --text-secondary: #6E6E73;
+            --text-tertiary: #8E8E93;
+
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+
+            --glass-blur: blur(20px);
+            --border-glass: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--background-primary) 0%, #E8F4F8 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--surface-frosted);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            margin: 20px;
+            border: var(--border-glass);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header h1 {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .header p {
+            font-size: 1.2em;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: var(--surface-glass);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid rgba(27, 54, 93, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+        }
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            background: transparent;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        .tab.active {
+            color: var(--primary-blue);
+            font-weight: 600;
+            border-bottom: 3px solid var(--accent-blue);
+        }
+        .tab:hover {
+            background: rgba(27, 54, 93, 0.05);
+            color: var(--primary-blue);
+        }
+        .tab-content {
+            display: none;
+            padding: 40px;
+            min-height: 600px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards & Layout */
+        .modern-card {
+            background: var(--surface-frosted);
+            backdrop-filter: var(--glass-blur);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            border: var(--border-glass);
+            margin-bottom: 24px;
+        }
+        .setup-grid,
+        .planning-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .template-option {
+            background: var(--background-secondary);
+            padding: 24px;
+            margin: 16px 0;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .template-option:hover,
+        .template-option.selected {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, var(--background-secondary) 0%, rgba(74, 144, 190, 0.05) 100%);
+        }
+        .template-option.selected {
+            border-color: var(--primary-blue);
+            background: linear-gradient(135deg, rgba(27, 54, 93, 0.05) 0%, rgba(74, 144, 190, 0.08) 100%);
+        }
+        .template-option h4 {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+        .template-option p {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green) 0%, #28A745 100%);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-orange) 0%, #FD7E14 100%);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, var(--error-red) 0%, #DC3545 100%);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--text-secondary) 0%, #6C757D 100%);
+        }
+
+        /* Retro Board */
+        .retro-board {
+            display: grid;
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .board-start-stop-continue {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+        .column {
+            background: var(--surface-frosted);
+            border-radius: 20px;
+            padding: 32px;
+            min-height: 450px;
+            position: relative;
+            border: var(--border-glass);
+            box-shadow: var(--shadow-md);
+        }
+        .column:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        .column h3 {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+        .start {
+            background: linear-gradient(135deg, var(--success-green) 0%, #20C997 100%);
+        }
+        .stop {
+            background: linear-gradient(135deg, var(--error-red) 0%, #E55353 100%);
+        }
+        .continue {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--light-blue) 100%);
+        }
+        .liked {
+            background: linear-gradient(135deg, var(--success-green) 0%, #20C997 100%);
+        }
+        .learned {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--light-blue) 100%);
+        }
+        .lacked {
+            background: linear-gradient(135deg, var(--warning-orange) 0%, #FFB84D 100%);
+        }
+        .longed {
+            background: linear-gradient(135deg, var(--purple-accent) 0%, #D946EF 100%);
+        }
+        .add-note {
+            width: 100%;
+            padding: 20px;
+            border: 3px dashed rgba(74, 144, 190, 0.3);
+            border-radius: 16px;
+            background: var(--background-secondary);
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .add-note:hover {
+            border-color: var(--accent-blue);
+            background: var(--surface-glass);
+            transform: translateY(-2px);
+            color: var(--primary-blue);
+            box-shadow: var(--shadow-sm);
+        }
+        .note {
+            background: var(--background-secondary);
+            padding: 24px;
+            margin-bottom: 16px;
+            border-radius: 16px;
+            border-left: 6px solid var(--accent-blue);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .note:hover {
+            transform: translateX(4px) translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-left-color: var(--primary-blue);
+        }
+        .note-text {
+            margin-bottom: 16px;
+            font-size: 1.1em;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+        .note-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+        .vote-btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+        }
+        .vote-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .delete-btn:hover {
+            transform: scale(1.1);
+            background: #C53030;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Planning Poker */
+        .poker-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .poker-card {
+            background: linear-gradient(135deg, var(--background-secondary) 0%, var(--surface-glass) 100%);
+            border: 3px solid var(--accent-blue);
+            border-radius: 16px;
+            padding: 20px 16px;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .poker-card.selected {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: white;
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+        .poker-card.special {
+            background: linear-gradient(135deg, var(--warning-orange) 0%, #FFB84D 100%);
+            color: white;
+            font-size: 1.2em;
+        }
+        .poker-card.special.selected {
+            background: linear-gradient(135deg, #E8990C 0%, var(--warning-orange) 100%);
+        }
+        .poker-card:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* YouTrack Integration */
+        .youtrack-integration {
+            background: linear-gradient(135deg, var(--purple-accent) 0%, var(--accent-blue) 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 20px;
+            margin: 32px 0;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Statistics */
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 24px 0;
+        }
+        .stat-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* User List */
+        .user-list {
+            background: var(--background-secondary);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F2F4F7;
+        }
+        .user-status {
+            font-size: 1.5em;
+            margin-right: 12px;
+        }
+        .user-role {
+            background: var(--accent-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.85em;
+            margin-left: auto;
+        }
+
+        /* AI Panel */
+        .ai-panel {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--purple-accent) 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 20px;
+            margin: 32px 0;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .setup-grid,
+            .planning-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                margin: 12px;
+            }
+            .tab {
+                padding: 16px 12px;
+                font-size: 1em;
+                min-width: 120px;
+            }
+            .poker-cards {
+                grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+                gap: 12px;
+            }
+            .poker-card {
+                min-height: 80px;
+                font-size: 1.3em;
+                padding: 16px 12px;
+            }
+        }
+        @media (max-width: 768px) {
+            .retro-board {
+                grid-template-columns: 1fr !important;
+            }
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .tab-content {
+                padding: 24px;
+            }
+            .nav-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            .tab {
+                min-width: 100px;
+                font-size: 0.9em;
+                padding: 12px 16px;
+            }
+            .statistics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 RETRO_CSSA</h1>
+            <p>Kompleksowa platforma retrospektyw i planowania zespołowego powered by Capital Service</p>
+        </div>
+        
+        <nav class="nav-tabs">
+            <button class="tab active" onclick="showTab('setup')">⚙️ Konfiguracja</button>
+            <button class="tab" onclick="showTab('planning')">📋 Planning Poker</button>
+            <button class="tab" onclick="showTab('checkin')">👋 Check-in</button>
+            <button class="tab" onclick="showTab('retro')">🎯 Retrospektywa</button>
+            <button class="tab" onclick="showTab('accounts')">🔗 Konta</button>
+            <button class="tab" onclick="showTab('summary')">📊 Raport</button>
+        </nav>
+        
+        <!-- KONFIGURACJA -->
+        <div id="setup" class="tab-content active">
+            <h2 style="margin-bottom: 32px; color: var(--primary-blue); font-weight: 700;">🚀 Konfiguracja sesji retrospektywy</h2>
+            <div class="setup-grid">
+                <div class="modern-card">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Wybierz szablon retrospektywy</h3>
+                    
+                    <div class="template-option selected" data-template="start-stop-continue" onclick="selectTemplate('start-stop-continue')">
+                        <h4>🔄 Start/Stop/Continue</h4>
+                        <p>Klasyczny szablon - co zacząć, przestać i kontynuować robić</p>
+                    </div>
+                    
+                    <div class="template-option" data-template="4ls" onclick="selectTemplate('4ls')">
+                        <h4>📝 4Ls (Liked/Learned/Lacked/Longed)</h4>
+                        <p>Co się podobało, czego się nauczyliśmy, czego brakowało, za czym tęsknimy</p>
+                    </div>
+                    
+                    <div class="template-option" data-template="glad-sad-mad" onclick="selectTemplate('glad-sad-mad')">
+                        <h4>😊😢😠 Glad/Sad/Mad</h4>
+                        <p>Co nas cieszy, smuci i złości w ostatnim sprincie</p>
+                    </div>
+                    
+                    <button class="btn" onclick="generateAITemplate()">🤖 Wygeneruj szablon AI</button>
+                </div>
+                
+                <div class="modern-card">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół Capital Service</h3>
+                    
+                    <div class="user-list">
+                        <div class="user-item">
+                            <span class="user-status">🟢</span>
+                            <span style="flex: 1;"><strong>Jan Kowalski</strong> (Developer)</span>
+                            <span class="user-role">DEV</span>
+                        </div>
+                        <div class="user-item">
+                            <span class="user-status">🟡</span>
+                            <span style="flex: 1;"><strong>Anna Nowak</strong> (Tester)</span>
+                            <span class="user-role">QA</span>
+                        </div>
+                        <div class="user-item">
+                            <span class="user-status">🟢</span>
+                            <span style="flex: 1;"><strong>Monika Capital</strong> (Project Manager)</span>
+                            <span class="user-role" style="background: var(--success-green);">PM</span>
+                        </div>
+                        <div class="user-item">
+                            <span class="user-status">⚪</span>
+                            <span style="flex: 1;"><strong>Piotr UX</strong> (Designer)</span>
+                            <span class="user-role" style="background: var(--purple-accent);">UX</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn" onclick="startRetro()">▶️ Rozpocznij retrospektywę</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PLANNING POKER -->
+        <div id="planning" class="tab-content">
+            <h2 style="margin-bottom: 32px; color: var(--primary-blue); font-weight: 700;">📋 Planning Poker - Szacowanie zadań</h2>
+            
+            <div class="modern-card youtrack-integration">
+                <h3>🔗 Integracja z YouTrack</h3>
+                <p>Pobierz zadania bezpośrednio z systemu YouTrack Capital Service</p>
+                <div style="margin-top: 16px;">
+                    <input type="text" id="youtrackTaskId" placeholder="Wpisz numer zadania (np. CS-1234)" style="padding: 12px; border-radius: 8px; border: none; margin-right: 16px; flex: 1;">
+                    <button class="btn" onclick="loadYouTrackTask()">🔍 Pobierz zadanie</button>
+                    <button class="btn" onclick="addNewStory()">➕ Dodaj zadanie</button>
+                </div>
+            </div>
+            
+            <div class="planning-grid">
+                <div class="modern-card">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📝 Zadania do oszacowania</h3>
+                    <div id="storiesList">
+                        <div class="story-item" onclick="selectStory(1)">
+                            <div style="font-weight: 600; margin-bottom: 8px;">🔐 Implementacja logowania OAuth 2.0</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em;">Integracja z Microsoft Azure AD dla bezpiecznego logowania zespołu</div>
+                            <div style="margin-top: 8px; font-size: 0.85em; color: var(--text-tertiary);">ID: CS-1234 | Przypisane: Jan Kowalski</div>
+                        </div>
+                        <div class="story-item" onclick="selectStory(2)">
+                            <div style="font-weight: 600; margin-bottom: 8px;">📊 Dashboard z metrykami zespołu</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em;">Widok statystyk retrospektyw i planning poker dla Project Managerów</div>
+                            <div style="margin-top: 8px; font-size: 0.85em; color: var(--text-tertiary);">ID: CS-1235 | Nieprzypisane</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Estymacja zadania</h3>
+                    <div id="currentStoryDisplay">
+                        <div id="selectedStory" style="display: none;">
+                            <h4 id="storyTitle"></h4>
+                            <p id="storyDescription"></p>
+                            <p><strong>Przypisane do:</strong> <span id="storyAssignee">Nieprzypisane</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="estimation-section" id="estimationSection">
+                        <h4 style="margin-bottom: 24px;">Wybierz swoją estymację:</h4>
+                        <div class="poker-cards">
+                            <div class="poker-card" data-value="0.5" onclick="selectEstimation(0.5)">½</div>
+                            <div class="poker-card" data-value="1" onclick="selectEstimation(1)">1</div>
+                            <div class="poker-card" data-value="2" onclick="selectEstimation(2)">2</div>
+                            <div class="poker-card" data-value="3" onclick="selectEstimation(3)">3</div>
+                            <div class="poker-card" data-value="5" onclick="selectEstimation(5)">5</div>
+                            <div class="poker-card" data-value="8" onclick="selectEstimation(8)">8</div>
+                            <div class="poker-card" data-value="13" onclick="selectEstimation(13)">13</div>
+                            <div class="poker-card" data-value="21" onclick="selectEstimation(21)">21</div>
+                            <div class="poker-card special" data-value="?" onclick="selectEstimation('?')">?</div>
+                            <div class="poker-card special" data-value="∞" onclick="selectEstimation('∞')">∞</div>
+                            <div class="poker-card special" data-value="☕" onclick="selectEstimation('☕')">☕</div>
+                        </div>
+                        
+                        <div style="margin: 24px 0; text-align: center;">
+                            <p>Twoja estymacja: <strong id="userEstimation">Nie wybrano</strong></p>
+                        </div>
+                        
+                        <div class="estimation-controls" style="text-align: center;">
+                            <button class="btn btn-success" onclick="submitEstimation()">✅ Zatwierdź głos</button>
+                            <button class="btn btn-warning" onclick="revealVotes()">👁️ Ujawnij głosy</button>
+                            <button class="btn btn-secondary" onclick="resetVoting()">🔄 Nowa runda</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reveal-section modern-card" id="resultsSection" style="display: none;">
+                <h3>📊 Wyniki głosowania - Statystyki jak w Dzikich Historyjkach</h3>
+                <div class="votes-display" id="votesDisplay"></div>
+                <div class="statistics-grid" id="statisticsGrid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statMin">-</div>
+                        <div class="stat-label">Min</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statMax">-</div>
+                        <div class="stat-label">Max</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statAvg">-</div>
+                        <div class="stat-label">Średnia</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statMedian">-</div>
+                        <div class="stat-label">Mediana</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statCount">-</div>
+                        <div class="stat-label">Głosy</div>
+                    </div>
+                </div>
+                <div style="margin-top: 24px; text-align: center;">
+                    <button class="btn btn-success" onclick="finalizeEstimation()">✅ Zaakceptuj estymację</button>
+                    <button class="btn" onclick="assignToUser()">👤 Przypisz osobę</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CHECK-IN -->
+        <div id="checkin" class="tab-content">
+            <div style="text-align: center; padding: 40px;">
+                <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in zespołu Capital Service</h2>
+                <p style="color: var(--text-secondary); font-size: 1.1em;">Zanim zaczniemy retro, sprawdźmy jak się wszyscy czujemy!</p>
+                
+                <div class="modern-card" style="max-width: 600px; margin: 32px auto;">
+                    <h3>🎲 Icebreaker dnia</h3>
+                    <p id="icebreakerText">Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?</p>
+                    <button class="btn" onclick="generateIcebreaker()" style="margin-top: 16px;">🔄 Nowy icebreaker</button>
+                </div>
+                
+                <h3 style="color: var(--primary-blue); margin: 32px 0 24px;">😊 Jaki jest Twój nastrój dzisiaj?</h3>
+                <div style="display: flex; justify-content: center; gap: 24px; margin: 40px 0; flex-wrap: wrap;">
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('excellent')" title="Doskonały">🤩</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('good')" title="Dobry">😊</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('neutral')" title="Neutralny">😐</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('bad')" title="Słaby">😔</span>
+                    <span style="font-size: 4em; cursor: pointer; padding: 24px; border-radius: 20px; transition: transform 0.3s;" onclick="selectMood('terrible')" title="Okropny">😫</span>
+                </div>
+                
+                <div id="moodSelected" style="display:none; margin-top: 32px;">
+                    <div class="modern-card" style="max-width: 500px; margin: 0 auto;">
+                        <h4 style="color: var(--success-green);">✅ Dziękujemy za udział w check-in!</h4>
+                        <p style="margin: 16px 0;">Twój głos jest ważny dla zespołu Capital Service</p>
+                        <button class="btn btn-success" onclick="showTab('retro')">Przejdź do retrospektywy →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RETROSPEKTYWA -->
+        <div id="retro" class="tab-content">
+            <h2 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Tablica retrospektywy</h2>
+            
+            <div class="modern-card ai-panel">
+                <h3>🤖 Capital Service AI Assistant</h3>
+                <p>Inteligentny asystent pomoże automatycznie grupować podobne tematy i generować insights dla Twojego zespołu</p>
+                <button class="btn" onclick="groupSimilarNotes()">🔗 Grupuj podobne tematy</button>
+                <button class="btn" onclick="generateInsights()">💡 Generuj insights</button>
+                <button class="btn" onclick="suggestActions()">⚡ Sugeruj akcje</button>
+            </div>
+            
+            <div id="retroBoard" class="retro-board board-start-stop-continue">
+                <div class="column">
+                    <h3 class="start">🚀 START - Co zacząć robić?</h3>
+                    <div class="add-note" onclick="addNote('start')">+ Dodaj nowy pomysł</div>
+                    <div id="start-notes"></div>
+                </div>
+                
+                <div class="column">
+                    <h3 class="stop">🛑 STOP - Co przestać robić?</h3>
+                    <div class="add-note" onclick="addNote('stop')">+ Dodaj nowy pomysł</div>
+                    <div id="stop-notes"></div>
+                </div>
+                
+                <div class="column">
+                    <h3 class="continue">✅ CONTINUE - Co robić dalej?</h3>
+                    <div class="add-note" onclick="addNote('continue')">+ Dodaj nowy pomysł</div>
+                    <div id="continue-notes"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- KONTA -->
+        <div id="accounts" class="tab-content">
+            <h2 style="color: var(--primary-blue); margin-bottom: 32px;">🔗 Matchowanie kont Teams ↔ YouTrack</h2>
+            
+            <div class="modern-card">
+                <h3>📊 Status mapowań</h3>
+                <div class="statistics-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Zmapowane konta</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">Niezmapowane</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Sugestie</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">95%</div>
+                        <div class="stat-label">Pokrycie</div>
+                    </div>
+                </div>
+                <button class="btn btn-success" onclick="autoMatch()">⚡ Auto-mapuj wysokie dopasowania</button>
+            </div>
+            
+            <div class="modern-card">
+                <h3>✅ Aktywne mapowania</h3>
+                <div style="display: grid; gap: 12px;">
+                    <div style="display: flex; align-items: center; padding: 16px; background: var(--background-tertiary); border-radius: 12px; border: 2px solid var(--success-green);">
+                        <div style="flex: 1;"><strong>jan@capitalservice.pl</strong> (Teams)</div>
+                        <div style="margin: 0 16px; font-size: 1.5em;">↔</div>
+                        <div style="flex: 1;"><strong>jan.kowalski</strong> (YouTrack)</div>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 16px; background: var(--background-tertiary); border-radius: 12px; border: 2px solid var(--success-green);">
+                        <div style="flex: 1;"><strong>anna@capitalservice.pl</strong> (Teams)</div>
+                        <div style="margin: 0 16px; font-size: 1.5em;">↔</div>
+                        <div style="flex: 1;"><strong>anna.nowak</strong> (YouTrack)</div>
+                    </div>
+                    <div style="display: flex; align-items: center; padding: 16px; background: var(--background-tertiary); border-radius: 12px; border: 2px solid var(--success-green);">
+                        <div style="flex: 1;"><strong>monika@capitalservice.pl</strong> (Teams)</div>
+                        <div style="margin: 0 16px; font-size: 1.5em;">↔</div>
+                        <div style="flex: 1;"><strong>monika.capital</strong> (YouTrack)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RAPORT -->
+        <div id="summary" class="tab-content">
+            <h2 style="color: var(--primary-blue); margin-bottom: 32px;">📊 Raport i podsumowanie</h2>
+            
+            <div class="setup-grid">
+                <div class="modern-card">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">✅ Lista akcji do wykonania</h3>
+                    <button class="btn btn-success" onclick="addActionItem()">+ Dodaj akcję</button>
+                    <div id="actionItemsList">
+                        <div style="background: var(--background-secondary); padding: 24px; margin: 20px 0; border-radius: 16px; border-left: 6px solid var(--success-green);">
+                            <div style="font-weight: 600; margin-bottom: 8px;">Implementacja automatycznego eksportu do Teams</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 8px;">Przypisane: Jan Kowalski | Termin: 2 tygodnie</div>
+                            <div style="font-size: 0.85em; color: var(--text-tertiary);">Status: TODO</div>
+                        </div>
+                        <div style="background: var(--background-secondary); padding: 24px; margin: 20px 0; border-radius: 16px; border-left: 6px solid var(--warning-orange);">
+                            <div style="font-weight: 600; margin-bottom: 8px;">Optymalizacja czasu retrospektyw</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 8px;">Przypisane: Monika Capital | Termin: 1 tydzień</div>
+                            <div style="font-size: 0.85em; color: var(--text-tertiary);">Status: W TRAKCIE</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modern-card">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">💚 Health Check zespołu</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(74, 144, 190, 0.1);">
+                        <span>Komunikacja w zespole:</span>
+                        <div>⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(74, 144, 190, 0.1);">
+                        <span>Motywacja zespołu:</span>
+                        <div>⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(74, 144, 190, 0.1);">
+                        <span>Efektywność procesów:</span>
+                        <div>⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0;">
+                        <span>ROTI (Return on Time Invested):</span>
+                        <div>⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modern-card" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%); color: white; text-align: center;">
+                <h2>🚀 Eksport i integracja Capital Service</h2>
+                <div style="background: rgba(255,255,255,0.1); padding: 24px; border-radius: 16px; margin: 24px 0;">
+                    <h3>📧 Integracja z Microsoft Teams & YouTrack</h3>
+                    <p>Automatycznie wyślij raport na kanał: <strong>RETRo_capital_devteam</strong></p>
+                </div>
+                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="exportToTeams()">📤 Wyślij do Teams</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="updateYouTrackEstimations()">🔄 Zaktualizuj YouTrack</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="generatePDFReport()">📄 Raport PDF</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.2);" onclick="scheduleFollowUp()">⏰ Zaplanuj follow-up</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Globalne zmienne
+        let currentTemplate = 'start-stop-continue';
+        let selectedStoryId = null;
+        let userEstimation = null;
+        let retroData = { start: [], stop: [], continue: [], liked: [], learned: [], lacked: [], longed: [] };
+        let stories = [
+            {
+                id: 1,
+                title: "🔐 Implementacja logowania OAuth 2.0",
+                description: "Integracja z Microsoft Azure AD dla bezpiecznego logowania zespołu",
+                assignee: "Jan Kowalski",
+                estimations: {}
+            },
+            {
+                id: 2,
+                title: "📊 Dashboard z metrykami zespołu",
+                description: "Widok statystyk retrospektyw i planning poker dla Project Managerów",
+                assignee: null,
+                estimations: {}
+            }
+        ];
+        let noteCounter = 0;
+
+        // Funkcje nawigacji
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Funkcje szablonów
+        function selectTemplate(templateName) {
+            document.querySelectorAll('.template-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
+            currentTemplate = templateName;
+            updateRetroBoard();
+        }
+
+        function updateRetroBoard() {
+            const templates = {
+                'start-stop-continue': ['start', 'stop', 'continue'],
+                '4ls': ['liked', 'learned', 'lacked', 'longed'],
+                'glad-sad-mad': ['glad', 'sad', 'mad']
+            };
+            
+            const columns = templates[currentTemplate];
+            const board = document.getElementById('retroBoard');
+            board.className = `retro-board board-${currentTemplate}`;
+            
+            const columnTitles = {
+                start: '🚀 START - Co zacząć robić?',
+                stop: '🛑 STOP - Co przestać robić?',
+                continue: '✅ CONTINUE - Co robić dalej?',
+                liked: '👍 LIKED - Co się podobało?',
+                learned: '🎓 LEARNED - Czego się nauczyliśmy?',
+                lacked: '❌ LACKED - Czego brakowało?',
+                longed: '💭 LONGED - Za czym tęsknimy?',
+                glad: '😊 GLAD - Co nas cieszy?',
+                sad: '😢 SAD - Co nas smuci?',
+                mad: '😠 MAD - Co nas złości?'
+            };
+            
+            board.innerHTML = columns.map(col => `
+                <div class="column">
+                    <h3 class="${col}">${columnTitles[col]}</h3>
+                    <div class="add-note" onclick="addNote('${col}')">+ Dodaj nowy pomysł</div>
+                    <div id="${col}-notes"></div>
+                </div>
+            `).join('');
+        }
+
+        // Funkcje retrospektywy
+        function addNote(category) {
+            const text = prompt(`Wpisz pomysł dla kategorii ${category.toUpperCase()}:`);
+            if (text && text.trim()) {
+                noteCounter++;
+                const note = {
+                    id: noteCounter,
+                    text: text.trim(),
+                    votes: 0,
+                    author: 'Demo User',
+                    timestamp: new Date().toLocaleString('pl-PL')
+                };
+                
+                retroData[category] = retroData[category] || [];
+                retroData[category].push(note);
+                displayNotes(category);
+            }
+        }
+
+        function displayNotes(category) {
+            const container = document.getElementById(category + '-notes');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            (retroData[category] || []).forEach(note => {
+                const noteElement = document.createElement('div');
+                noteElement.className = 'note';
+                noteElement.innerHTML = `
+                    <button class="delete-btn" onclick="deleteNote(${note.id}, '${category}')">×</button>
+                    <div class="note-text">${note.text}</div>
+                    <div class="note-meta">
+                        <div>
+                            <span>👍 ${note.votes} głosów</span>
+                            <button class="vote-btn" onclick="voteNote(${note.id}, '${category}')">Głosuj</button>
+                        </div>
+                        <small>${note.author} • ${note.timestamp}</small>
+                    </div>
+                `;
+                container.appendChild(noteElement);
+            });
+        }
+
+        function voteNote(noteId, category) {
+            const note = retroData[category].find(n => n.id === noteId);
+            if (note) {
+                note.votes++;
+                displayNotes(category);
+            }
+        }
+
+        function deleteNote(noteId, category) {
+            retroData[category] = retroData[category].filter(n => n.id !== noteId);
+            displayNotes(category);
+        }
+
+        // Funkcje Planning Poker
+        function selectStory(storyId) {
+            selectedStoryId = storyId;
+            const story = stories.find(s => s.id === storyId);
+            if (story) {
+                document.getElementById('storyTitle').textContent = story.title;
+                document.getElementById('storyDescription').textContent = story.description;
+                document.getElementById('storyAssignee').textContent = story.assignee || 'Nieprzypisane';
+                document.getElementById('selectedStory').style.display = 'block';
+                
+                // Highlight selected story
+                document.querySelectorAll('.story-item').forEach(item => item.classList.remove('selected'));
+                event.target.classList.add('selected');
+            }
+        }
+
+        function selectEstimation(value) {
+            userEstimation = value;
+            document.getElementById('userEstimation').textContent = value;
+            
+            // Visual feedback
+            document.querySelectorAll('.poker-card').forEach(card => card.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
+        function submitEstimation() {
+            if (!selectedStoryId || userEstimation === null) {
+                alert('Wybierz zadanie i estymację!');
+                return;
+            }
+            
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story) {
+                story.estimations['Demo User'] = userEstimation;
+                // Add some mock team estimations
+                story.estimations['Jan Kowalski'] = Math.floor(Math.random() * 8) + 1;
+                story.estimations['Anna Nowak'] = Math.floor(Math.random() * 8) + 1;
+                story.estimations['Monika Capital'] = Math.floor(Math.random() * 8) + 1;
+                
+                alert('✅ Estymacja zapisana!');
+            }
+        }
+
+        function revealVotes() {
+            if (!selectedStoryId) {
+                alert('Wybierz zadanie!');
+                return;
+            }
+            
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story && Object.keys(story.estimations).length > 0) {
+                displayResults(story.estimations);
+                document.getElementById('resultsSection').style.display = 'block';
+            } else {
+                alert('Brak głosów do pokazania!');
+            }
+        }
+
+        function displayResults(estimations) {
+            const votesDisplay = document.getElementById('votesDisplay');
+            votesDisplay.innerHTML = Object.entries(estimations).map(([user, vote]) => 
+                `<span style="background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; margin: 4px; display: inline-block;"><strong>${user}:</strong> ${vote}</span>`
+            ).join('');
+            
+            const numericVotes = Object.values(estimations).filter(v => typeof v === 'number');
+            if (numericVotes.length > 0) {
+                const min = Math.min(...numericVotes);
+                const max = Math.max(...numericVotes);
+                const avg = (numericVotes.reduce((a, b) => a + b, 0) / numericVotes.length).toFixed(1);
+                const sorted = [...numericVotes].sort((a, b) => a - b);
+                const median = sorted.length % 2 === 0 
+                    ? ((sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2).toFixed(1)
+                    : sorted[Math.floor(sorted.length / 2)];
+                
+                document.getElementById('statMin').textContent = min;
+                document.getElementById('statMax').textContent = max;
+                document.getElementById('statAvg').textContent = avg;
+                document.getElementById('statMedian').textContent = median;
+                document.getElementById('statCount').textContent = numericVotes.length;
+            }
+        }
+
+        function resetVoting() {
+            if (!selectedStoryId) return;
+            
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story) {
+                story.estimations = {};
+                document.getElementById('resultsSection').style.display = 'none';
+                document.querySelectorAll('.poker-card').forEach(card => card.classList.remove('selected'));
+                document.getElementById('userEstimation').textContent = 'Nie wybrano';
+                userEstimation = null;
+            }
+        }
+
+        // Inne funkcje
+        function startRetro() {
+            showTab('retro');
+        }
+
+        function generateAITemplate() {
+            alert('🤖 AI Template Generator - Funkcja dostępna w pełnej wersji!');
+        }
+
+        function generateIcebreaker() {
+            const icebreakers = [
+                'Gdybyś mógł/mogła wprowadzić jedną innowację do Capital Service, co by to było?',
+                'Jaki był najlepszy moment w pracy tego tygodnia?',
+                'Gdybyś był/była aplikacją, jaką funkcję byś miał/miała?',
+                'Co nowego nauczyłeś/aś się w ostatnim sprincie?',
+                'Jaki superbohater najlepiej opisuje Twój styl pracy?'
+            ];
+            const random = icebreakers[Math.floor(Math.random() * icebreakers.length)];
+            document.getElementById('icebreakerText').textContent = random;
+        }
+
+        function selectMood(mood) {
+            document.getElementById('moodSelected').style.display = 'block';
+            event.target.style.transform = 'scale(1.2)';
+        }
+
+        function groupSimilarNotes() {
+            alert('🔗 AI Grouping - Analizowanie podobnych tematów...');
+        }
+
+        function generateInsights() {
+            alert('💡 AI Insights - Generowanie wniosków z retrospektywy...');
+        }
+
+        function suggestActions() {
+            alert('⚡ AI Actions - Proponowanie konkretnych działań...');
+        }
+
+        function autoMatch() {
+            alert('⚡ Auto-matching kont Teams ↔ YouTrack...');
+        }
+
+        function addActionItem() {
+            const action = prompt('Wpisz akcję do wykonania:');
+            if (action) {
+                alert('✅ Akcja dodana: ' + action);
+            }
+        }
+
+        function exportToTeams() {
+            alert('📤 Eksportowanie raportu do Teams - kanał RETRo_capital_devteam');
+        }
+
+        function updateYouTrackEstimations() {
+            alert('🔄 Aktualizacja estymacji w YouTrack...');
+        }
+
+        function generatePDFReport() {
+            alert('📄 Generowanie raportu PDF...');
+        }
+
+        function scheduleFollowUp() {
+            alert('⏰ Planowanie follow-up na Teams...');
+        }
+
+        function loadYouTrackTask() {
+            const taskId = document.getElementById('youtrackTaskId').value;
+            if (taskId) {
+                alert(`🔍 Pobieranie zadania ${taskId} z YouTrack...`);
+            }
+        }
+
+        function addNewStory() {
+            const title = prompt('Tytuł zadania:');
+            if (title) {
+                const description = prompt('Opis zadania:');
+                stories.push({
+                    id: Date.now(),
+                    title: title,
+                    description: description || '',
+                    assignee: null,
+                    estimations: {}
+                });
+                alert('✅ Zadanie dodane!');
+            }
+        }
+
+        function finalizeEstimation() {
+            alert('✅ Estymacja sfinalizowana!');
+        }
+
+        function assignToUser() {
+            const user = prompt('Przypisz do osoby:');
+            if (user && selectedStoryId) {
+                const story = stories.find(s => s.id === selectedStoryId);
+                if (story) {
+                    story.assignee = user;
+                    document.getElementById('storyAssignee').textContent = user;
+                    alert(`✅ Zadanie przypisane do: ${user}`);
+                }
+            }
+        }
+
+        // Inicjalizacja
+        window.onload = function() {
+            console.log('🔄 RETRO_CSSA załadowane pomyślnie!');
+            
+            // Dodaj przykładowe dane retro
+            retroData.start.push({
+                id: 1,
+                text: 'Częstsze retrospektywy zespołowe',
+                votes: 3,
+                author: 'Anna K.',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            retroData.stop.push({
+                id: 2,
+                text: 'Zbyt długie spotkania bez konkretów',
+                votes: 5,
+                author: 'Jan K.',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            retroData.continue.push({
+                id: 3,
+                text: 'Dobra komunikacja w zespole Capital Service',
+                votes: 7,
+                author: 'Monika C.',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            // Wyświetl notatki
+            displayNotes('start');
+            displayNotes('stop');
+            displayNotes('continue');
+            
+            noteCounter = 3;
+        };
+
+        // Style dla story items
+        const additionalCSS = `
+        .story-item {
+            background: var(--background-secondary);
+            padding: 20px;
+            margin: 12px 0;
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-blue);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .story-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+            border-left-color: var(--primary-blue);
+        }
+        .story-item.selected {
+            background: linear-gradient(135deg, rgba(27, 54, 93, 0.05) 0%, rgba(74, 144, 190, 0.08) 100%);
+            border-left-color: var(--primary-blue);
+            border-left-width: 6px;
+        }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = additionalCSS;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
