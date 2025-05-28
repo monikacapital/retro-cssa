@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETRO_CSSA - Retrospektywy i Planning Poker</title>
+    <meta name="description" content="Nowoczesna aplikacja do retrospektyw zespołowych i planning poker z integracją Microsoft Teams i YouTrack">
+    <meta name="keywords" content="retrospektywa, scrum, agile, planning poker, teams, youtrack">
+    <meta name="author" content="Capital Service">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1B365D">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    
+    <!-- Favicons -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- Preload key resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <noscript>
+        <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif;">
+            <h1>RETRO_CSSA</h1>
+            <p>Ta aplikacja wymaga włączonego JavaScript.</p>
+            <p>Proszę włączyć JavaScript w przeglądarce i odświeżyć stronę.</p>
+        </div>
+    </noscript>
+    
+    <div id="root"></div>
+    
+    <!-- Loading fallback -->
+    <script>
+        // Pokaż loading indicator jeśli React nie załaduje się w 3 sekundy
+        setTimeout(function() {
+            const root = document.getElementById('root');
+            if (!root.hasChildNodes()) {
+                root.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:Arial,sans-serif;"><div><h2>Ładowanie RETRO_CSSA...</h2><p>Sprawdź połączenie z internetem</p></div></div>';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
