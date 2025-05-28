@@ -325,8 +325,8 @@
     <div class="container">
         <!-- === HEADER === -->
         <div class="header">
-            <h1>🔄 RETRO_CSSA</h1>
-            <p>Platforma retrospektyw zespołowych - Capital Service</p>
+            <h1>RETRO SERVICE</h1>
+            <p>Tu grzebiemy w przeszłości, żeby przyszłość ogarniała się sama. Planowanie i retro bez spiny.</p>
             
             <div class="user-info">
                 <div id="userBadge" class="user-badge">
@@ -339,31 +339,31 @@
         
         <!-- === NAVIGATION === -->
         <nav class="nav-tabs">
-            <button class="tab" id="tab-setup" onclick="showTab('setup')" data-required-role="pm">⚙️ Konfiguracja</button>
-            <button class="tab active" id="tab-planning" onclick="showTab('planning')" data-required-role="developer,pm">📋 Planning Poker</button>
-            <button class="tab" id="tab-checkin" onclick="showTab('checkin')" data-required-role="developer,pm">👋 Check-in</button>
-            <button class="tab" id="tab-retro" onclick="showTab('retro')" data-required-role="developer,pm">🎯 Retrospektywa</button>
-            <button class="tab" id="tab-accounts" onclick="showTab('accounts')" data-required-role="pm">🔗 Konta</button>
-            <button class="tab" id="tab-summary" onclick="showTab('summary')" data-required-role="pm">📊 Raport</button>
+            <button class="tab" id="tab-setup" onclick="showTab('setup')" data-required-role="pm">Konfiguracja</button>
+            <button class="tab active" id="tab-planning" onclick="showTab('planning')" data-required-role="developer,pm">Planning Poker</button>
+            <button class="tab" id="tab-checkin" onclick="showTab('checkin')" data-required-role="developer,pm">Check-in</button>
+            <button class="tab" id="tab-retro" onclick="showTab('retro')" data-required-role="developer,pm">Retrospektywa</button>
+            <button class="tab" id="tab-accounts" onclick="showTab('accounts')" data-required-role="pm">Konta</button>
+            <button class="tab" id="tab-summary" onclick="showTab('summary')" data-required-role="pm">Raport</button>
         </nav>
         
         <!-- === SETUP === -->
         <div id="setup" class="tab-content">
-            <h2 style="margin-bottom: 32px; color: var(--primary-blue);">🚀 Konfiguracja sesji retrospektywy</h2>
+            <h2 style="margin-bottom: 32px; color: var(--primary-blue);">Konfiguracja sesji retrospektywy</h2>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
                 <div class="modern-card">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Wybierz szablon retrospektywy</h3>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">Wybierz szablon retrospektywy</h3>
                     
                     <div class="template-selector">
                         <div class="template-option selected" onclick="selectTemplate('start-stop-continue', this)">
                             <h4>🔄 Start/Stop/Continue</h4>
-                            <p>Klasyczny szablon agile - co zacząć, przestać i kontynuować</p>
+                            <p>Klasyczny szablon agile - co wreszcie odpalić, czego zaprzestać, a co kontynuować?</p>
                         </div>
                         
                         <div class="template-option" onclick="selectTemplate('4ls', this)">
                             <h4>📝 4Ls Framework</h4>
-                            <p>Liked, Learned, Lacked, Longed for - pogłębiona analiza</p>
+                            <p>Liked, Learned, Lacked, Longed for - nad czym warto się pochylić?</p>
                         </div>
                         
                         <div class="template-option" onclick="selectTemplate('glad-sad-mad', this)">
@@ -378,18 +378,18 @@
                         
                         <div class="template-option" onclick="selectTemplate('team-radar', this)">
                             <h4>📡 Team Radar</h4>
-                            <p>Komunikacja, Proces, Narzędzia, Współpraca</p>
+                            <p>Sprawdzamy, jak się czujemy w kluczowych obszarach...</p>
                         </div>
                         
                         <div class="template-option" onclick="selectTemplate('roses-thorns', this)">
                             <h4>🌹🌿🌱 Roses/Thorns/Buds</h4>
-                            <p>Sukcesy, Problemy, Nowe możliwości</p>
+                            <p>Szablon dla romantyków ceniących retro z nutką refleksji i optymizmu ;)/p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="modern-card">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół Capital Service (z Teams)</h3>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół [Teamsy]</h3>
                     <div class="team-members" id="teamMembersList"></div>
                     <button class="btn btn-success" onclick="startRetrospective()">▶️ Rozpocznij retrospektywę</button>
                 </div>
@@ -400,7 +400,7 @@
         <div id="planning" class="tab-content active">
             <h2 style="margin-bottom: 32px; color: var(--primary-blue);">📋 Planning Poker - Szacowanie zadań</h2>
             
-            <div class="modern-card pm-only">
+                   <div class="modern-card pm-only">
                 <h3>➕ Dodaj nowe zadanie do szacowania</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
                     <input type="text" id="newStoryTitle" placeholder="Tytuł zadania" style="padding: 12px; border: 2px solid #E5E7EB; border-radius: 8px;">
@@ -431,6 +431,9 @@
                     <div class="poker-card" onclick="selectEstimation(13)">13</div>
                     <div class="poker-card" onclick="selectEstimation(21)">21</div>
                     <div class="poker-card" onclick="selectEstimation(34)">34</div>
+                    <div class="poker-card" onclick="selectEstimation(34)">34</div>
+                    <div class="poker-card" onclick="selectEstimation(34)">55</div>
+                    <div class="poker-card" onclick="selectEstimation(34)">89</div>
                     <div class="poker-card special" onclick="selectEstimation('?')">?</div>
                     <div class="poker-card special" onclick="selectEstimation('∞')">∞</div>
                     <div class="poker-card special" onclick="selectEstimation('☕')">☕</div>
@@ -443,11 +446,11 @@
                 </div>
             </div>
         </div>
-        
+ 
         <!-- === CHECK-IN === -->
         <div id="checkin" class="tab-content">
             <div style="text-align: center; padding: 40px;">
-                <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in zespołu Capital Service</h2>
+                <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in</h2>
                 
                 <div class="modern-card" style="max-width: 600px; margin: 32px auto;">
                     <h3>💭 Icebreaker dnia</h3>
@@ -467,7 +470,7 @@
                 <div id="moodResponse" style="display: none; margin-top: 32px;">
                     <div class="modern-card" style="max-width: 500px; margin: 0 auto;">
                         <h4 style="color: var(--success-green);">✅ Dziękujemy za udział w check-in!</h4>
-                        <p>Twój głos jest ważny dla zespołu Capital Service</p>
+                        <p>Twój głos jest ważny dla zespołu</p>
                         <button class="btn btn-success" onclick="showTab('retro')">Przejdź do retrospektywy →</button>
                     </div>
                 </div>
@@ -488,7 +491,7 @@
             <!-- PANEL TWORZENIA ZADAŃ TO-DO (tylko PM) -->
             <div class="modern-card pm-only" style="background: linear-gradient(135deg, rgba(52, 199, 89, 0.05) 0%, rgba(74, 144, 190, 0.05) 100%); border: 2px solid var(--success-green);">
                 <h3 style="color: var(--success-green); margin-bottom: 20px;">📝 Tworzenie zadań To-Do dla zespołu (PM)</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 24px;">Przypisuj konkretne zadania członkom zespołu Capital Service. Zadania zostaną automatycznie dodane do Microsoft To-Do przypisanej osoby.</p>
+                <p style="color: var(--text-secondary); margin-bottom: 24px;">Przypisuj konkretne zadania członkom zespołu. Zadania zostaną automatycznie dodane do Microsoft To-Do przypisanej osoby.</p>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                     <!-- Kolumna 1: Podstawowe informacje -->
@@ -545,7 +548,7 @@
         <div id="accounts" class="tab-content">
             <h2 style="color: var(--primary-blue); margin-bottom: 32px;">🔗 Matchowanie kont Teams ↔ YouTrack</h2>
             <div class="modern-card">
-                <h3>📊 Status mapowań Capital Service</h3>
+                <h3>📊 Status mapowań</h3>
                 <p>Funkcja dostępna po integracji z Microsoft Teams i YouTrack</p>
                 <div style="background: rgba(74, 144, 190, 0.1); padding: 20px; border-radius: 12px; margin: 20px 0;">
                     <strong>🔄 Do zaimplementowania:</strong> Automatyczne mapowanie kont zespołu
@@ -559,11 +562,11 @@
             <div class="modern-card" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%); color: white; text-align: center;">
                 <h2>🚀 Eksport i raportowanie</h2>
                 <div style="margin: 24px 0;">
-                    <p>Generowanie raportów i eksport danych z retrospektyw Capital Service</p>
+                    <p>Generowanie raportów i eksport danych z retrospektyw</p>
                 </div>
                 <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="exportToTeams()">📤 Wyślij do Teams</button>
                 <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="updateYouTrack()">🔄 Zaktualizuj YouTrack</button>
-                <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="generatePDFReport()">📄 Raport PDF</button>
+                <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="generatePDFReport()">📄 Raport</button>
             </div>
         </div>
     </div>
@@ -831,34 +834,34 @@
             'start-stop-continue': {
                 name: 'Start/Stop/Continue',
                 columns: [
-                    { id: 'start', title: '🚀 START - Co zacząć robić?', color: 'rgba(52, 199, 89, 0.1)' },
-                    { id: 'stop', title: '🛑 STOP - Co przestać robić?', color: 'rgba(255, 59, 48, 0.1)' },
-                    { id: 'continue', title: '✅ CONTINUE - Co robić dalej?', color: 'rgba(74, 144, 190, 0.1)' }
+                    { id: 'start', title: '🟢 START Co warto w końcu odpalić – nowe pomysły, dobre nawyki, rzeczy, które mogą usprawnić naszą codzienność?', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'stop', title: '🔴 STOP Czego mamy już serdecznie dość – rzeczy, które nie działają, irytują albo tylko kradną czas i energię?', color: 'rgba(255, 59, 48, 0.1)' },
+                    { id: 'continue', title: '🟡 CONTINUE Co nam fajnie wychodzi i warto to ciągnąć dalej? Dobre praktyki, zdrowy flow – jeśli działa, nie ruszać!?', color: 'rgba(74, 144, 190, 0.1)' }
                 ]
             },
             '4ls': {
                 name: '4Ls Framework',
                 columns: [
-                    { id: 'liked', title: '👍 LIKED - Co się podobało?', color: 'rgba(52, 199, 89, 0.1)' },
-                    { id: 'learned', title: '🎓 LEARNED - Czego się nauczyliśmy?', color: 'rgba(74, 144, 190, 0.1)' },
-                    { id: 'lacked', title: '❌ LACKED - Czego brakowało?', color: 'rgba(255, 149, 0, 0.1)' },
-                    { id: 'longed', title: '💭 LONGED - Za czym tęsknimy?', color: 'rgba(175, 82, 222, 0.1)' }
+                    { id: 'liked', title: '😊 LIKED - Co nam się spodobało? Co było fajne, przyjemne, działało super? Pochwały mile widziane – nie tylko dla kodu!', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'learned', title: '😖 LEARNED - Czego się nauczyliśmy? O ludziach, procesach, narzędziach… albo np. że deploy w piątek to zły pomysł?', color: 'rgba(74, 144, 190, 0.1)' },
+                    { id: 'lacked', title: '😤 LACKED - Czego brakowało? Czasu, informacji, cierpliwości, może pizzy na deploy party?', color: 'rgba(255, 149, 0, 0.1)' },
+                    { id: 'longed', title: '🤔 LONGED - Za czym tęskniliśmy? Co by się przydało, ale się nie wydarzyło?', color: 'rgba(175, 82, 222, 0.1)' }
                 ]
             },
             'glad-sad-mad': {
                 name: 'Glad/Sad/Mad',
                 columns: [
-                    { id: 'glad', title: '😊 GLAD - Co nas cieszy?', color: 'rgba(52, 199, 89, 0.1)' },
-                    { id: 'sad', title: '😢 SAD - Co nas smuci?', color: 'rgba(74, 144, 190, 0.1)' },
-                    { id: 'mad', title: '😠 MAD - Co nas złości?', color: 'rgba(255, 59, 48, 0.1)' }
+                    { id: 'glad', title: '😊 GLAD - Co nas ucieszyło? Co poszło dobrze, co dało satysfakcję? Dobre momenty, sukcesy i wszystko, co warto powtórzyć?', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'sad', title: '😢 SAD - Co nas trochę zasmuciło? Co nie wyszło, co mogło pójść lepiej? Bez dramy – po prostu chwila szczerości i refleksji.', color: 'rgba(74, 144, 190, 0.1)' },
+                    { id: 'mad', title: '😠 MAD - CCo nas totalnie wkurzyło? Co frustrowało, zgrzytało, wywołało facepalma? Czas wyrzucić z siebie te sprintowe potwory – konstruktywnie oczywiście.', color: 'rgba(255, 59, 48, 0.1)' }
                 ]
             },
             'what-worked': {
                 name: 'What Worked/Didn\'t/Try',
                 columns: [
-                    { id: 'worked', title: '✅ CO DZIAŁAŁO - Sukcesy', color: 'rgba(52, 199, 89, 0.1)' },
-                    { id: 'didnt-work', title: '❌ CO NIE DZIAŁAŁO - Problemy', color: 'rgba(255, 59, 48, 0.1)' },
-                    { id: 'try-next', title: '💡 CO SPRÓBOWAĆ - Eksperymenty', color: 'rgba(175, 82, 222, 0.1)' }
+                    { id: 'worked', title: '✅ CO DZIAŁAŁO - Co zadziałało i warto to powtórzyć? Procesy, pomysły, komunikacja, a może po prostu to, że nikt się nie zaciął na daily. W każdym razie – keep it up!', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'didnt-work', title: '❌ CO NIE DZIAŁAŁO - Co nie wypaliło? Coś się rozsypało, coś było meh, a coś innego po prostu nie miało sensu? Wylewamy żale – konstruktywnie!', color: 'rgba(255, 59, 48, 0.1)' },
+                    { id: 'try-next', title: '💡 CO SPRÓBOWAĆ - Co warto przetestować? Nowe podejścia, narzędzia, rytuały... albo po prostu spróbować zaczynać sprinty bez dramy po deployu.', color: 'rgba(175, 82, 222, 0.1)' }
                 ]
             },
             'team-radar': {
@@ -873,9 +876,9 @@
             'roses-thorns': {
                 name: 'Roses/Thorns/Buds',
                 columns: [
-                    { id: 'roses', title: '🌹 ROSES - Sukcesy i radości', color: 'rgba(52, 199, 89, 0.1)' },
-                    { id: 'thorns', title: '🌿 THORNS - Problemy i frustracje', color: 'rgba(255, 59, 48, 0.1)' },
-                    { id: 'buds', title: '🌱 BUDS - Nowe możliwości', color: 'rgba(175, 82, 222, 0.1)' }
+                    { id: 'roses', title: '🌹 ROSES - Co zakwitło? Co poszło super, co było pozytywne, co pachniało sukcesem? Pochwalmy się naszymi różami – bez kolców!', color: 'rgba(52, 199, 89, 0.1)' },
+                    { id: 'thorns', title: '🌿 THORNS - Co kłuło? Co przeszkadzało, bolało, irytowało? To moment na nazwane frustracje – bez przebierania w liściach.e', color: 'rgba(255, 59, 48, 0.1)' },
+                    { id: 'buds', title: '🌱 BUDS - Co kiełkuje? Pomysły z potencjałem, inicjatywy, które dopiero startują – może jeszcze nie kwitną, ale warto je podlewać!', color: 'rgba(175, 82, 222, 0.1)' }
                 ]
             }
         };
@@ -1351,7 +1354,7 @@
             'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
             'Co chciałbyś, żeby Twój zespół wiedział o Twojej pracy?',
             'Która technologia/narzędzie najbardziej zmieniło Twój sposób pracy?',
-            'Co sprawia, że praca w Capital Service ma sens?'
+            'Co sprawia, że praca tutaj ma sens?'
         ];
 
         function generateNewIcebreaker() {
@@ -1395,11 +1398,11 @@
             }
             
             const template = retroTemplates[currentTemplate];
-            const reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE
+            const reportContent = `RAPORT RETROSPEKTYWY
 ===========================================
 
 Data: ${new Date().toLocaleDateString('pl-PL')}
-Zespół: Capital Service Development Team
+Zespół: Development Team
 Szablon: ${template.name}
 
 STATYSTYKI SESJI:
@@ -1416,7 +1419,7 @@ Użyto szablonu: ${template.name}
 Wszyscy członkowie zespołu aktywnie uczestniczyli w sesji.
 
 Raport wygenerowany automatycznie przez RETRO_CSSA
-© Capital Service ${new Date().getFullYear()}`;
+© Solution Hub ${new Date().getFullYear()}`;
             
             const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
             const url = URL.createObjectURL(blob);
@@ -1440,7 +1443,7 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
         // ================================
         
         window.onload = function() {
-            console.log('🔄 RETRO_CSSA Capital Service - inicjalizacja');
+            console.log('🔄 RETRO_CSSA - inicjalizacja');
             
             updateUIForCurrentUser();
             displayTeamMembers();
