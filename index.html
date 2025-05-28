@@ -51,7 +51,7 @@
             overflow: hidden;
         }
 
-        /* === HEADER Z INFORMACJĄ O UŻYTKOWNIKU === */
+        /* === HEADER === */
         .header {
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
             color: white;
@@ -69,7 +69,7 @@
             opacity: 0.9;
         }
 
-        /* === INFORMACJE O UŻYTKOWNIKU === */
+        /* === USER INFO === */
         .user-info {
             position: absolute;
             top: 20px;
@@ -99,7 +99,7 @@
             font-size: 0.8em;
         }
 
-        /* === ZAKŁADKI NAWIGACJI === */
+        /* === NAVIGATION === */
         .nav-tabs {
             display: flex;
             background: rgba(255, 255, 255, 0.8);
@@ -131,7 +131,7 @@
             color: var(--primary-blue);
         }
 
-        /* === ZAWARTOŚĆ ZAKŁADEK === */
+        /* === TAB CONTENT === */
         .tab-content {
             display: none;
             padding: 40px;
@@ -141,7 +141,7 @@
             display: block;
         }
 
-        /* === KARTY I ELEMENTY === */
+        /* === CARDS === */
         .modern-card {
             background: var(--background-secondary);
             border-radius: 16px;
@@ -150,7 +150,7 @@
             margin-bottom: 24px;
         }
 
-        /* === SZABLONY RETROSPEKTYWY === */
+        /* === TEMPLATE SELECTOR === */
         .template-selector {
             display: grid;
             gap: 16px;
@@ -182,7 +182,7 @@
             font-size: 0.9em;
         }
 
-        /* === PRZYCISKI === */
+        /* === BUTTONS === */
         .btn {
             background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-blue) 100%);
             color: white;
@@ -205,13 +205,8 @@
         .btn-warning {
             background: linear-gradient(135deg, var(--warning-orange) 0%, #FD7E14 100%);
         }
-        .btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
 
-        /* === ELEMENTY DOSTĘPNE TYLKO DLA PM === */
+        /* === PM ONLY === */
         .pm-only {
             display: block;
         }
@@ -219,7 +214,7 @@
             display: none !important;
         }
 
-        /* === LISTA UŻYTKOWNIKÓW TEAMS === */
+        /* === TEAM MEMBERS === */
         .team-members {
             display: grid;
             gap: 16px;
@@ -247,7 +242,7 @@
             font-size: 0.85em;
         }
 
-        /* === KARTY PLANNING POKER === */
+        /* === POKER CARDS === */
         .poker-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
@@ -285,7 +280,7 @@
             color: white;
         }
 
-        /* === LISTA ZADAŃ === */
+        /* === STORIES === */
         .story-list {
             display: grid;
             gap: 16px;
@@ -307,7 +302,7 @@
             background: rgba(27, 54, 93, 0.05);
         }
 
-        /* === RESPONSIVE DESIGN === */
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
             .container {
                 margin: 12px;
@@ -328,12 +323,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- === HEADER Z INFORMACJAMI O UŻYTKOWNIKU === -->
+        <!-- === HEADER === -->
         <div class="header">
             <h1>🔄 RETRO_CSSA</h1>
             <p>Platforma retrospektyw zespołowych - Capital Service</p>
             
-            <!-- Informacje o aktualnym użytkowniku -->
             <div class="user-info">
                 <div id="userBadge" class="user-badge">
                     <div><strong id="userName">Jan Kowalski</strong></div>
@@ -343,7 +337,7 @@
             </div>
         </div>
         
-        <!-- === NAWIGACJA ZAKŁADEK === -->
+        <!-- === NAVIGATION === -->
         <nav class="nav-tabs">
             <button class="tab" id="tab-setup" onclick="showTab('setup')" data-required-role="pm">⚙️ Konfiguracja</button>
             <button class="tab active" id="tab-planning" onclick="showTab('planning')" data-required-role="developer,pm">📋 Planning Poker</button>
@@ -353,56 +347,50 @@
             <button class="tab" id="tab-summary" onclick="showTab('summary')" data-required-role="pm">📊 Raport</button>
         </nav>
         
-        <!-- === KONFIGURACJA (tylko PM) === -->
+        <!-- === SETUP === -->
         <div id="setup" class="tab-content">
             <h2 style="margin-bottom: 32px; color: var(--primary-blue);">🚀 Konfiguracja sesji retrospektywy</h2>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
-                <!-- Wybór szablonu retrospektywy - ROZSZERZONE OPCJE -->
                 <div class="modern-card">
                     <h3 style="color: var(--primary-blue); margin-bottom: 24px;">📋 Wybierz szablon retrospektywy</h3>
                     
                     <div class="template-selector">
-                        <div class="template-option selected" onclick="selectTemplate('start-stop-continue')">
+                        <div class="template-option selected" onclick="selectTemplate('start-stop-continue', this)">
                             <h4>🔄 Start/Stop/Continue</h4>
                             <p>Klasyczny szablon agile - co zacząć, przestać i kontynuować</p>
                         </div>
                         
-                        <div class="template-option" onclick="selectTemplate('4ls')">
+                        <div class="template-option" onclick="selectTemplate('4ls', this)">
                             <h4>📝 4Ls Framework</h4>
                             <p>Liked, Learned, Lacked, Longed for - pogłębiona analiza</p>
                         </div>
                         
-                        <div class="template-option" onclick="selectTemplate('glad-sad-mad')">
+                        <div class="template-option" onclick="selectTemplate('glad-sad-mad', this)">
                             <h4>😊😢😠 Glad/Sad/Mad</h4>
                             <p>Emocjonalne spojrzenie na sprint - uczucia zespołu</p>
                         </div>
                         
-                        <div class="template-option" onclick="selectTemplate('what-worked')">
+                        <div class="template-option" onclick="selectTemplate('what-worked', this)">
                             <h4>✅❌💡 What Worked/Didn't/Try</h4>
                             <p>Fokus na praktyczne rozwiązania i eksperymenty</p>
                         </div>
                         
-                        <div class="template-option" onclick="selectTemplate('team-radar')">
+                        <div class="template-option" onclick="selectTemplate('team-radar', this)">
                             <h4>📡 Team Radar</h4>
                             <p>Komunikacja, Proces, Narzędzia, Współpraca</p>
                         </div>
                         
-                        <div class="template-option" onclick="selectTemplate('roses-thorns')">
+                        <div class="template-option" onclick="selectTemplate('roses-thorns', this)">
                             <h4>🌹🌿🌱 Roses/Thorns/Buds</h4>
                             <p>Sukcesy, Problemy, Nowe możliwości</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Zespół Capital Service z Teams -->
                 <div class="modern-card">
                     <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół Capital Service (z Teams)</h3>
-                    
-                    <div class="team-members" id="teamMembersList">
-                        <!-- Lista członków zespołu będzie wygenerowana przez JavaScript -->
-                    </div>
-                    
+                    <div class="team-members" id="teamMembersList"></div>
                     <button class="btn btn-success" onclick="startRetrospective()">▶️ Rozpocznij retrospektywę</button>
                 </div>
             </div>
@@ -412,7 +400,6 @@
         <div id="planning" class="tab-content active">
             <h2 style="margin-bottom: 32px; color: var(--primary-blue);">📋 Planning Poker - Szacowanie zadań</h2>
             
-            <!-- Dodawanie nowego zadania (PM) -->
             <div class="modern-card pm-only">
                 <h3>➕ Dodaj nowe zadanie do szacowania</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
@@ -422,15 +409,11 @@
                 <button class="btn btn-success" onclick="addNewStory()">➕ Dodaj zadanie</button>
             </div>
             
-            <!-- Lista zadań do oszacowania -->
             <div class="modern-card">
                 <h3>📝 Zadania do oszacowania</h3>
-                <div class="story-list" id="storiesList">
-                    <!-- Zadania będą wygenerowane przez JavaScript -->
-                </div>
+                <div class="story-list" id="storiesList"></div>
             </div>
             
-            <!-- Karty szacowania -->
             <div class="modern-card">
                 <h3>🎯 Oszacuj wybrane zadanie</h3>
                 <div id="selectedStoryDisplay">
@@ -439,7 +422,6 @@
                 
                 <h4 style="margin: 24px 0 16px;">Wybierz swoją estymację (Story Points):</h4>
                 <div class="poker-cards">
-                    <!-- Pełna skala Fibonacci + specjalne karty -->
                     <div class="poker-card" onclick="selectEstimation(0.5)">½</div>
                     <div class="poker-card" onclick="selectEstimation(1)">1</div>
                     <div class="poker-card" onclick="selectEstimation(2)">2</div>
@@ -492,19 +474,15 @@
             </div>
         </div>
         
-        <!-- === RETROSPEKTYWA === -->
+        <!-- === RETRO === -->
         <div id="retro" class="tab-content">
             <h2 style="color: var(--primary-blue); margin-bottom: 24px;">🎯 Tablica retrospektywy</h2>
-            
-            <div id="retroBoard">
-                <!-- Zawartość będzie dynamicznie generowana na podstawie wybranego szablonu -->
-            </div>
+            <div id="retroBoard"></div>
         </div>
         
-        <!-- === KONTA (tylko PM) === -->
+        <!-- === ACCOUNTS === -->
         <div id="accounts" class="tab-content">
             <h2 style="color: var(--primary-blue); margin-bottom: 32px;">🔗 Matchowanie kont Teams ↔ YouTrack</h2>
-            
             <div class="modern-card">
                 <h3>📊 Status mapowań Capital Service</h3>
                 <p>Funkcja dostępna po integracji z Microsoft Teams i YouTrack</p>
@@ -514,10 +492,9 @@
             </div>
         </div>
         
-        <!-- === RAPORT (tylko PM) === -->
+        <!-- === SUMMARY === -->
         <div id="summary" class="tab-content">
             <h2 style="color: var(--primary-blue); margin-bottom: 32px;">📊 Raport i podsumowanie</h2>
-            
             <div class="modern-card" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%); color: white; text-align: center;">
                 <h2>🚀 Eksport i raportowanie</h2>
                 <div style="margin: 24px 0;">
@@ -532,26 +509,24 @@
 
     <script>
         // =====================================================
-        // ===🔴 MOCK DATA SECTION - EASY TO FIND AND REPLACE ===
+        // === 🔴 MOCK DATA SECTION - EASY TO FIND AND REPLACE ===
         // =====================================================
         
-        // 🔴 MOCK: Aktualny użytkownik - ZASTĄP gdy połączysz z Microsoft/Teams
         let currentUser = {
             id: "user_001",
             name: "Jan Kowalski",
             email: "jan.kowalski@capitalservice.pl",
-            role: "developer", // developer lub pm
+            role: "developer",
             avatar: "👨‍💻"
         };
 
-        // 🔴 MOCK: Lista członków zespołu z Teams - ZASTĄP gdy połączysz z Teams API
         const teamMembers = [
             {
                 id: "user_001",
                 name: "Jan Kowalski", 
                 email: "jan.kowalski@capitalservice.pl",
                 role: "developer",
-                presence: "online", // online, offline, away, busy
+                presence: "online",
                 avatar: "👨‍💻"
             },
             {
@@ -580,7 +555,6 @@
             }
         ];
         
-        // 🔴 MOCK: Lista zadań - ZASTĄP gdy połączysz z YouTrack API
         let stories = [
             {
                 id: 1,
@@ -604,7 +578,6 @@
         // === 🟢 REAL API CALLS SECTION - ODKOMENTUJ PO INTEGRACJI ===
         // =====================================================
         
-        // 🟢 TEAMS API: Pobieranie członków zespołu z Microsoft Teams
         /*
         async function loadTeamMembersFromTeams() {
             try {
@@ -624,27 +597,6 @@
         }
         */
         
-        // 🟢 YOUTRACK API: Pobieranie zadań z YouTrack
-        /*
-        async function loadStoriesFromYouTrack() {
-            try {
-                const response = await fetch('/api/youtrack/tasks', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + getYouTrackToken(),
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const tasks = await response.json();
-                return tasks;
-            } catch (error) {
-                console.error('Błąd pobierania zadań z YouTrack:', error);
-                return [];
-            }
-        }
-        */
-        
-        // 🟢 YOUTRACK API: Zapisywanie estymacji do YouTrack
         /*
         async function saveEstimationToYouTrack(taskId, userId, estimation) {
             try {
@@ -667,32 +619,9 @@
             }
         }
         */
-        
-        // 🟢 TEAMS API: Wysyłanie raportów do Teams
-        /*
-        async function sendReportToTeams(message) {
-            try {
-                const response = await fetch('/api/teams/send-message', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + getTeamsAccessToken(),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        channelId: 'retro_capital_devteam',
-                        message: message
-                    })
-                });
-                return await response.json();
-            } catch (error) {
-                console.error('Błąd wysyłania raportu do Teams:', error);
-                throw error;
-            }
-        }
-        */
 
         // ============================================
-        // === KONTROLA DOSTĘPU OPARTA NA ROLACH ===
+        // === ROLE BASED ACCESS CONTROL ===
         // ============================================
         
         const rolePermissions = {
@@ -760,7 +689,7 @@
         }
 
         // =======================================
-        // === NAWIGACJA MIĘDZY ZAKŁADKAMI ===
+        // === NAVIGATION ===
         // =======================================
         
         function showTab(tabName) {
@@ -783,12 +712,12 @@
 
         function showFirstAvailableTab() {
             const allowedTabs = rolePermissions[currentUser.role].allowedTabs;
-            const firstTab = allowedTabs[0];
+            const firstTab = allowedTabs[0]; // ✅ NAPRAWIONE - was: allowedTabs (array) now: allowedTabs[0] (string)
             showTab(firstTab);
         }
 
         // ========================================
-        // === SZABLONY RETROSPEKTYWY - ROZSZERZONE ===
+        // === RETRO TEMPLATES ===
         // ========================================
         
         const retroTemplates = {
@@ -847,31 +776,44 @@
         let currentTemplate = 'start-stop-continue';
         let retroNotes = {};
 
-        function selectTemplate(templateKey) {
-            document.querySelectorAll('.template-option').forEach(opt => opt.classList.remove('selected'));
-            event.target.classList.add('selected');
-            currentTemplate = templateKey;
+        function selectTemplate(templateKey, clickedElement) {
+            console.log('Wybrano szablon:', templateKey);
             
-            // Zainicjuj strukturę danych dla nowego szablonu
-            const template = retroTemplates[templateKey];
-            retroNotes = {};
-            template.columns.forEach(col => {
-                retroNotes[col.id] = [];
+            document.querySelectorAll('.template-option').forEach(opt => {
+                opt.classList.remove('selected');
             });
             
-            // Aktualizuj tablicę retro jeśli jest wyświetlana
-            if (document.getElementById('retro').classList.contains('active')) {
-                generateRetroBoard();
+            if (clickedElement) {
+                clickedElement.classList.add('selected');
+            }
+            
+            currentTemplate = templateKey;
+            
+            const template = retroTemplates[templateKey];
+            if (template) {
+                retroNotes = {};
+                template.columns.forEach(col => {
+                    retroNotes[col.id] = [];
+                });
+                
+                if (document.getElementById('retro').classList.contains('active')) {
+                    generateRetroBoard();
+                }
+                
+                alert(`✅ Wybrano szablon: ${template.name}`);
             }
         }
 
         function generateRetroBoard() {
             const template = retroTemplates[currentTemplate];
+            if (!template) return;
+            
             const board = document.getElementById('retroBoard');
+            if (!board) return;
             
             board.innerHTML = `
                 <h3 style="text-align: center; margin-bottom: 24px; color: var(--primary-blue);">
-                    ${template.name}
+                    📋 ${template.name}
                 </h3>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;">
                     ${template.columns.map(col => `
@@ -879,7 +821,7 @@
                             <h3 style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%); color: white; text-align: center; padding: 20px; border-radius: 16px; margin-bottom: 24px;">
                                 ${col.title}
                             </h3>
-                            <div style="border: 3px dashed rgba(74, 144, 190, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer;" onclick="addRetroNote('${col.id}')">
+                            <div style="border: 3px dashed rgba(74, 144, 190, 0.3); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px; cursor: pointer; background: rgba(255,255,255,0.5);" onclick="addRetroNote('${col.id}')">
                                 + Dodaj nowy pomysł
                             </div>
                             <div id="${col.id}-notes"></div>
@@ -888,20 +830,18 @@
                 </div>
             `;
             
-            // Wyświetl istniejące notatki
             template.columns.forEach(col => {
                 displayRetroNotes(col.id);
             });
         }
 
         // ========================================
-        // === GENEROWANIE LISTY CZŁONKÓW ZESPOŁU ===
+        // === TEAM MEMBERS ===
         // ========================================
         
         function displayTeamMembers() {
             const container = document.getElementById('teamMembersList');
             
-            // 🔴 MOCK: Replace with loadTeamMembersFromTeams() when Teams API is ready
             const presenceIcons = {
                 online: '🟢',
                 offline: '⚪', 
@@ -922,7 +862,7 @@
         }
 
         // ===================================
-        // === ZARZĄDZANIE ZADANIAMI ===
+        // === STORIES ===
         // ===================================
         
         let selectedStoryId = null;
@@ -966,7 +906,8 @@
                 
                 const userEstimation = story.estimations[currentUser.name];
                 if (userEstimation) {
-                    selectEstimation(userEstimation);
+                    currentEstimation = userEstimation;
+                    document.getElementById('currentEstimation').textContent = userEstimation;
                 }
             }
             
@@ -1006,7 +947,7 @@
         }
 
         // ==============================
-        // === SZACOWANIE ZADAŃ ===
+        // === ESTIMATION ===
         // ==============================
         
         function selectEstimation(value) {
@@ -1065,7 +1006,7 @@
         }
 
         // ===============================
-        // === RETROSPEKTYWA ===
+        // === RETRO NOTES ===
         // ===============================
         
         let noteCounter = 0;
@@ -1113,7 +1054,7 @@
         }
 
         // ==============================
-        // === CHECK-IN I ICEBREAKERS - LEPSZE ===
+        // === ICEBREAKERS ===
         // ==============================
         
         const icebreakers = [
@@ -1141,13 +1082,10 @@
             setTimeout(() => {
                 event.target.style.transform = 'scale(1)';
             }, 300);
-            
-            // 🟢 REAL API: Odkomentuj gdy Teams API będzie gotowe
-            // await saveMoodToAPI(currentUser.id, moodLevel);
         }
 
         // ================================
-        // === EKSPORT I RAPORTOWANIE ===
+        // === EXPORT ===
         // ================================
         
         function exportToTeams() {
@@ -1155,10 +1093,6 @@
                 alert('❌ Brak uprawnień do eksportu');
                 return;
             }
-            
-            // 🟢 REAL API: Odkomentuj gdy Teams API będzie gotowe
-            // await sendReportToTeams(generateRetroSummary());
-            
             alert('📤 Raport zostanie wysłany do kanału Teams Capital Service');
         }
 
@@ -1167,10 +1101,6 @@
                 alert('❌ Brak uprawnień do eksportu');
                 return;
             }
-            
-            // 🟢 REAL API: Odkomentuj gdy YouTrack API będzie gotowe
-            // await updateAllEstimationsInYouTrack();
-            
             alert('🔄 Estymacje zostaną zaktualizowane w YouTrack');
         }
 
@@ -1180,7 +1110,6 @@
                 return;
             }
             
-            // 🔴 MOCK: Raport bez szczegółów zadań (zgodnie z wymaganiem)
             const reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE
 ===========================================
 
@@ -1213,7 +1142,7 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert('📄 Raport retrospektywy został pobrany (bez szczegółów zadań ze względów bezpieczeństwa)');
+            alert('📄 Raport retrospektywy został pobrany');
         }
 
         function startRetrospective() {
@@ -1221,7 +1150,7 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
         }
 
         // ================================
-        // === INICJALIZACJA APLIKACJI ===
+        // === INITIALIZATION ===
         // ================================
         
         window.onload = function() {
@@ -1231,13 +1160,13 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
             displayTeamMembers();
             displayStories();
             
-            // Inicjalizuj strukturę retroNotes dla domyślnego szablonu
+            // Initialize retro structure
             const defaultTemplate = retroTemplates[currentTemplate];
             defaultTemplate.columns.forEach(col => {
                 retroNotes[col.id] = [];
             });
             
-            // Dodaj przykładowe notatki retro
+            // Add sample retro notes
             retroNotes.start = retroNotes.start || [];
             retroNotes.continue = retroNotes.continue || [];
             
