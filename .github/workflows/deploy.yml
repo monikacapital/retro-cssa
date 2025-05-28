@@ -1,4 +1,4 @@
-name: Deploy RETRO_CSSA
+name: Simple Deploy
 
 on:
   push:
@@ -9,25 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Create simple build
+    - uses: actions/checkout@v4
+    
+    - name: Create site
       run: |
-        mkdir -p docs
-        if [ -f index.html ]; then
-          cp index.html docs/index.html
-        else
-          echo "<h1>RETRO_CSSA działa!</h1>" > docs/index.html
+        if [ ! -f index.html ]; then
+          echo "<!DOCTYPE html><html><head><title>RETRO_CSSA</title></head><body><h1>🔄 RETRO_CSSA działa!</h1><p>GitHub Pages aktywne!</p></body></html>" > index.html
         fi
         
-    - name: Deploy to GitHub Pages
+    - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
+        publish_dir: ./
