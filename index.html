@@ -3,77 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETRO_CSSA</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #FAFBFC 0%, #E8F4F8 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #1B365D 0%, #2E5984 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 3.5em;
-            margin-bottom: 12px;
-            font-weight: 800;
-        }
-        .content {
-            padding: 40px;
-            text-align: center;
-        }
-        .demo-message {
-            background: #34C759;
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            font-size: 1.2em;
-        }
-    </style>
+    <title>RETRO_CSSA - Retrospektywy i Planning Poker</title>
+    <meta name="description" content="Nowoczesna aplikacja do retrospektyw zespołowych i planning poker z integracją Microsoft Teams i YouTrack">
+    <meta name="keywords" content="retrospektywa, scrum, agile, planning poker, teams, youtrack">
+    <meta name="author" content="Capital Service">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1B365D">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    
+    <!-- Favicons -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+    <!-- Preload key resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🔄 RETRO_CSSA</h1>
-            <p>Kompleksowa platforma retrospektyw i planowania zespołowego</p>
+    <noscript>
+        <div style="padding: 40px; text-align: center; font-family: Arial, sans-serif;">
+            <h1>RETRO_CSSA</h1>
+            <p>Ta aplikacja wymaga włączonego JavaScript.</p>
+            <p>Proszę włączyć JavaScript w przeglądarce i odświeżyć stronę.</p>
         </div>
-        
-        <div class="content">
-            <div class="demo-message">
-                ✅ Gratulacje! GitHub Pages działa poprawnie!
-            </div>
-            
-            <h2>🚀 Demo aplikacji RETRO_CSSA</h2>
-            <p>Aplikacja do retrospektyw zespołowych z integracją Microsoft Teams i YouTrack</p>
-            
-            <h3>📋 Funkcje:</h3>
-            <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
-                <li>🎯 Retrospektywy zespołowe (Start/Stop/Continue, 4Ls)</li>
-                <li>🃏 Planning Poker z estymacjami</li>
-                <li>👥 Zarządzanie użytkownikami Teams</li>
-                <li>🔗 Integracja z YouTrack</li>
-                <li>📊 Statystyki i raporty</li>
-                <li>✅ Action items i health check</li>
-            </ul>
-            
-            <p style="margin-top: 40px;">
-                <strong>Status:</strong> Demo wersja uruchomiona na GitHub Pages 🎉
-            </p>
-        </div>
-    </div>
+    </noscript>
+    
+    <div id="root"></div>
+    
+    <!-- Loading fallback -->
+    <script>
+        // Pokaż loading indicator jeśli React nie załaduje się w 3 sekundy
+        setTimeout(function() {
+            const root = document.getElementById('root');
+            if (!root.hasChildNodes()) {
+                root.innerHTML = '<div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:Arial,sans-serif;"><div><h2>Ładowanie RETRO_CSSA...</h2><p>Sprawdź połączenie z internetem</p></div></div>';
+            }
+        }, 3000);
+    </script>
 </body>
 </html>
