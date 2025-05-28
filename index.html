@@ -1032,3 +1032,461 @@
                         <h4 style="color: var(--primary-blue); margin-bottom: 8px;">${story.title}</h4>
                         <p style="margin-bottom: 8px;">${story.description}</p>
                         <div style="font-size: 0.9em; color: var(--text-secondary);">
+                            <strong>Status:</strong> ${story.finalEstimation ? 'Oszacowane (' + story.finalEstimation + ' SP)' : 'Oczekuje na oszacowanie'}
+                        </div>
+                    </div>
+                `;
+                
+                const userEstimation = story.estimations[currentUser.name];
+                if (userEstimation) {
+                    currentEstimation = userEstimation;
+                    document.getElementById('currentEstimation').textContent = userEstimation;
+                }
+            }
+            
+            displayStories();
+        }
+
+        function addNewStory() {
+            if (!hasPermission('canManageUsers')) {
+                alert('❌ Tylko PM może dodawać zadania');
+                return;
+            }
+            
+            const title = document.getElementById('newStoryTitle').value.trim();
+            const description = document.getElementById('newStoryDescription').value.trim();
+            
+            if (!title) {
+                alert('❌ Wprowadź tytuł zadania');
+                return;
+            }
+            
+            const newStory = {
+                id: Date.now(),
+                title: title,
+                description: description || 'Brak szczegółowego opisu',
+                estimations: {},
+                finalEstimation: null,
+                assignee: null
+            };
+            
+            stories.push(newStory);
+            displayStories();
+            
+            document.getElementById('newStoryTitle').value = '';
+            document.getElementById('newStoryDescription').value = '';
+            
+            alert(`✅ Dodano zadanie: ${title}`);
+        }
+
+        // ==============================
+        // === ESTIMATION ===
+        // ==============================
+        
+        function selectEstimation(value) {
+            currentEstimation = value;
+            document.getElementById('currentEstimation').textContent = value;
+            
+            document.querySelectorAll('.poker-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            event.target.classList.add('selected');
+        }
+
+        function submitEstimation() {
+            if (!selectedStoryId) {
+                alert('❌ Wybierz zadanie do oszacowania');
+                return;
+            }
+            
+            if (currentEstimation === null) {
+                alert('❌ Wybierz kartę z estymacją');
+                return;
+            }
+            
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story) {
+                story.estimations[currentUser.name] = currentEstimation;
+                alert(`✅ Estymacja ${currentEstimation} zapisana dla zadania: ${story.title}`);
+                
+                // 🟢 REAL API: Odkomentuj gdy YouTrack API będzie gotowe
+                // await saveEstimationToYouTrack(selectedStoryId, currentUser.id, currentEstimation);
+            }
+        }
+
+        function revealAllVotes() {
+            if (!hasPermission('canRevealVotes')) {
+                alert('❌ Tylko PM może ujawniać głosy zespołu');
+                return;
+            }
+            
+            if (!selectedStoryId) {
+                alert('❌ Wybierz zadanie');
+                return;
+            }
+            
+            const story = stories.find(s => s.id === selectedStoryId);
+            if (story && Object.keys(story.estimations).length > 0) {
+                let voteSummary = "👁️ Głosy zespołu:\n\n";
+                Object.entries(story.estimations).forEach(([user, vote]) => {
+                    voteSummary += `${user}: ${vote}\n`;
+                });
+                alert(voteSummary);
+            } else {
+                alert('❌ Brak głosów do pokazania');
+            }
+        }
+
+        // ===============================
+        // === RETRO NOTES ===
+        // ===============================
+        
+        let noteCounter = 0;
+
+        function addRetroNote(category) {
+            const text = prompt(`Wpisz pomysł dla kategorii ${category.toUpperCase()}:`);
+            if (text && text.trim()) {
+                noteCounter++;
+                const note = {
+                    id: noteCounter,
+                    text: text.trim(),
+                    votes: 0,
+                    author: currentUser.name,
+                    timestamp: new Date().toLocaleString('pl-PL')
+                };
+                
+                retroNotes[category] = retroNotes[category] || [];
+                retroNotes[category].push(note);
+                displayRetroNotes(category);
+                
+                console.log('✅ Dodano notatkę do kategorii:', category, note);
+            }
+        }
+
+        function displayRetroNotes(category) {
+            const container = document.getElementById(`${category}-notes`);
+            if (!container) {
+                console.warn('⚠️ Nie znaleziono kontenera dla kategorii:', category);
+                return;
+            }
+            
+            const notes = retroNotes[category] || [];
+            
+            container.innerHTML = notes.map(note => `
+                <div style="background: white; padding: 20px; margin: 12px 0; border-radius: 12px; box-shadow: var(--shadow-sm); border-left: 4px solid var(--accent-blue);">
+                    <div style="margin-bottom: 12px; font-weight: 500; color: var(--text-primary);">${note.text}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; color: var(--text-secondary);">
+                        <span>👍 ${note.votes} głosów</span>
+                        <button onclick="voteRetroNote(${note.id}, '${category}')" style="background: var(--accent-blue); color: white; border: none; padding: 8px 16px; border-radius: 16px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">Głosuj</button>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.8em; color: var(--text-tertiary);">${note.author} • ${note.timestamp}</div>
+                </div>
+            `).join('');
+            
+            console.log('✅ Wyświetlono notatki dla kategorii:', category, notes.length, 'notatek');
+        }
+
+        function voteRetroNote(noteId, category) {
+            const note = (retroNotes[category] || []).find(n => n.id === noteId);
+            if (note) {
+                note.votes++;
+                displayRetroNotes(category);
+                console.log('✅ Głos oddany na notatkę:', noteId, 'nowa liczba głosów:', note.votes);
+            }
+        }
+
+        // ===============================
+        // === MICROSOFT TO-DO INTEGRATION ===
+        // ===============================
+
+        let createdTodos = [];
+
+        function populateAssigneeSelect() {
+            const select = document.getElementById('todoAssignee');
+            if (!select) return;
+            
+            while (select.children.length > 1) {
+                select.removeChild(select.lastChild);
+            }
+            
+            teamMembers.forEach(member => {
+                const option = document.createElement('option');
+                option.value = member.id;
+                option.textContent = `${member.name} (${member.role}) ${member.presence === 'online' ? '🟢' : '⚪'}`;
+                select.appendChild(option);
+            });
+        }
+
+        function canCreateTodos() {
+            return currentUser.role === 'pm';
+        }
+
+        function validateTodoForm() {
+            const title = document.getElementById('todoTitle').value.trim();
+            const assignee = document.getElementById('todoAssignee').value;
+            
+            if (!title) {
+                alert('❌ Wprowadź tytuł zadania');
+                return false;
+            }
+            
+            if (!assignee) {
+                alert('❌ Wybierz osobę, do której przypisać zadanie');
+                return false;
+            }
+            
+            return true;
+        }
+
+        async function createTodoTask() {
+            if (!canCreateTodos()) {
+                alert('❌ Tylko Project Manager może tworzyć zadania To-Do');
+                return;
+            }
+            
+            if (!validateTodoForm()) {
+                return;
+            }
+            
+            const taskData = {
+                title: document.getElementById('todoTitle').value.trim(),
+                assigneeId: document.getElementById('todoAssignee').value,
+                assigneeName: document.getElementById('todoAssignee').selectedOptions[0].textContent.split(' (')[0],
+                dueDate: document.getElementById('todoDueDate').value,
+                notes: document.getElementById('todoNotes').value.trim(),
+                priority: document.getElementById('todoPriority').value,
+                reminder: document.getElementById('todoReminder').checked,
+                createdBy: currentUser.name,
+                createdAt: new Date().toISOString()
+            };
+            
+            try {
+                // 🟢 REAL API: Odkomentuj gdy Microsoft Graph API będzie gotowe
+                // const createdTask = await createMicrosoftTodoTask(taskData);
+                
+                // 🔴 MOCK: Symulacja tworzenia zadania
+                const mockCreatedTask = {
+                    id: `todo_${Date.now()}`,
+                    ...taskData,
+                    status: 'created'
+                };
+                
+                createdTodos.push(mockCreatedTask);
+                
+                alert(`✅ Zadanie utworzone pomyślnie!\n\n📌 Tytuł: ${taskData.title}\n👤 Przypisane do: ${taskData.assigneeName}\n📅 Termin: ${taskData.dueDate || 'Nie ustawiono'}\n\nZadanie zostało dodane do Microsoft To-Do użytkownika ${taskData.assigneeName}.`);
+                
+                clearTodoForm();
+                displayCreatedTodosPreview();
+                
+                console.log('✅ Zadanie To-Do utworzone:', mockCreatedTask);
+                
+            } catch (error) {
+                console.error('❌ Błąd tworzenia zadania To-Do:', error);
+                alert('❌ Wystąpił błąd podczas tworzenia zadania. Spróbuj ponownie.');
+            }
+        }
+
+        function clearTodoForm() {
+            document.getElementById('todoTitle').value = '';
+            document.getElementById('todoAssignee').value = '';
+            document.getElementById('todoDueDate').value = '';
+            document.getElementById('todoNotes').value = '';
+            document.getElementById('todoPriority').value = 'normal';
+            document.getElementById('todoReminder').checked = false;
+        }
+
+        function displayCreatedTodosPreview() {
+            const preview = document.getElementById('createdTodosPreview');
+            const list = document.getElementById('todosPreviewList');
+            
+            if (createdTodos.length === 0) {
+                preview.style.display = 'none';
+                return;
+            }
+            
+            preview.style.display = 'block';
+            
+            const recentTodos = createdTodos.slice(-3).reverse();
+            
+            list.innerHTML = recentTodos.map(todo => `
+                <div style="background: white; padding: 16px; margin: 8px 0; border-radius: 8px; border-left: 4px solid var(--success-green); box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; justify-content: between; align-items: start;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">📌 ${todo.title}</div>
+                            <div style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 4px;">👤 Przypisane do: ${todo.assigneeName}</div>
+                            ${todo.dueDate ? `<div style="font-size: 0.9em; color: var(--text-secondary); margin-bottom: 4px;">📅 Termin: ${new Date(todo.dueDate).toLocaleDateString('pl-PL')}</div>` : ''}
+                            ${todo.notes ? `<div style="font-size: 0.85em; color: var(--text-tertiary); margin-top: 8px;">💬 ${todo.notes}</div>` : ''}
+                        </div>
+                        <div style="font-size: 0.8em; color: var(--text-tertiary); text-align: right;">
+                            ${new Date(todo.createdAt).toLocaleString('pl-PL')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setDefaultDueDate() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            
+            const dueDateInput = document.getElementById('todoDueDate');
+            if (dueDateInput) {
+                dueDateInput.value = tomorrowStr;
+            }
+        }
+
+        // ==============================
+        // === ICEBREAKERS ===
+        // ==============================
+        
+        const icebreakers = [
+            'Która umiejętność, którą rozwijasz teraz, będzie Ci najbardziej pomocna za rok?',
+            'Co ostatnio nauczyło Cię czegoś nowego o sobie?',
+            'Jaką jedną rzecz zmieniłbyś w swoim codziennym workflow?',
+            'Co sprawia, że czujesz się dumny ze swojej pracy?',
+            'Jakiej lekcji nauczyłeś się od współpracownika w ostatnim czasie?',
+            'Co motywuje Cię do lepszej pracy z zespołem?',
+            'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
+            'Co chciałbyś, żeby Twój zespół wiedział o Twojej pracy?',
+            'Która technologia/narzędzie najbardziej zmieniło Twój sposób pracy?',
+            'Co sprawia, że praca w Capital Service ma sens?'
+        ];
+
+        function generateNewIcebreaker() {
+            const randomIcebreaker = icebreakers[Math.floor(Math.random() * icebreakers.length)];
+            document.getElementById('icebreakerQuestion').textContent = randomIcebreaker;
+        }
+
+        function selectMood(moodLevel, emoji) {
+            document.getElementById('moodResponse').style.display = 'block';
+            
+            event.target.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                event.target.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // ================================
+        // === EXPORT ===
+        // ================================
+        
+        function exportToTeams() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            alert('📤 Raport zostanie wysłany do kanału Teams Capital Service');
+        }
+
+        function updateYouTrack() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            alert('🔄 Estymacje zostaną zaktualizowane w YouTrack');
+        }
+
+        function generatePDFReport() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            
+            const template = retroTemplates[currentTemplate];
+            const reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE
+===========================================
+
+Data: ${new Date().toLocaleDateString('pl-PL')}
+Zespół: Capital Service Development Team
+Szablon: ${template.name}
+
+STATYSTYKI SESJI:
+- Liczba uczestników: ${teamMembers.filter(m => m.presence === 'online').length}
+- Liczba pomysłów: ${Object.values(retroNotes).flat().length}
+- Aktualny szablon: ${template.name}
+
+ZESPÓŁ PRESENT:
+${teamMembers.filter(m => m.presence === 'online').map(m => `- ${m.name} (${m.role})`).join('\n')}
+
+PODSUMOWANIE:
+Retrospektywa przeprowadzona zgodnie z metodyką agile.
+Użyto szablonu: ${template.name}
+Wszyscy członkowie zespołu aktywnie uczestniczyli w sesji.
+
+Raport wygenerowany automatycznie przez RETRO_CSSA
+© Capital Service ${new Date().getFullYear()}`;
+            
+            const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `raport-retro-capital-service-${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('📄 Raport retrospektywy został pobrany');
+        }
+
+        function startRetrospective() {
+            showTab('retro');
+        }
+
+        // ================================
+        // === INITIALIZATION ===
+        // ================================
+        
+        window.onload = function() {
+            console.log('🔄 RETRO_CSSA Capital Service - inicjalizacja');
+            
+            updateUIForCurrentUser();
+            displayTeamMembers();
+            displayStories();
+            
+            const defaultTemplate = retroTemplates[currentTemplate];
+            defaultTemplate.columns.forEach(col => {
+                retroNotes[col.id] = [];
+            });
+            
+            retroNotes.start = retroNotes.start || [];
+            retroNotes.continue = retroNotes.continue || [];
+            
+            retroNotes.start.push({
+                id: 1,
+                text: 'Częstsze retrospektywy zespołowe w Capital Service',
+                votes: 3,
+                author: 'Anna Nowak',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            retroNotes.continue.push({
+                id: 2, 
+                text: 'Dobra komunikacja między developerami a testerami',
+                votes: 5,
+                author: 'Monika Capital',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            noteCounter = 2;
+            
+            const templateDisplay = document.getElementById('currentTemplateDisplay');
+            if (templateDisplay) {
+                templateDisplay.textContent = defaultTemplate.name;
+            }
+            
+            populateAssigneeSelect();
+            setDefaultDueDate();
+            
+            generateRetroBoard();
+            showFirstAvailableTab();
+            
+            console.log('✅ Aplikacja RETRO_CSSA załadowana pomyślnie');
+            console.log('📋 Aktualny szablon:', currentTemplate);
+            console.log('📝 Notatki retro:', retroNotes);
+        };
+    </script>
+</body>
+</html>
