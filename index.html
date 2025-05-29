@@ -182,6 +182,112 @@
             font-size: 0.9em;
         }
 
+        /* === VOTING STATUS STYLES === */
+        .voting-status-panel {
+            background: rgba(74, 144, 190, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .team-voting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .member-vote-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #E5E7EB;
+            transition: all 0.3s ease;
+        }
+        .member-vote-status.voted {
+            border-left-color: var(--success-green);
+            background: rgba(52, 199, 89, 0.05);
+        }
+        .member-vote-status.not-voted {
+            border-left-color: var(--warning-orange);
+            background: rgba(255, 149, 0, 0.05);
+        }
+        .vote-indicator {
+            font-size: 1.2em;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* === VOTING RESULTS STYLES === */
+        .voting-results {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin: 24px 0;
+            border: 2px solid var(--accent-blue);
+            display: none;
+        }
+        .voting-results.visible {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .results-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+        .individual-votes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .vote-card {
+            background: rgba(74, 144, 190, 0.1);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .vote-value {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+        }
+        .vote-author {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+        .statistics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .stat-item {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+
         /* === BUTTONS === */
         .btn {
             background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-blue) 100%);
@@ -242,43 +348,6 @@
             font-size: 0.85em;
         }
 
-        /* === PLANNING POKER VOTING STATUS === */
-        .voting-status {
-            background: rgba(74, 144, 190, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .team-voting-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 16px;
-        }
-        .member-vote-status {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            background: white;
-            border-radius: 12px;
-            border-left: 4px solid #E5E7EB;
-            transition: all 0.3s ease;
-        }
-        .member-vote-status.voted {
-            border-left-color: var(--success-green);
-            background: rgba(52, 199, 89, 0.05);
-        }
-        .member-vote-status.not-voted {
-            border-left-color: var(--warning-orange);
-            background: rgba(255, 149, 0, 0.05);
-        }
-        .vote-indicator {
-            font-size: 1.2em;
-            width: 24px;
-            text-align: center;
-        }
-
         /* === POKER CARDS === */
         .poker-cards {
             display: grid;
@@ -315,75 +384,6 @@
         .poker-card.special {
             background: linear-gradient(135deg, var(--warning-orange) 0%, #FFB84D 100%);
             color: white;
-        }
-
-        /* === VOTING RESULTS === */
-        .voting-results {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            margin: 24px 0;
-            border: 2px solid var(--accent-blue);
-            display: none;
-        }
-        .voting-results.visible {
-            display: block;
-            animation: slideDown 0.5s ease-out;
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .results-header {
-            text-align: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--accent-blue);
-        }
-        .individual-votes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 20px 0;
-        }
-        .vote-card {
-            background: rgba(74, 144, 190, 0.1);
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-            border-left: 4px solid var(--accent-blue);
-        }
-        .vote-value {
-            font-size: 2em;
-            font-weight: 800;
-            color: var(--primary-blue);
-            margin-bottom: 8px;
-        }
-        .vote-author {
-            font-size: 0.9em;
-            color: var(--text-secondary);
-        }
-        .statistics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
-        }
-        .stat-item {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .stat-value {
-            font-size: 2.2em;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-        .stat-label {
-            font-size: 0.9em;
-            opacity: 0.9;
         }
 
         /* === STORIES === */
@@ -428,7 +428,7 @@
                 grid-template-columns: 1fr;
             }
             .individual-votes {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             }
             .statistics-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -529,15 +529,18 @@
                 <div class="story-list" id="storiesList"></div>
             </div>
             
-            <!-- STATUS GŁOSOWANIA ZESPOŁU (tylko PM) -->
-            <div class="modern-card pm-only" id="votingStatusPanel" style="display: none;">
+            <!-- STATUS GŁOSOWANIA ZESPOŁU (widoczny dla wszystkich) -->
+            <div class="modern-card" id="votingStatusPanel" style="display: none;">
                 <h3 style="color: var(--primary-blue); margin-bottom: 16px;">👥 Status głosowania zespołu</h3>
-                <div class="voting-status">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="voting-status-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                         <span style="font-weight: 600;">Postęp głosowania:</span>
                         <span id="votingProgress">0/4 członków zespołu</span>
                     </div>
                     <div class="team-voting-grid" id="teamVotingStatus"></div>
+                    <div style="margin-top: 16px; padding: 16px; background: rgba(255, 149, 0, 0.1); border-radius: 12px;" id="pendingVotersAlert" style="display: none;">
+                        <strong>⏳ Oczekuje na głosy:</strong> <span id="pendingVotersList"></span>
+                    </div>
                 </div>
             </div>
             
@@ -571,7 +574,7 @@
                 </div>
             </div>
             
-            <!-- WYNIKI GŁOSOWANIA -->
+            <!-- WYNIKI GŁOSOWANIA (widoczne dla wszystkich po ujawnieniu) -->
             <div class="voting-results" id="votingResults">
                 <div class="results-header">
                     <h3 style="color: var(--primary-blue);">📊 Wyniki głosowania Planning Poker</h3>
@@ -814,94 +817,6 @@
                 }
             }
         ];
-
-        // =====================================================
-        // === 🟢 REAL API CALLS SECTION - ODKOMENTUJ PO INTEGRACJI ===
-        // =====================================================
-        
-        /*
-        async function loadTeamMembersFromTeams() {
-            try {
-                const response = await fetch('/api/teams/members', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + getTeamsAccessToken(),
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const members = await response.json();
-                return members;
-            } catch (error) {
-                console.error('Błąd pobierania członków zespołu z Teams:', error);
-                return [];
-            }
-        }
-        */
-        
-        /*
-        async function saveEstimationToYouTrack(taskId, userId, estimation) {
-            try {
-                const response = await fetch('/api/youtrack/update-estimation', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + getYouTrackToken(),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        taskId: taskId,
-                        userId: userId,
-                        estimation: estimation
-                    })
-                });
-                return await response.json();
-            } catch (error) {
-                console.error('Błąd zapisywania estymacji do YouTrack:', error);
-                throw error;
-            }
-        }
-        */
-
-        /*
-        async function createMicrosoftTodoTask(taskData) {
-            try {
-                const todoListResponse = await fetch(`/api/graph/users/${taskData.assigneeId}/todo/lists`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + getMicrosoftAccessToken(),
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const todoLists = await todoListResponse.json();
-                const defaultList = todoLists.value.find(list => list.displayName === 'Tasks') || todoLists.value[0];
-                
-                const createTaskResponse = await fetch(`/api/graph/users/${taskData.assigneeId}/todo/lists/${defaultList.id}/tasks`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + getMicrosoftAccessToken(),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        title: taskData.title,
-                        body: {
-                            content: taskData.notes,
-                            contentType: 'text'
-                        },
-                        dueDateTime: taskData.dueDate ? {
-                            dateTime: taskData.dueDate + 'T23:59:59',
-                            timeZone: 'Europe/Warsaw'
-                        } : null,
-                        importance: taskData.priority,
-                        isReminderOn: taskData.reminder
-                    })
-                });
-                
-                return await createTaskResponse.json();
-            } catch (error) {
-                console.error('Błąd tworzenia zadania Microsoft To-Do:', error);
-                throw error;
-            }
-        }
-        */
 
         // ============================================
         // === ROLE BASED ACCESS CONTROL ===
@@ -1236,7 +1151,7 @@
                     });
                 }
 
-                // Aktualizuj status głosowania dla PM
+                // Aktualizuj status głosowania
                 updateVotingStatus(story);
                 
                 // Pokaż/ukryj wyniki jeśli już ujawnione
@@ -1250,27 +1165,30 @@
             displayStories();
         }
 
-        // NOWA FUNKCJA: Aktualizuj status głosowania zespołu (dla PM)
+        // ✅ NOWA FUNKCJA: Aktualizuj status głosowania zespołu (widoczne dla wszystkich)
         function updateVotingStatus(story) {
-            if (currentUser.role !== 'pm') {
-                document.getElementById('votingStatusPanel').style.display = 'none';
-                return;
-            }
-
             const statusPanel = document.getElementById('votingStatusPanel');
             const progressElement = document.getElementById('votingProgress');
             const teamStatusContainer = document.getElementById('teamVotingStatus');
+            const pendingAlert = document.getElementById('pendingVotersAlert');
+            const pendingList = document.getElementById('pendingVotersList');
             
             const votedCount = Object.keys(story.votingSession.votes).length;
             const totalCount = teamMembers.length;
             
             progressElement.textContent = `${votedCount}/${totalCount} członków zespołu`;
             
+            const pendingMembers = [];
+            
             teamStatusContainer.innerHTML = teamMembers.map(member => {
                 const hasVoted = story.votingSession.votes.hasOwnProperty(member.id);
                 const statusClass = hasVoted ? 'voted' : 'not-voted';
                 const statusIcon = hasVoted ? '✅' : '⏳';
                 const statusText = hasVoted ? 'Zagłosował' : 'Oczekuje na głos';
+                
+                if (!hasVoted) {
+                    pendingMembers.push(member.name);
+                }
                 
                 return `
                     <div class="member-vote-status ${statusClass}">
@@ -1283,6 +1201,14 @@
                     </div>
                 `;
             }).join('');
+            
+            // Pokaż alert o oczekujących głosach
+            if (pendingMembers.length > 0) {
+                pendingList.textContent = pendingMembers.join(', ');
+                pendingAlert.style.display = 'block';
+            } else {
+                pendingAlert.style.display = 'none';
+            }
             
             statusPanel.style.display = 'block';
         }
@@ -1364,13 +1290,10 @@
                 // Aktualizuj status głosowania
                 updateVotingStatus(story);
                 displayStories();
-                
-                // 🟢 REAL API: Odkomentuj gdy YouTrack API będzie gotowe
-                // await saveEstimationToYouTrack(selectedStoryId, currentUser.id, currentEstimation);
             }
         }
 
-        // NOWA FUNKCJA: Wyświetl wyniki głosowania z pełnymi statystykami
+        // ✅ NOWA FUNKCJA: Wyświetl wyniki głosowania z pełnymi statystykami (dla wszystkich)
         function revealAllVotes() {
             if (!hasPermission('canRevealVotes')) {
                 alert('❌ Brak uprawnień do ujawniania głosów');
@@ -1678,10 +1601,6 @@
             };
             
             try {
-                // 🟢 REAL API: Odkomentuj gdy Microsoft Graph API będzie gotowe
-                // const createdTask = await createMicrosoftTodoTask(taskData);
-                
-                // 🔴 MOCK: Symulacja tworzenia zadania
                 const mockCreatedTask = {
                     id: `todo_${Date.now()}`,
                     ...taskData,
@@ -1764,15 +1683,3 @@
             'Co sprawia, że czujesz się dumny ze swojej pracy?',
             'Jakiej lekcji nauczyłeś się od współpracownika w ostatnim czasie?',
             'Co motywuje Cię do lepszej pracy z zespołem?',
-            'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
-            'Co chciałbyś, żeby Twój zespół wiedział o Twojej pracy?',
-            'Która technologia/narzędzie najbardziej zmieniło Twój sposób pracy?',
-            'Co sprawia, że praca w Capital Service ma sens?'
-        ];
-
-        function generateNewIcebreaker() {
-            const randomIcebreaker = icebreakers[Math.floor(Math.random() * icebreakers.length)];
-            document.getElementById('icebreakerQuestion').textContent = randomIcebreaker;
-        }
-
-        function selectM
