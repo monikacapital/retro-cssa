@@ -1683,3 +1683,146 @@
             'Co sprawia, że czujesz się dumny ze swojej pracy?',
             'Jakiej lekcji nauczyłeś się od współpracownika w ostatnim czasie?',
             'Co motywuje Cię do lepszej pracy z zespołem?',
+                        'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
+            'Co chciałbyś, żeby Twój zespół wiedział o Twojej pracy?',
+            'Która technologia/narzędzie najbardziej zmieniło Twój sposób pracy?',
+            'Co sprawia, że praca w Capital Service ma sens?'
+        ];
+
+        function generateNewIcebreaker() {
+            const randomIcebreaker = icebreakers[Math.floor(Math.random() * icebreakers.length)];
+            document.getElementById('icebreakerQuestion').textContent = randomIcebreaker;
+        }
+
+        function selectMood(moodLevel, emoji) {
+            document.getElementById('moodResponse').style.display = 'block';
+            
+            event.target.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                event.target.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // ================================
+        // === EXPORT ===
+        // ================================
+        
+        function exportToTeams() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            alert('📤 Raport zostanie wysłany do kanału Teams Capital Service');
+        }
+
+        function updateYouTrack() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            alert('🔄 Estymacje zostaną zaktualizowane w YouTrack');
+        }
+
+        function generatePDFReport() {
+            if (!hasPermission('canExport')) {
+                alert('❌ Brak uprawnień do eksportu');
+                return;
+            }
+            
+            const template = retroTemplates[currentTemplate];
+            const reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE
+===========================================
+
+Data: ${new Date().toLocaleDateString('pl-PL')}
+Zespół: Capital Service Development Team
+Szablon: ${template.name}
+
+STATYSTYKI SESJI:
+- Liczba uczestników: ${teamMembers.filter(m => m.presence === 'online').length}
+- Liczba pomysłów: ${Object.values(retroNotes).flat().length}
+- Aktualny szablon: ${template.name}
+
+ZESPÓŁ PRESENT:
+${teamMembers.filter(m => m.presence === 'online').map(m => `- ${m.name} (${m.role})`).join('\n')}
+
+PODSUMOWANIE:
+Retrospektywa przeprowadzona zgodnie z metodyką agile.
+Użyto szablonu: ${template.name}
+Wszyscy członkowie zespołu aktywnie uczestniczyli w sesji.
+
+Raport wygenerowany automatycznie przez RETRO_CSSA
+© Capital Service ${new Date().getFullYear()}`;
+            
+            const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `raport-retro-capital-service-${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('📄 Raport retrospektywy został pobrany');
+        }
+
+        function startRetrospective() {
+            showTab('retro');
+        }
+
+        // ================================
+        // === INITIALIZATION ===
+        // ================================
+        
+        window.onload = function() {
+            console.log('🔄 RETRO_CSSA Capital Service - inicjalizacja');
+            
+            updateUIForCurrentUser();
+            displayTeamMembers();
+            displayStories();
+            
+            const defaultTemplate = retroTemplates[currentTemplate];
+            defaultTemplate.columns.forEach(col => {
+                retroNotes[col.id] = [];
+            });
+            
+            retroNotes.start = retroNotes.start || [];
+            retroNotes.continue = retroNotes.continue || [];
+            
+            retroNotes.start.push({
+                id: 1,
+                text: 'Częstsze retrospektywy zespołowe w Capital Service',
+                votes: 3,
+                author: 'Anna Nowak',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            retroNotes.continue.push({
+                id: 2, 
+                text: 'Dobra komunikacja między developerami a testerami',
+                votes: 5,
+                author: 'Monika Capital',
+                timestamp: new Date().toLocaleString('pl-PL')
+            });
+            
+            noteCounter = 2;
+            
+            const templateDisplay = document.getElementById('currentTemplateDisplay');
+            if (templateDisplay) {
+                templateDisplay.textContent = defaultTemplate.name;
+            }
+            
+            populateAssigneeSelect();
+            setDefaultDueDate();
+            
+            generateRetroBoard();
+            showFirstAvailableTab();
+            
+            console.log('✅ Aplikacja RETRO_CSSA załadowana pomyślnie');
+            console.log('📋 Aktualny szablon:', currentTemplate);
+            console.log('📝 Notatki retro:', retroNotes);
+        };
+    </script>
+</body>
+</html>
+
