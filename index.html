@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RETRO_CSSA - Capital Service</title>
+    <title>RETRO Service</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -440,8 +440,8 @@
     <div class="container">
         <!-- === HEADER === -->
         <div class="header">
-            <h1>🔄 RETRO_CSSA</h1>
-            <p>Platforma retrospektyw zespołowych - Capital Service</p>
+            <h1>🔄 RETRO Service</h1>
+            <p>Platforma retrospektyw zespołowych</p>
             
             <div class="user-info">
                 <div id="userBadge" class="user-badge">
@@ -504,7 +504,7 @@
                 </div>
                 
                 <div class="modern-card">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół Capital Service (z Teams)</h3>
+                    <h3 style="color: var(--primary-blue); margin-bottom: 24px;">👥 Zespół(z Teams)</h3>
                     <div class="team-members" id="teamMembersList"></div>
                     <button class="btn btn-success" onclick="startRetrospective()">▶️ Rozpocznij retrospektywę</button>
                 </div>
@@ -578,7 +578,7 @@
             <div class="voting-results" id="votingResults">
                 <div class="results-header">
                     <h3 style="color: var(--primary-blue);">📊 Wyniki głosowania Planning Poker</h3>
-                    <p style="color: var(--text-secondary); margin-top: 8px;">Estymacje zespołu Capital Service</p>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">Estymacje zespołu</p>
                 </div>
                 
                 <div class="individual-votes" id="individualVotes"></div>
@@ -620,7 +620,7 @@
         <!-- === CHECK-IN === -->
         <div id="checkin" class="tab-content">
             <div style="text-align: center; padding: 40px;">
-                <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in zespołu Capital Service</h2>
+                <h2 style="color: var(--primary-blue); margin-bottom: 24px;">👋 Check-in zespołu</h2>
                 
                 <div class="modern-card" style="max-width: 600px; margin: 32px auto;">
                     <h3>💭 Icebreaker dnia</h3>
@@ -640,7 +640,7 @@
                 <div id="moodResponse" style="display: none; margin-top: 32px;">
                     <div class="modern-card" style="max-width: 500px; margin: 0 auto;">
                         <h4 style="color: var(--success-green);">✅ Dziękujemy za udział w check-in!</h4>
-                        <p>Twój głos jest ważny dla zespołu Capital Service</p>
+                        <p>Twój głos jest ważny dla całego zespołu</p>
                         <button class="btn btn-success" onclick="showTab('retro')">Przejdź do retrospektywy →</button>
                     </div>
                 </div>
@@ -718,7 +718,7 @@
         <div id="accounts" class="tab-content">
             <h2 style="color: var(--primary-blue); margin-bottom: 32px;">🔗 Matchowanie kont Teams ↔ YouTrack</h2>
             <div class="modern-card">
-                <h3>📊 Status mapowań Capital Service</h3>
+                <h3>📊 Status mapowań</h3>
                 <p>Funkcja dostępna po integracji z Microsoft Teams i YouTrack</p>
                 <div style="background: rgba(74, 144, 190, 0.1); padding: 20px; border-radius: 12px; margin: 20px 0;">
                     <strong>🔄 Do zaimplementowania:</strong> Automatyczne mapowanie kont zespołu
@@ -749,7 +749,7 @@
         let currentUser = {
             id: "user_001",
             name: "Jan Kowalski",
-            email: "jan.kowalski@capitalservice.pl",
+            email: "jan.kowalski@service.pl",
             role: "developer",
             avatar: "👨‍💻"
         };
@@ -758,7 +758,7 @@
             {
                 id: "user_001",
                 name: "Jan Kowalski", 
-                email: "jan.kowalski@capitalservice.pl",
+                email: "jan.kowalski@service.pl",
                 role: "developer",
                 presence: "online",
                 avatar: "👨‍💻"
@@ -766,7 +766,7 @@
             {
                 id: "user_002", 
                 name: "Anna Nowak",
-                email: "anna.nowak@capitalservice.pl", 
+                email: "anna.nowak@service.pl", 
                 role: "tester",
                 presence: "away",
                 avatar: "👩‍🔬"
@@ -774,7 +774,7 @@
             {
                 id: "user_003",
                 name: "Monika Capital",
-                email: "monika.capital@capitalservice.pl",
+                email: "monika.capital@service.pl",
                 role: "pm", 
                 presence: "online",
                 avatar: "👩‍💼"
@@ -782,7 +782,7 @@
             {
                 id: "user_004",
                 name: "Piotr Kowalczyk", 
-                email: "piotr.kowalczyk@capitalservice.pl",
+                email: "piotr.kowalczyk@service.pl",
                 role: "developer",
                 presence: "busy",
                 avatar: "👨‍💻"
@@ -793,7 +793,7 @@
             {
                 id: 1,
                 title: "🔐 Implementacja logowania OAuth 2.0",
-                description: "Integracja z Microsoft Azure AD dla zespołu Capital Service",
+                description: "Integracja z Microsoft Azure AD dla zespołu",
                 estimations: {},
                 finalEstimation: null,
                 assignee: null,
@@ -806,7 +806,7 @@
             {
                 id: 2,
                 title: "📊 Dashboard z metrykami retrospektyw", 
-                description: "Widok statystyk dla Project Managerów Capital Service",
+                description: "Widok statystyk dla Project Managerów",
                 estimations: {},
                 finalEstimation: null,
                 assignee: null,
@@ -875,12 +875,12 @@
             if (currentUser.role === 'developer') {
                 currentUser.role = 'pm';
                 currentUser.name = 'Monika Capital';
-                currentUser.email = 'monika.capital@capitalservice.pl';
+                currentUser.email = 'monika.capital@service.pl';
                 currentUser.avatar = '👩‍💼';
             } else {
                 currentUser.role = 'developer';
                 currentUser.name = 'Jan Kowalski';
-                currentUser.email = 'jan.kowalski@capitalservice.pl';
+                currentUser.email = 'jan.kowalski@service.pl';
                 currentUser.avatar = '👨‍💻';
             }
             
@@ -1750,7 +1750,7 @@ Retrospektywa przeprowadzona zgodnie z metodyką agile.
 Użyto szablonu: ${template.name}
 Wszyscy członkowie zespołu aktywnie uczestniczyli w sesji.
 
-Raport wygenerowany automatycznie przez RETRO_CSSA
+Raport wygenerowany automatycznie przez RETRO SERVICE
 © Capital Service ${new Date().getFullYear()}`;
             
             const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
@@ -1775,7 +1775,7 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
         // ================================
         
         window.onload = function() {
-            console.log('🔄 RETRO_CSSA Capital Service - inicjalizacja');
+            console.log('🔄 RETRO Service - inicjalizacja');
             
             updateUIForCurrentUser();
             displayTeamMembers();
@@ -1791,7 +1791,7 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
             
             retroNotes.start.push({
                 id: 1,
-                text: 'Częstsze retrospektywy zespołowe w Capital Service',
+                text: 'Częstsze retrospektywy zespołowe',
                 votes: 3,
                 author: 'Anna Nowak',
                 timestamp: new Date().toLocaleString('pl-PL')
@@ -1818,7 +1818,7 @@ Raport wygenerowany automatycznie przez RETRO_CSSA
             generateRetroBoard();
             showFirstAvailableTab();
             
-            console.log('✅ Aplikacja RETRO_CSSA załadowana pomyślnie');
+            console.log('✅ Aplikacja RETRO Service załadowana pomyślnie');
             console.log('📋 Aktualny szablon:', currentTemplate);
             console.log('📝 Notatki retro:', retroNotes);
         };
