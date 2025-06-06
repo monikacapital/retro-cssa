@@ -748,6 +748,29 @@
     </div>
 
     <script>
+
+        function saveState() {
+    try {
+        localStorage.setItem('retroStories', JSON.stringify(stories));
+        localStorage.setItem('retroNotes', JSON.stringify(retroNotes));
+        localStorage.setItem('createdTodos', JSON.stringify(createdTodos));
+    } catch (e) {
+        console.warn('Nie udało się zapisać do localStorage:', e);
+    }
+}
+function loadState() {
+    try {
+        const s = localStorage.getItem('retroStories');
+        if (s) stories = JSON.parse(s);
+        const n = localStorage.getItem('retroNotes');
+        if (n) retroNotes = JSON.parse(n);
+        const t = localStorage.getItem('createdTodos');
+        if (t) createdTodos = JSON.parse(t);
+    } catch (e) {
+        console.warn('Nie udało się odczytać z localStorage:', e);
+    }
+}
+
         // =====================================================
         // === 🔴 MOCK DATA SECTION - EASY TO FIND AND REPLACE ===
         // =====================================================
