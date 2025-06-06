@@ -738,7 +738,7 @@
             <div class="modern-card" style="background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%); color: white; text-align: center;">
                 <h2>🚀 Eksport i raportowanie</h2>
                 <div style="margin: 24px 0;">
-                    <p>Generowanie raportów i eksport danych z retrospektyw Capital Service</p>
+                    <p>Generowanie raportów i eksport danych z retrospektywy</p>
                 </div>
                 <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="exportToTeams()">📤 Wyślij do Teams</button>
                 <button class="btn" style="background: rgba(255,255,255,0.15);" onclick="updateYouTrack()">🔄 Zaktualizuj YouTrack</button>
@@ -1689,10 +1689,10 @@
             'Co sprawia, że czujesz się dumny ze swojej pracy?',
             'Jakiej lekcji nauczyłeś się od współpracownika w ostatnim czasie?',
             'Co motywuje Cię do lepszej pracy z zespołem?',
-                        'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
+            'Jaki problem rozwiązałeś ostatnio w nietypowy sposób?',
             'Co chciałbyś, żeby Twój zespół wiedział o Twojej pracy?',
             'Która technologia/narzędzie najbardziej zmieniło Twój sposób pracy?',
-            'Co sprawia, że praca w Capital Service ma sens?'
+            'Co sprawia, że praca w tym miejscu ma sens?'
         ];
 
         function generateNewIcebreaker() {
@@ -1718,7 +1718,7 @@
                 alert('❌ Brak uprawnień do eksportu');
                 return;
             }
-            alert('📤 Raport zostanie wysłany do kanału Teams Capital Service');
+            alert('📤 Raport zostanie wysłany do kanału Teams');
         }
 
         function updateYouTrack() {
@@ -1736,7 +1736,7 @@
             }
             
             const template = retroTemplates[currentTemplate];
-            const reportContent = `RAPORT RETROSPEKTYWY CAPITAL SERVICE
+            const reportContent = `RAPORT RETROSPEKTYWY
 ===========================================
 
 Data: ${new Date().toLocaleDateString('pl-PL')}
